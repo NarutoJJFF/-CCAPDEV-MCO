@@ -73,11 +73,31 @@
             height: 20px;
         }
 
-        .main-posts{
+        .main{
             display:flex;
-            background-color: coral;
-            height:100px
+        }
 
+        .main-posts{
+            flex-grow: 3;
+            display:flex;
+            background-color: white;
+            border: 1px solid black;
+            height:500px;
+            justify-content: center;
+        }
+
+        .main-ranking{
+            flex-grow: 0.5;
+            display: flex;
+            background-color: white;
+            border: 1px solid black;
+            height:500px;
+            justify-content: center;
+        }
+
+        .ranking-chart{
+            display:flex;
+            background-color: whitesmoke;
         }
 
 
@@ -110,9 +130,19 @@
 
     </div>
 
-    <div class = "main-posts">
-
+    <div  class = "main"> 
+        <div class = "main-posts">
+            <p> test </p>
+            
+        </div>
+    
+        <div class = "main-ranking">
+            <div class = "ranking-chart">
+                <p>POPULAR COMMUNITIES</p>
+            </div>
+        </div>
     </div>
+    
     
 </body>
 </html>
