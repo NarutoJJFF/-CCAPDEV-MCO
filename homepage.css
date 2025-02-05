@@ -166,6 +166,7 @@ main{
     flex-direction: row;
     line-height: 1rem;
     margin-right: 20px;
+    align-items:center ;
 }
 
 .posts-icon img {
@@ -183,6 +184,7 @@ main{
 
 .posts-stats {
     display: flex;
+    align-items: center;
 }
 
 .posts-stats p {
@@ -190,7 +192,6 @@ main{
 }
 
 .posts-stats img {
-    position: relative;
     top: 12px;
     width: 30px;
     height: 30px;
@@ -202,6 +203,7 @@ main{
     flex-direction: row;
     line-height: 0rem;
     justify-content: space-between;
+    align-items: center ;
 }
 
 .edit-post {
@@ -209,8 +211,8 @@ main{
     flex-direction: row;
     line-height: 0rem;
     position: relative;
-    top: 10px;
     color: orangered;
+    align-items: center;
 }
 
 .edit-post img{
@@ -238,6 +240,7 @@ main{
 .hr-orange-smaller {
     border-color: orangered;
     border-width: 1px;
+    margin: 10px 0;
 }
 
 .flair {
