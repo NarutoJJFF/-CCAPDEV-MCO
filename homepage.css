@@ -8,16 +8,18 @@ body {
     min-height: 100vh;
     display:grid;
     grid-template-columns: 300px 1fr;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: auto 1fr auto;
     grid-template-areas: 
     "header header"
-    "sidebar main";
+    "sidebar main"
+    "footer footer";
 }
 
 header{
     top: 0;
     position: sticky;
     grid-area: header;
+    color: white;
     background-color: orangered;
     display: flex;  
     padding: 10px 20px;     
@@ -67,17 +69,17 @@ header a:hover{
 }
 
 header a:link{
-    color:black;
+    color:white;
     text-decoration: none;
 
 }
 header a:visited{
-    color:black;
+    color:white;
     text-decoration: none;
 
 }
 header a:active {
-    color: black;
+    color: white;
     text-decoration: none;
 }
 
@@ -93,4 +95,22 @@ aside{
 main{
     grid-area: main;
     padding: 20px;
+}
+
+
+
+.footer-content {
+    display: flex;
+    background-color: orangered;
+    color: white;
+    justify-content:center;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    padding-right: 2vh;
+    padding-left: 2vh;
+}
+
+.footer-content p {
+    margin: 5px;
 }

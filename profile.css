@@ -197,19 +197,23 @@ article{
 .profile-stats {
     display: flex;
     justify-content:center;
+    width: 50%;
+    margin: 10px auto;
+    text-align: center;
 }
 
 .profile-stats p {
     margin-right: 20px;
 }
 
-.profile-follow {
+.profile-edit {
     color: white;
     background-color: orangered;
     border-radius: 50px;
     width: 50%;
     justify-self: center;
-    margin-top: 0px;
+    margin: 10px auto;
+    text-align: center;
 }
 
 /* POSTS */
@@ -332,6 +336,16 @@ article{
 .hr-orange-smaller {
     border-color: orangered;
     border-width: 1px;
+}
+
+.flair {
+    display: inline-block;
+    padding: 3px 8px;
+    background-color: lightgray;
+    border-radius: 5px;
+    font-size: 16px;
+    line-height: 1;
+    margin-left: 5px;
 }
 
 /* SCROLL */
