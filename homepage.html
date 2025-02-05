@@ -17,6 +17,7 @@
         }
 
         body {
+            font-family: "Poppins", sans-serif;
             min-height: 100vh;
             display:grid;
             grid-template-columns: 300px 1fr;
@@ -24,9 +25,6 @@
             grid-template-areas: 
             "header header"
             "sidebar main";
-            font-family: "Poppins", serif;
-            font-weight: 400;
-            font-style: normal;
         }
 
         header{
@@ -34,7 +32,6 @@
             position: sticky;
             grid-area: header;
             background-color: orangered;
-            border-bottom: 1px solid black;  
             display: flex;  
             padding: 10px 20px;     
             justify-content: space-between;
@@ -42,23 +39,19 @@
 
         .header-logo{
             display: flex;
-            flex-direction: column;
             align-items: center;
             margin-left: 50px;
+            justify-content: flex-start;
+            gap:0 ;
         }
 
         .header-logo-img img{
-            width: 100px;    
+            width: 120px; 
         }
 
         .header-logo-word{
-            margin-top: -5px;   
-        }
-
-        .header-logo-word strong{
-            font-family: "Poppins", serif;
-            font-weight: 700;
-            font-style: normal
+            color: white;
+            font-size: 30px;
         }
 
         .header-search{
@@ -67,7 +60,6 @@
             justify-content: center;
             align-items: center;
             margin: 0 20px;
-
         }
 
         .header-text{
@@ -103,8 +95,8 @@
         }
 
         aside{
-            height: calc(100vh - 94.28px);
-            top: 94.28px;
+            height: calc(100vh - 94.53px);
+            top: 94.53px;
             position:sticky;
             align-self: start;
             grid-area: sidebar;
@@ -123,7 +115,7 @@
     <header> 
         <div class = "header-logo">
             <div class = "header-logo-img">
-                <img src="https://logos-world.net/wp-content/uploads/2020/10/Reddit-Emblem-700x394.png" alt="logo"> <br/> 
+                <img src="https://logos-world.net/wp-content/uploads/2020/10/Reddit-Emblem-700x394.png" alt="logo">
             </div>
 
             <div class = "header-logo-word">
@@ -148,9 +140,29 @@
 
 
     <main> 
-        <div class = "">
 
-        </div>
+        <h1> Testing Sticky Positioning </h1>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi, quis maxime qui mollitia tempora dolorum inventore enim exercitationem velit nemo pariatur voluptatibus suscipit amet optio blanditiis nam explicabo, neque nesciunt.</p>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi, quis maxime qui mollitia tempora dolorum inventore enim exercitationem velit nemo pariatur voluptatibus suscipit amet optio blanditiis nam explicabo, neque nesciunt.</p>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi, quis maxime qui mollitia tempora dolorum inventore enim exercitationem velit nemo pariatur voluptatibus suscipit amet optio blanditiis nam explicabo, neque nesciunt.</p>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi, quis maxime qui mollitia tempora dolorum inventore enim exercitationem velit nemo pariatur voluptatibus suscipit amet optio blanditiis nam explicabo, neque nesciunt.</p>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi, quis maxime qui mollitia tempora dolorum inventore enim exercitationem velit nemo pariatur voluptatibus suscipit amet optio blanditiis nam explicabo, neque nesciunt.</p>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi, quis maxime qui mollitia tempora dolorum inventore enim exercitationem velit nemo pariatur voluptatibus suscipit amet optio blanditiis nam explicabo, neque nesciunt.</p>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi, quis maxime qui mollitia tempora dolorum inventore enim exercitationem velit nemo pariatur voluptatibus suscipit amet optio blanditiis nam explicabo, neque nesciunt.</p>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi, quis maxime qui mollitia tempora dolorum inventore enim exercitationem velit nemo pariatur voluptatibus suscipit amet optio blanditiis nam explicabo, neque nesciunt.</p>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi, quis maxime qui mollitia tempora dolorum inventore enim exercitationem velit nemo pariatur voluptatibus suscipit amet optio blanditiis nam explicabo, neque nesciunt.</p>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi, quis maxime qui mollitia tempora dolorum inventore enim exercitationem velit nemo pariatur voluptatibus suscipit amet optio blanditiis nam explicabo, neque nesciunt.</p>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi, quis maxime qui mollitia tempora dolorum inventore enim exercitationem velit nemo pariatur voluptatibus suscipit amet optio blanditiis nam explicabo, neque nesciunt.</p>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi, quis maxime qui mollitia tempora dolorum inventore enim exercitationem velit nemo pariatur voluptatibus suscipit amet optio blanditiis nam explicabo, neque nesciunt.</p>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi, quis maxime qui mollitia tempora dolorum inventore enim exercitationem velit nemo pariatur voluptatibus suscipit amet optio blanditiis nam explicabo, neque nesciunt.</p>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi, quis maxime qui mollitia tempora dolorum inventore enim exercitationem velit nemo pariatur voluptatibus suscipit amet optio blanditiis nam explicabo, neque nesciunt.</p>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi, quis maxime qui mollitia tempora dolorum inventore enim exercitationem velit nemo pariatur voluptatibus suscipit amet optio blanditiis nam explicabo, neque nesciunt.</p>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi, quis maxime qui mollitia tempora dolorum inventore enim exercitationem velit nemo pariatur voluptatibus suscipit amet optio blanditiis nam explicabo, neque nesciunt.</p>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi, quis maxime qui mollitia tempora dolorum inventore enim exercitationem velit nemo pariatur voluptatibus suscipit amet optio blanditiis nam explicabo, neque nesciunt.</p>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi, quis maxime qui mollitia tempora dolorum inventore enim exercitationem velit nemo pariatur voluptatibus suscipit amet optio blanditiis nam explicabo, neque nesciunt.</p>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi, quis maxime qui mollitia tempora dolorum inventore enim exercitationem velit nemo pariatur voluptatibus suscipit amet optio blanditiis nam explicabo, neque nesciunt.</p>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi, quis maxime qui mollitia tempora dolorum inventore enim exercitationem velit nemo pariatur voluptatibus suscipit amet optio blanditiis nam explicabo, neque nesciunt.</p>
+
     </main>
 </body>
 </html>
