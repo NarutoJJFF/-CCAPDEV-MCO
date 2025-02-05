@@ -95,6 +95,43 @@ aside{
 main{
     grid-area: main;
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.post-bar {
+    display: flex;
+    flex-direction: row;
+    line-height: 0rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.post-bar img {
+    object-fit:fill;
+    object-position: center center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    border-style: solid;
+    border-color: orangered;
+    border-width: 2px;
+    margin-right: 10px;
+    top: 7px;
+}
+
+.post-bar textarea {
+    width: 100%;
+    background-color: orangered;
+    padding: 5px 20px;
+    margin: 8px 0;
+    border-radius: 20px;
+    color: white;
+    font-family: "Poppins", serif;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 20px;
+    resize: none; 
 }
 
 
