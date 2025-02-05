@@ -97,6 +97,9 @@ main{
     padding: 20px;
     display: flex;
     flex-direction: column;
+    margin-left: 50px;
+    margin-right: 50px;
+    gap: 20px;
 }
 
 .post-bar {
@@ -134,7 +137,102 @@ main{
     resize: none; 
 }
 
+.posts-section {
+    padding: 15px;
+    border-style: solid;
+    border-radius: 10px;
+    border-width: 5px;
+    border-color: orangered;
+}
 
+.posts-icon {
+    display: flex;
+    flex-direction: row;
+    line-height: 1rem;
+    margin-right: 20px;
+}
+
+.posts-icon img {
+    object-fit:fill;
+    object-position: center center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    margin-bottom: 8px ;
+    margin-right: 10px;
+    border-style: solid;
+    border-color: orangered;
+    border-width: 2px;
+}
+
+.posts-stats {
+    display: flex;
+}
+
+.posts-stats p {
+    margin-right: 20px;
+}
+
+.posts-stats img {
+    position: relative;
+    top: 12px;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px; 
+}
+
+.posts-edit {
+    display: flex;
+    flex-direction: row;
+    line-height: 0rem;
+    justify-content: space-between;
+}
+
+.edit-post {
+    display: flex;
+    flex-direction: row;
+    line-height: 0rem;
+    position: relative;
+    top: 10px;
+    color: orangered;
+}
+
+.edit-post img{
+    object-fit:fill;
+    object-position: center center;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.orange-text {
+    color: orangered !important;
+}
+
+.hr-orange {
+    border-color: orangered;
+    border-width: 5px;
+}
+
+.hr-orange-small {
+    border-color: orangered;
+    border-width: 2px;
+}
+
+.hr-orange-smaller {
+    border-color: orangered;
+    border-width: 1px;
+}
+
+.flair {
+    display: inline-block;
+    padding: 3px 8px;
+    background-color: lightgray;
+    border-radius: 5px;
+    font-size: 16px;
+    line-height: 1;
+    margin-left: 5px;
+}
 
 .footer-content {
     display: flex;
