@@ -103,8 +103,6 @@ main{
 }
 
 
-/* POST AREA */
-
 .posts-section {
     padding: 15px;
     border-style: solid;
@@ -145,8 +143,8 @@ main{
 
 .posts-stats img {
     top: 12px;
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     margin-right: 10px; 
 }
 
@@ -200,11 +198,43 @@ main{
     padding: 3px 8px;
     background-color: lightgray;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 12px;
     line-height: 1;
     margin-left: 5px;
 }
 
+.posts-section strong {
+    font-size: 25px;
+}
+
+.paragraph {
+    margin-top: 10px;
+    color: #333;
+}
+
+.posts-stats img:hover{
+    cursor: pointer;
+}
+
+.posts-stats img:hover{
+    transform: scale(0.8);
+}
+
+.edit-post img:hover{
+    cursor: pointer;
+}
+
+.edit-post img:hover{
+    transform: scale(0.8);
+}
+
+.posts-icon img:hover{
+    cursor: pointer;
+}
+
+.posts-icon img:hover{
+    transform: scale(0.8);
+}
 
 /* FOOTER */
 

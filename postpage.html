@@ -46,26 +46,26 @@
                 <p><b>@anonymouse</b></p> 
                 </div>
                 <div class="edit-post">
-                    <img src="Header Elements/pencil-square-svgrepo-com.png" alt="Pencil">
+                    <a href = "editpost.html"><img src="Header Elements/pencil-square-svgrepo-com.png" alt="Pencil"></a>
                     <p>Edit Post</p>
                 </div>
                    
             </div>
-            <hr class="hr-orange-smaller">
-            <span class="flair">Tom the Cat</span>
-            <hr class="hr-orange-smaller">
-            <p>
+            <strong> AITA For being faster </strong>
+            <span class="flair">Tom the Cat</span> 
+            <p class = "paragraph">
                 Tom the Cat is my rival. He is always trying to catch me but I always outsmart him.
             </p>
             <hr class="hr-orange-smaller">
             <div class="posts-stats">
-                <img src="Header Elements/heart.png" alt="like">
+                <img id = "like" src="Header Elements/heart.png" alt="like" onclick = "changeImageLike()">
                 <p>14 Likes</p>
-                <img src="Header Elements/broken-heart.png" alt="dislike">
+                <img id = "dislike" src="Header Elements/broken-heart.png" alt="dislike" onclick = "changeImageDislike()">
                 <p>1 Dislike</p>
                 <img src="Header Elements/comment.png" alt="comment">
                 <p>3 Comments</p>
             </div>
+        </div>
 
     </main>
 
@@ -76,6 +76,7 @@
             </div>
         </div>
     </footer>
-    
+
+    <script src="postpage.js"></script> 
 </body>
 </html>
