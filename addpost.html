@@ -40,7 +40,10 @@
 <body>
     <h1>Create Post</h1>
     <form action="/homepage.html">
-        <textarea rows ="13" cols = "50" placeholder="What are you thinking today..."></textarea><br><br>
+        <label for="title"></label>
+        <input type="text" id="title" name="title" placeholder="Title"><br><br>
+        <label for="post_area"></label>
+        <textarea rows ="13" cols = "50" id="post_area" name="post_area" placeholder="What are you thinking today..."></textarea><br><br>
         <label for="tags"></label>
         <input type="text" id="tags" name="tags" placeholder="Tags"><br><br>
         <input type="submit" value="Post"></form><br>

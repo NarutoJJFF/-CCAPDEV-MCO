@@ -40,9 +40,11 @@
 <body>
     <h1>Edit Post</h1>
     <form action="/homepage.html">
-        <label for="post_area"></label>
+        <label for="title">Title</label><br>
+        <textarea type="text" id="title" name="title" placeholder="Title">A peak contender</textarea><br><br>
+        <label for="post_area">Post Text</label><br>
         <textarea rows ="13" cols = "50" id="post_area" name="post_area" placeholder="What would you like to change?">Camombear cheese is simply divine!</textarea><br><br>
-        <label for="tags"></label>
+        <label for="tags">Tags</label><br>
         <textarea rows ="5" cols = "50" id="tags" name="tags" placeholder="Tags">#Cheese</textarea><br><br>
         <input type="submit" value="Post"></form><br>
     </form>
