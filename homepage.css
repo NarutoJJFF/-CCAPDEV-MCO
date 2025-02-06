@@ -261,6 +261,22 @@ main{
     transform: scale(0.8);
 }
 
+.edit-post img:hover{
+    cursor: pointer;
+}
+
+.edit-post img:hover{
+    transform: scale(0.8);
+}
+
+.posts-icon img:hover{
+    cursor: pointer;
+}
+
+.posts-icon img:hover{
+    transform: scale(0.8);
+}
+
 
 /* FOOTER */
 
