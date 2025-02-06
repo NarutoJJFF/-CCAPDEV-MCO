@@ -207,13 +207,17 @@ article{
 }
 
 .profile-edit {
-    color: white;
     background-color: orangered;
     border-radius: 50px;
     width: 50%;
     justify-self: center;
     margin: 10px auto;
     text-align: center;
+}
+
+.profile-edit a{
+    color: white;
+    text-decoration: none;
 }
 
 /* POSTS */
