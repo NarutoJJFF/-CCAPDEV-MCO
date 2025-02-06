@@ -16,7 +16,7 @@
 <header>
     <div class = "header-logo">
         <div class = "header-logo-img">
-            <a href = "homepage.html"><img src="https://logos-world.net/wp-content/uploads/2020/10/Reddit-Emblem-700x394.png" alt="logo"></a>
+            <img src="https://logos-world.net/wp-content/uploads/2020/10/Reddit-Emblem-700x394.png" alt="logo">
         </div>
 
         <div class = "header-logo-word">
@@ -35,11 +35,16 @@
         <h1>Login Page</h1>
         <form action="/homepage.html">
             <label for="username"></label>
-            <input type="text" id="username" name="username" placeholder="Type your Username..."><br><br>
+            <input type="text" id="username" name="username" placeholder="Type your Username..."><br>
             <label for="password"></label>
-            <input type="password" id="password" name="password" placeholder="Type your password..."><br><br>
+            <input type="password" id="password" name="password" placeholder="Type your password..."><br>
+            <input type="checkbox" name="remember" value="remember"/> Remember me <br>
             <input type="submit" value="Submit"><br>
             <a href="register.html">No Account!? Sign Up Here!</a>
+        </form>
+        <form action="/homepage.html">
+            or<br>
+            <input type="submit" value="Browse as guest">
         </form>
     </div>
 </body>

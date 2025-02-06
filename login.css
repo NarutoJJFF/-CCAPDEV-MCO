@@ -106,10 +106,35 @@ header{
     align-items: center;
 }
 
+.header-logo{
+    display: flex;
+    align-items: center;
+    margin-left: 50px;
+    justify-content: flex-start;
+    gap:0 ;
+}
+
+.header-logo-img{
+    margin-right :5px;
+}
+
 .header-logo-img img{
     max-width: 150px;
-    margin-left: 50px; 
+    margin-left: -28px;
+    margin-right: -28px;
     height: auto;
+}
+
+.header-logo-img a{
+    padding-top : 7px;
+    padding-bottom : 1px;
+    padding-right : 4px;
+    padding-left : 4px;
+}
+
+.header-logo-word{
+    color: white;
+    font-size: 30px;
 }
 
 .header-search{
@@ -139,7 +164,7 @@ header a:visited {
 
 header a:hover{
     background-color: darkgray;
-    border-radius: 200px;
+    border-radius: 50px;
 }
 
 header a:link{
