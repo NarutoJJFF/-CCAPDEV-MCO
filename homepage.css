@@ -253,6 +253,14 @@ main{
     margin-left: 5px;
 }
 
+.posts-stats img:hover{
+    cursor: pointer;
+}
+
+.posts-stats img:hover{
+    transform: scale(0.8);
+}
+
 
 /* FOOTER */
 
