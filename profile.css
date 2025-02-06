@@ -207,13 +207,17 @@ article{
 }
 
 .profile-edit {
-    color: white;
     background-color: orangered;
     border-radius: 50px;
     width: 50%;
     justify-self: center;
     margin: 10px auto;
     text-align: center;
+}
+
+.profile-edit a{
+    color: white;
+    text-decoration: none;
 }
 
 /* POSTS */
@@ -343,9 +347,37 @@ article{
     padding: 3px 8px;
     background-color: lightgray;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 12px;
     line-height: 1;
     margin-left: 5px;
+}
+
+.posts-section strong {
+    font-size: 25px;
+}
+
+.posts-stats img:hover{
+    cursor: pointer;
+}
+
+.posts-stats img:hover{
+    transform: scale(0.8);
+}
+
+.edit-post img:hover{
+    cursor: pointer;
+}
+
+.edit-post img:hover{
+    transform: scale(0.8);
+}
+
+.posts-icon img:hover{
+    cursor: pointer;
+}
+
+.posts-icon img:hover{
+    transform: scale(0.8);
 }
 
 /* SCROLL */
