@@ -18,3 +18,11 @@ function changeImageDislike(){
         displayImage.src = 'Header Elements/broken-heart.png';
     }
 }
+
+
+function reply(){
+    let replyBox = document.getElementById('reply');
+    let textBox = document.getElementById("text-box");
+            textBox.style.display = "block";
+            textBox.focus(); 
+}
