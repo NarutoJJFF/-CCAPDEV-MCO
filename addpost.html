@@ -14,23 +14,21 @@
 </head>
 
 <header>
-    <div>
-        <div class="header-logo-img">
-            <div class="nav_logotype">
-                <img src="https://logos-world.net/wp-content/uploads/2020/10/Reddit-Emblem-700x394.png" 
-            alt="logo"> 
-            <H1 class="nav_type">Redesign</H1>
-            </div>
+    <div class = "header-logo">
+        <div class = "header-logo-img">
+            <a href = "homepage.html"><img src="https://logos-world.net/wp-content/uploads/2020/10/Reddit-Emblem-700x394.png" alt="logo"></a>
+        </div>
+
+        <div class = "header-logo-word">
+            <strong> Redesign </strong>
         </div>
     </div>
 
     <div class="header-search">
-        <!--     -->
+        <input type="text" placeholder="Search..">
     </div>
 
-
-
-    <div class="header-text">
+    <div class="header-text">  
         <a href="profile.html"> Profile </a>
         <p>|</p>
         <a href="login.html"> Logout </a>
@@ -38,16 +36,18 @@
 </header>
 
 <body>
-    <h1>Create Post</h1>
-    <form action="/homepage.html">
-        <label for="title"></label>
-        <input type="text" id="title" name="title" placeholder="Title"><br><br>
-        <label for="post_area"></label>
-        <textarea rows ="13" cols = "50" id="post_area" name="post_area" placeholder="What are you thinking today..."></textarea><br><br>
-        <label for="tags"></label>
-        <input type="text" id="tags" name="tags" placeholder="Tags"><br><br>
-        <input type="submit" value="Post"></form><br>
-    </form>
+    <div class="posting-area">
+        <h1>Create Post</h1>
+        <form action="/homepage.html">
+            <label for="title"></label>
+            <input type="text" id="title" name="title" placeholder="Title"><br>
+            <label for="post_area"></label>
+            <textarea rows ="10" cols = "50" id="post_area" name="post_area" placeholder="What are you thinking today..."></textarea><br>
+            <label for="tags"></label>
+            <input type="text" id="tags" name="tags" placeholder="Tags"><br>
+            <input type="submit" value="Post"></form><br>
+        </form>
+    </div>
 </body>
 
 </html>

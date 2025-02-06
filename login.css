@@ -18,9 +18,9 @@ form {
     text-align: center;
 }
 
-input[type=text],
+form input[type=text],
 input[type=password] {
-    width: 30%;
+    width: 90%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
@@ -30,7 +30,7 @@ input[type=password] {
 }
 
 textarea {
-    width : 30%;
+    width : 90%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
@@ -39,7 +39,7 @@ textarea {
 }
 
 input[type=submit] {
-    width: 30%;
+    width: 90%;
     background-color: orangered;
     color: white;
     padding: 14px 20px;
@@ -51,6 +51,22 @@ input[type=submit] {
 
 input[type=submit]:hover {
     background-color: #ccc;
+}
+
+.posting-area{
+    margin : 20px 30%;
+    border-style: solid;
+    border-radius: 10px;
+    border-width: 5px;
+    border-color: orangered;
+}
+
+.input-area{
+    margin : 50px 35%;
+    border-style: solid;
+    border-radius: 10px;
+    border-width: 5px;
+    border-color: orangered;
 }
 
 a {
@@ -73,9 +89,14 @@ a:hover {
 /* header css */
 
 header{
+    top: 0;
+    position: sticky;
+    grid-area: header;
     color: white;
     background-color: orangered;
     display: flex;  
+    padding: 10px 20px;     
+    justify-content: space-between; 
 }
 
 .nav-bar{
@@ -105,7 +126,6 @@ header a:visited {
 }
 
 .header-text{
-    
     display: flex;
     justify-content: center;
     align-items: center;
