@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     
-    <title>Register</title>
+    <title>Create Post</title>
 </head>
 
 <header>
@@ -28,18 +28,22 @@
         <!--     -->
     </div>
 
+
+
+    <div class="header-text">
+        <a href="profile.html"> Profile </a>
+        <p>|</p>
+        <a href="login.html"> Logout </a>
+    </div>
 </header>
 
 <body>
-    <h1>Registration Page</h1>
+    <h1>Create Post</h1>
     <form action="/homepage.html">
-        <label for="username"></label>
-        <input type="text" id="username" name="username" placeholder="Type your Username..."><br><br>
-        <label for="password"></label>
-        <input type="password" id="password" name="password" placeholder="Type your password..."><br><br>
-        <label for="conf_password"></label>
-        <input type="password" id="conf_password" name="conf_password" placeholder="Confirm your password..."><br><br>
-        <input type="submit" value="Submit"></form><br>
+        <textarea rows ="13" cols = "50" placeholder="What are you thinking today..."></textarea><br><br>
+        <label for="tags"></label>
+        <input type="text" id="tags" name="tags" placeholder="Tags"><br><br>
+        <input type="submit" value="Post"></form><br>
     </form>
 </body>
 
