@@ -236,6 +236,10 @@ main{
     transform: scale(0.8);
 }
 
+.comment-section {
+    margin-top: 20px;
+}
+
 /* FOOTER */
 
 .footer-content {
