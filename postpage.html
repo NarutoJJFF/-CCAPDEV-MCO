@@ -63,7 +63,7 @@
                 <img id = "dislike" src="Header Elements/broken-heart.png" alt="dislike" onclick = "changeImageDislike()">
                 <p>1 Dislike</p>
                 <img src="Header Elements/comment.png" alt="comment">
-                <p>3 Comments</p>
+                <p>4 Comments</p>
             </div>
 
            <div class = "comment-section"> 
@@ -90,12 +90,50 @@
 
                 <div class = comment >
                     <div class = comment-heading>
-                        <a href = "profile.html"> <img src="Header Elements/tom the cat.jpg" alt="Profile Button"> </a>
-                        <p><b>@anonycat</b></p>
+                        <a href = "profile.html"> <img src="Header Elements/spike.jpg" alt="Profile Button"> </a>
+                        <p><b>@anonydog</b></p>
                     </div>
     
                     <div class = "comment-body">
-                        <p> Just you wait!!</p>
+                        <p>Jerry, you better not be causing trouble again! 😠 Tom's got enough problems already.</p>
+                        <hr class="hr-orange-smaller">
+
+                    </div>
+    
+                    <div class = "comment-reply">
+                        <img id = "reply" src="Header Elements/comment.png" alt="comment" onclick = "reply()">
+                        <input type="text" id="text-box" placeholder="Reply...">
+                        <p>Reply</p>
+                    </div>
+                </div>
+
+                <div class = comment >
+                    <div class = comment-heading>
+                        <a href = "profile.html"> <img src="Header Elements/musclemouse.webp" alt="Profile Button"> </a>
+                        <p><b>@anonymuscle</b></p>
+                    </div>
+    
+                    <div class = "comment-body">
+                        <p>Outsmarting is one thing, but can you outlift me, little guy? 💪😼</p>
+                        <hr class="hr-orange-smaller">
+
+                    </div>
+    
+                    <div class = "comment-reply">
+                        <img id = "reply" src="Header Elements/comment.png" alt="comment" onclick = "reply()">
+                        <input type="text" id="text-box" placeholder="Reply...">
+                        <p>Reply</p>
+                    </div>
+                </div>
+
+                <div class = comment >
+                    <div class = comment-heading>
+                        <a href = "profile.html"> <img src="Header Elements/bugs.png" alt="Profile Button"> </a>
+                        <p><b>@BugsBunny</b></p>
+                    </div>
+    
+                    <div class = "comment-body">
+                        <p>Who are you guys?</p>
                         <hr class="hr-orange-smaller">
 
                     </div>
@@ -108,7 +146,24 @@
                 </div>
            </div>
 
+           <div class="reply">
+                <div class="reply-image">
+                    <a href = "profile.html"> <img src="Header Elements/Jerry_lobby_sprite.webp" alt="Profile Button"> </a>
+                </div>
+
+                <div class = "reply-textbox">
+                    <input type="text" id="reply-box" placeholder="Reply...">
+                </div>
+
+                <div class = "reply-word">
+                    <p>Reply</p>
+                </div>
+                
+           </div>
+    
         </div>
+
+
 
     </main>
 

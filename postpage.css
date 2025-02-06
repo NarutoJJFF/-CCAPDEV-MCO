@@ -308,6 +308,55 @@ main{
     width: 85%;
 }
 
+.reply{
+    display: grid;
+    grid-template-columns: 300px 1fr 300px;
+    grid-template-rows: auto 1fr;
+    grid-template-areas: 
+    "image replybar replybutton";
+}
+
+.reply-image{
+    grid-area: image;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    margin-top: 10px;
+    
+}
+
+.reply-image img{
+    object-fit:fill;
+    object-position: center center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50px;
+    margin-bottom: 8px ;
+    margin-right: 10px;
+    border-style: solid;
+    border-color: orangered;
+    border-width: 2px;
+}
+
+#reply-box{
+    grid-area: replybar;
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+    border: 2px solid orangered; 
+    border-radius: 5px; 
+}
+
+.reply-word{
+    grid-area:replybutton;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    margin-left: 30px;
+}
+
+
 /* FOOTER */
 
 .footer-content {
