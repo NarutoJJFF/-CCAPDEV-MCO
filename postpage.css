@@ -103,8 +103,6 @@ main{
 }
 
 
-/* POST AREA */
-
 .posts-section {
     padding: 15px;
     border-style: solid;
@@ -145,8 +143,8 @@ main{
 
 .posts-stats img {
     top: 12px;
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     margin-right: 10px; 
 }
 
@@ -200,9 +198,162 @@ main{
     padding: 3px 8px;
     background-color: lightgray;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 12px;
     line-height: 1;
     margin-left: 5px;
+}
+
+.posts-section strong {
+    font-size: 25px;
+}
+
+.paragraph {
+    margin-top: 10px;
+    color: #333;
+}
+
+.posts-stats img:hover{
+    cursor: pointer;
+}
+
+.posts-stats img:hover{
+    transform: scale(0.8);
+}
+
+.edit-post img:hover{
+    cursor: pointer;
+}
+
+.edit-post img:hover{
+    transform: scale(0.8);
+}
+
+.posts-icon img:hover{
+    cursor: pointer;
+}
+
+.posts-icon img:hover{
+    transform: scale(0.8);
+}
+
+/* COMMENT SECTION */
+
+.comment-section {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.comment {
+    padding: 15px;
+    border-style: solid;
+    border-radius: 10px;
+    border-width: 3px;
+    border-color: orangered;
+    margin-left: 40px;
+    margin-bottom: 20px; 
+
+}
+
+.comment-heading {
+    display: flex;
+    flex-direction: row;
+    line-height: 1rem;
+    margin-right: 20px;
+    align-items: center;
+     
+}
+
+.comment-heading img{
+    object-fit:fill;
+    object-position: center center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50px;
+    margin-bottom: 8px ;
+    margin-right: 10px;
+    border-style: solid;
+    border-color: orangered;
+    border-width: 2px;
+}
+
+.comment-body p{
+    margin-left: 20px;
+}
+
+
+.comment-reply {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+.comment-reply img{
+    top: 12px;
+    width: 25px;
+    height: 25px;
+    margin-right: 10px; 
+}
+
+.comment-reply p {
+    margin-right: 20px;
+}
+
+
+#text-box {
+    display: none; 
+    margin-top: 10px;
+    padding: 5px;
+    font-size: 16px;
+    margin: 10px;
+    width: 85%;
+}
+
+.reply{
+    display: grid;
+    grid-template-columns: 300px 1fr 300px;
+    grid-template-rows: auto 1fr;
+    grid-template-areas: 
+    "image replybar replybutton";
+}
+
+.reply-image{
+    grid-area: image;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    margin-top: 10px;
+    
+}
+
+.reply-image img{
+    object-fit:fill;
+    object-position: center center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50px;
+    margin-bottom: 8px ;
+    margin-right: 10px;
+    border-style: solid;
+    border-color: orangered;
+    border-width: 2px;
+}
+
+#reply-box{
+    grid-area: replybar;
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+    border: 2px solid orangered; 
+    border-radius: 5px; 
+}
+
+.reply-word{
+    grid-area:replybutton;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    margin-left: 30px;
 }
 
 
