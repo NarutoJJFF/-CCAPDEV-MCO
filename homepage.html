@@ -69,9 +69,9 @@
             </p>
             <hr class="hr-orange-smaller">
             <div class="posts-stats">
-                <img src="Header Elements/heart.png" alt="like">
+                <img id = "like" src="Header Elements/heart.png" alt="like" onclick = "changeImageLike()">
                 <p>14 Likes</p>
-                <img src="Header Elements/broken-heart.png" alt="dislike">
+                <img id = "dislike" src="Header Elements/broken-heart.png" alt="dislike" onclick = "changeImageDislike()">
                 <p>1 Dislike</p>
                 <a href="postpage.html"> <img src="Header Elements/comment.png" alt="comment"></a>
                 <p>3 Comments</p>
@@ -112,5 +112,7 @@
             </div>
         </div>
     </footer>
+
+    <script src="homepage.js"></script>
 </body>
 </html>
