@@ -1,0 +1,249 @@
+/* SIDE BAR */
+
+aside{
+    height: calc(100vh - 94.53px);
+    top: 94.53px;
+    position:sticky;
+    align-self: start;
+    grid-area: sidebar;
+    border-right: 1px solid black;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-titles{
+    margin-left:20px;
+    margin-top: 15px;
+    font-size: 20px;
+}
+
+.sidebar-populartags {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    margin-left: 35px; 
+    align-items: center; 
+    padding: 8px 12px;
+    cursor: pointer;
+    width: 200px; 
+}
+
+.sidebar-populartags:hover {
+    background-color: #d6d6d6;
+}
+
+.sidebar-tag {
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.sidebar-smaller {
+    font-size: 14px;
+    color: #555;
+    text-decoration: none;
+
+}
+
+aside a:link{
+    color:black;
+    text-decoration: none;
+
+}
+aside a:visited{
+    color:black;
+    text-decoration: none;
+
+}
+aside a:active {
+    color: black;
+    text-decoration: none;
+}
+
+
+/* MAIN */
+
+main{
+    grid-area: main;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 50px;
+    margin-right: 50px;
+    gap: 20px;
+}
+
+/* POST BAR */
+
+.post-bar {
+    display:grid;
+    grid-template-columns: 100px 1fr;
+    grid-template-areas: 
+    "image search";
+}
+
+.post-bar img {
+    grid-area: image;
+    object-fit:fill;
+    object-position: center center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    border-style: solid;
+    border-color: orangered;
+    border-width: 2px;
+    margin-right: 10px;
+    margin-left: 30px;
+    top: 7px;
+
+}
+
+.post-bar input {
+    grid-area: search;
+    width: 80%;
+    background-color: orangered;
+    padding: 8px 20px;
+    margin: 8px 0;
+    border-radius: 20px;
+    color: white;
+    font-family: "Poppins", serif;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 20px;
+    resize: none; 
+}
+
+
+/* POST AREA */
+
+.posts-section {
+    padding: 15px;
+    border-style: solid;
+    border-radius: 10px;
+    border-width: 5px;
+    border-color: orangered;
+}
+
+.posts-icon {
+    display: flex;
+    flex-direction: row;
+    line-height: 1rem;
+    margin-right: 20px;
+    align-items:center ;
+}
+
+.posts-icon img {
+    object-fit:fill;
+    object-position: center center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    margin-bottom: 8px ;
+    margin-right: 10px;
+    border-style: solid;
+    border-color: orangered;
+    border-width: 2px;
+}
+
+.posts-stats {
+    display: flex;
+    align-items: center;
+}
+
+.posts-stats p {
+    margin-right: 20px;
+}
+
+.posts-stats img {
+    top: 12px;
+    width: 25px;
+    height: 25px;
+    margin-right: 10px; 
+}
+
+.posts-edit {
+    display: flex;
+    flex-direction: row;
+    line-height: 0rem;
+    justify-content: space-between;
+    align-items: center ;
+}
+
+.edit-post {
+    display: flex;
+    flex-direction: row;
+    line-height: 0rem;
+    position: relative;
+    color: orangered;
+    align-items: center;
+}
+
+.edit-post img{
+    object-fit:fill;
+    object-position: center center;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.orange-text {
+    color: orangered !important;
+}
+
+.hr-orange {
+    border-color: orangered;
+    border-width: 5px;
+}
+
+.hr-orange-small {
+    border-color: orangered;
+    border-width: 2px;
+}
+
+.hr-orange-smaller {
+    border-color: orangered;
+    border-width: 1px;
+    margin: 10px 0;
+}
+
+.flair {
+    display: inline-block;
+    padding: 3px 8px;
+    background-color: lightgray;
+    border-radius: 5px;
+    font-size: 12px;
+    line-height: 1;
+    margin-left: 5px;
+}
+
+.posts-section strong {
+    font-size: 25px;
+}
+
+.paragraph {
+    margin-top: 10px;
+    color: #333;
+}
+
+.posts-stats img:hover{
+    cursor: pointer;
+}
+
+.posts-stats img:hover{
+    transform: scale(0.8);
+}
+
+.edit-post img:hover{
+    cursor: pointer;
+}
+
+.edit-post img:hover{
+    transform: scale(0.8);
+}
+
+.posts-icon img:hover{
+    cursor: pointer;
+}
+
+.posts-icon img:hover{
+    transform: scale(0.8);
+}

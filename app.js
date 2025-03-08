@@ -28,10 +28,8 @@ const postSchema = new mongoose.Schema({
     title: {type: String , required: true},
     accID: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},  //Subject to change depends on the user database
     content:{type: String , required: true},
-    votes: { 
-        upvotes: { type: Number, default: 0 }, 
-        downvotes: { type: Number, default: 0 }
-    }
+    upvotes: { type: Number, default: 0 }, 
+    downvotes: { type: Number, default: 0 }
 
   },{versionKey: false, timestamps: true});
 
@@ -42,10 +40,8 @@ const commentSchema = new mongoose.Schema({
     author: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, // Links to User
     content: { type: String, required: true },
     parentComment: { type: mongoose.Schema.Types.ObjectId, ref: 'Comment', default: null }, // For nested comments
-    votes: { 
-        upvotes: { type: Number, default: 0 }, 
-        downvotes: { type: Number, default: 0 }
-    }
+    upvotes: { type: Number, default: 0 }, 
+    downvotes: { type: Number, default: 0 }
 
 }, {versionKey: false, timestamps: true});
 
@@ -60,3 +56,7 @@ server.get('/', function(req, resp){
   });
 
 server.listen(3000, () => console.log('Server running on http://localhost:3000'));
+
+server.get('/', async function(req,resp)){
+
+}
