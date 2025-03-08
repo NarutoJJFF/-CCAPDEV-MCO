@@ -14,7 +14,13 @@ server.engine('hbs', handlebars.engine({
 server.use(express.static('public'));
 
 const mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://josh:dbjoshpassword@apdevmc.vfohc.mongodb.net/?retryWrites=true&w=majority&appName=APDEVMC');
+
+try{
+    mongoose.connect('mongodb+srv://josh:dbjoshpassword@apdevmc.vfohc.mongodb.net/?retryWrites=true&w=majority&appName=APDEVMC');
+    console.log("MongoDB connected")
+} catch(e){
+    console.log("Error MongoDB not connected")
+}
 
 
 const postSchema = new mongoose.Schema({
