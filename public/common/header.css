@@ -1,0 +1,99 @@
+*{
+    margin: 0;
+    padding: 0px;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    min-height: 100vh;
+    display:grid;
+    grid-template-columns: 300px 1fr;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas: 
+    "header header"
+    "sidebar main"
+    "footer footer";
+}
+
+/* HEADER */
+
+header{
+    top: 0;
+    position: sticky;
+    grid-area: header;
+    color: white;
+    background-color: orangered;
+    display: flex;  
+    padding: 10px 20px;     
+    justify-content: space-between;
+}
+
+/* LOGO HEADER */
+
+.header-logo{
+    display: flex;
+    align-items: center;
+    margin-left: 50px;
+    justify-content: flex-start;
+    gap:0 ;
+}
+
+.header-logo-img img{
+    width: 120px; 
+}
+
+.header-logo-word{
+    color: white;
+    font-size: 30px;
+}
+
+/* SEARCH BAR */
+
+.header-search{
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 20px;
+}
+
+.header-search input{
+    width: 80%;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+/* NAVIGATION*/
+
+.header-text{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    margin-right: 50px;
+}
+
+.header-text p{
+    margin: 0 10px;
+}
+
+header a:hover{
+    background-color: darkgray;
+    border-radius: 200px;
+}
+
+header a:link{
+    color:white;
+    text-decoration: none;
+
+}
+header a:visited{
+    color:white;
+    text-decoration: none;
+
+}
+header a:active {
+    color: white;
+    text-decoration: none;
+}
