@@ -134,53 +134,59 @@ nav {
 .posts-icon {
     display: flex;
     flex-direction: row;
-    line-height: 1rem;
-    margin-right: 20px;
+    align-items: center;  
+    margin-right: 20px;            
 }
 
 .posts-icon img {
-    object-fit: fill;
-    object-position: center center;
     width: 50px;
     height: 50px;
     border-radius: 50px;
-    margin-bottom: 8px;
-    margin-right: 10px;
-    border-style: solid;
-    border-color: orangered;
-    border-width: 2px;
+    border: 2px solid orangered;
+    margin-bottom: 0;      
+    margin-right: 0;       
+    object-fit: cover;
+    object-position: center;
+}
+
+.posts-icon p {
+    margin: 0;             
+    line-height: normal;
 }
 
 .posts-stats {
     display: flex;
+    align-items: center;  
+    gap: 10px;
 }
 
 .posts-stats p {
-    margin-right: 20px;
+    margin: 0;            
+    line-height: normal;
 }
 
 .posts-stats img {
-    position: relative;
-    top: 12px;
+    position: static;     
+    top: 0;               
+    margin: 0;
     width: 30px;
     height: 30px;
-    margin-right: 10px; 
 }
 
 .posts-edit {
     display: flex;
-    flex-direction: row;
-    line-height: 0rem;
+    align-items: center;   
     justify-content: space-between;
+    line-height: normal;   
 }
 
 .edit-post {
     display: flex;
-    flex-direction: row;
-    line-height: 0rem;
+    align-items: center;
     position: relative;
-    top: 10px;
+    top: 0;                
     color: orangered;
+    gap: 10px;             
 }
 
 .edit-post img {
@@ -189,6 +195,7 @@ nav {
     width: 30px;
     height: 30px;
     margin-right: 10px;
+    border: none;
 }
 
 /* Utility Classes */
@@ -256,6 +263,7 @@ nav {
     font-size: 12px;
     line-height: 1;
     margin-left: 5px;
+    vertical-align: middle;
 }
 
 /* Post Titles */
