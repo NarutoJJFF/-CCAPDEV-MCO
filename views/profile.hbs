@@ -11,9 +11,9 @@
                     <p><b>{{following}}</b> Following</p>
                 </div>
                 
-                    <h2 class="profile-edit">
-                        <a href="editprofile.html">Edit Profile</a>
-                    </h2>
+                <h2 class="profile-edit">
+                    <a href="editprofile.html">Edit Profile</a>
+                </h2>
                 
                 <hr class="hr-orange-small">
                 <h3>My Bio</h3>
@@ -31,8 +31,8 @@
                     <div class="posts-section">
                         <div class="posts-edit">
                             <div class="posts-icon">
-                            <img src="{{profileImg}}" alt="Profile Button">
-                            <p><b>@{{username}}</b></p> 
+                            <img src="{{../profileImg}}" alt="Profile Button">
+                            <p><b>@{{../username}}</b></p> 
                             </div>
                             <div class="edit-post">
                                 <a href = "editpost.html">
@@ -42,19 +42,19 @@
                             </div>
                         </div>
 
-                        <strong> {{title}} </strong>
-                        <span class="flair">{{tag}}</span>
+                        <strong> {{this.title}} </strong>
+                        <span class="flair">{{this.tag}}</span>
                         <p class ="paragraph">
-                            {{content}}
+                            {{this.content}}
                         </p>
                         <hr class="hr-orange-smaller">
                         <div class="posts-stats">
                             <img id = "like" src="Header Elements/heart.png" alt="like" onclick = "changeImageLike()">
-                            <p>{{upvotes}} Likes</p>
+                            <p>{{this.upvotes}} Likes</p>
                             <img id = "dislike" src="Header Elements/broken-heart.png" alt="dislike" onclick = "changeImageDislike()">
-                            <p>{{downvotes}} Dislike</p>
+                            <p>{{this.downvotes}} Dislike</p>
                             <a href="postpage.html"> <img src="Header Elements/comment.png" alt="comment"></a>
-                            <p>Comments</p>
+                            <p>{{this.comments}} Comments</p>
                         </div>
                     </div>
                 {{/each}}
@@ -67,11 +67,11 @@
                 <ul class="nopadding">
                     {{#each friends}}
                     <li class="friendslist">
-                        <a href="profile.html"><img src="{{profileImg}}" alt="@{{username}}"></a>
-                        <p>@{{username}}</p>
+                        <a href="profile.html"><img src="{{this.profileImg}}" alt="@{{this.username}}"></a>
+                        <p>@{{this.username}}</p>
                         <hr class="hr-orange-small">    
                     </li>
-                {{/each}}
+                    {{/each}}
                 </ul>
             </div>
         </div>
@@ -86,5 +86,4 @@
     </main>
 
     <script src="profile.js"></script>
-    
 </body>

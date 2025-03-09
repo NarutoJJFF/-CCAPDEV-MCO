@@ -1,5 +1,7 @@
 const express = require('express');
 const server = express();
+const fs = require('fs');
+const path = require('path')
 
 const bodyParser = require('body-parser');
 server.use(express.json()); 
@@ -62,7 +64,15 @@ server.get('/profile/:username', (req, res) => {
           return res.status(404).send('User not found');
       }
       
-      res.render('profile', { user: profileData });
+      res.render('profile', { 
+          profileImg: profileData.profileImg,
+          username: profileData.username,
+          bio: profileData.bio,
+          followers: profileData.followers,
+          following: profileData.following,
+          posts: profileData.posts,
+          friends: profileData.friends
+      });
   });
 });
 
