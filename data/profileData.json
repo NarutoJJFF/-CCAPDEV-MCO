@@ -1,0 +1,71 @@
+{
+  "username": "anonymouse",
+  "profileImg": "Header Elements/Jerry_lobby_sprite.webp",
+  "bio": "Hi! I am anonymouse. You will never know my name but my rival is \"@anonycat\" a.k.a Tom the Cat!",
+  "followers": 12,
+  "following": 19,
+  "posts": [
+    {
+      "title": "AITA For being faster",
+      "tag": "Tom the Cat",
+      "content": "Tom the Cat is my rival. He is always trying to catch me but I always outsmart him.",
+      "upvotes": 14,
+      "downvotes": 1,
+      "comments": 3
+    },
+    {
+      "title": "Fastest Mouse in the West!",
+      "tag": "Tom the Cat",
+      "content": "I outsmarted Tom the Cat again! I am the best mouse in the world!",
+      "upvotes": 5,
+      "downvotes": 1,
+      "comments": 6
+    },
+    {
+      "title": "Yay! Cheese!",
+      "tag": "Cheese",
+      "content": "Today I found a piece of cheese! It was the best day of my life!",
+      "upvotes": 7,
+      "downvotes": 1,
+      "comments": 1
+    },
+    {
+      "title": "Mouse's Best Friend!",
+      "tag": "Spike the Dog",
+      "content": "Spike the Dog is my friend. He always helps me out when Tom the Cat is around.",
+      "upvotes": 13,
+      "downvotes": 1,
+      "comments": 5
+    },
+    {
+      "title": "Cheese is the Best!",
+      "tag": "Cheese",
+      "content": "Cheese is my favorite food! I love it so much!",
+      "upvotes": 9,
+      "downvotes": 1,
+      "comments": 4
+    },
+    {
+      "title": "Stoopid Hooman!",
+      "tag": "Tom the Cat",
+      "content": "Tom's owner is always trying to catch me! I always outsmart him though!",
+      "upvotes": 17,
+      "downvotes": 1,
+      "comments": 3
+    }
+  ],
+  "friends": [
+    {
+      "username": "anonycat",
+      "profileImg": "Header Elements/tom the cat.jpg"
+    },
+    {
+      "username": "anonydog",
+      "profileImg": "Header Elements/spike.jpg"
+    },
+    {
+      "username": "anonymuscle",
+      "profileImg": "Header Elements/musclemouse.webp"
+    }
+  ]
+}

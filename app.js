@@ -47,6 +47,7 @@ const commentSchema = new mongoose.Schema({
 
 const Comment = mongoose.model('Comment', commentSchema);
 
+server.use('/profile', require('./profile'));
 
 server.get('/', async function (req, resp) {
   try {
