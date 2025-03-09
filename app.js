@@ -85,6 +85,11 @@ server.get('/profile/:username', (req, res) => {
   });
 });
 
+
+server.post ('/search', async function (req,resp)){
+  
+}
+
 server.get('/homepage-page', async function (req, resp) {
   try {
     let postResult = await Post.find({}).populate("accID", "username"); 
