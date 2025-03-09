@@ -36,7 +36,7 @@ const User = mongoose.model('User', userSchema);
 const postSchema = new mongoose.Schema({
     tag: { type: String , required: true},
     title: {type: String , required: true},
-    accID: {type: mongoose.Schema.Types.ObjectId, ref: 'users', required: true},  //Subject to change depends on the user database
+    accID: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},  //Subject to change depends on the user database
     content:{type: String , required: true},
     upvotes: { type: Number, default: 0 }, 
     downvotes: { type: Number, default: 0 }
@@ -87,7 +87,7 @@ server.get('/profile/:username', (req, res) => {
 
 server.get('/homepage-page', async function (req, resp) {
   try {
-    let postResult = await Post.find({});
+    let postResult = await Post.find({}).populate("accID", "username"); 
     const plainPosts = postResult.map(post => post.toObject());
     console.log("W", postResult);
     resp.render('homepage', { 
@@ -148,11 +148,7 @@ server.post('/login', async function(req, resp) {
   if(login != undefined && login._id != null){
     let postResult = await Post.find({}); 
     const plainPosts = postResult.map(post => post.toObject());
-    resp.render('homepage', { 
-      layout: 'homepageLayout',
-      title: 'Home page',
-      posts: plainPosts, 
-    });
+    resp.redirect('/homepage-page');
   }else{
     resp.render('login',{
       layout: 'loginRegisterLayout',
