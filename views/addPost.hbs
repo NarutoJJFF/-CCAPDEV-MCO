@@ -1,17 +1,16 @@
 {{> header}}
 
-
 <body>
     <div class="posting-area">
         <h1>Create Post</h1>
-        <form action="/homepage.html">
-            <label for="title"></label>
-            <input type="text" id="title" name="title" placeholder="title"><br>
-            <label for="post_area"></label>
-            <textarea rows ="10" cols = "50" id="post_area" name="post_area" placeholder="What's on your mind?"></textarea><br>
-            <label for="tags"></label>
-            <input type="text" id="tags" name="tags" placeholder="tag"><br>
-            <input type="submit" value="Post"></form><br>
+        <form action="/add-post" method="post">
+            <input type="text" id="title" name="title" placeholder="Title" required><br>
+
+            <textarea rows="10" cols="50" id="post_area" name="content" placeholder="What's on your mind?" required></textarea><br>
+
+            <input type="text" id="tags" name="tag" placeholder="Tag"><br>
+
+            <input type="submit" value="Post">
         </form>
     </div>
 </body>

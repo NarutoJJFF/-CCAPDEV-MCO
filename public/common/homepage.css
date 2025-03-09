@@ -124,6 +124,10 @@ main{
     resize: none; 
 }
 
+.post-bar ::placeholder{
+    color: black;
+}
+
 
 /* POST AREA */
 
