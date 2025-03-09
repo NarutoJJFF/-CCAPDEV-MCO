@@ -48,7 +48,7 @@ const commentSchema = new mongoose.Schema({
 const Comment = mongoose.model('Comment', commentSchema);
 
 
-server.get('/', function(req, resp){
+server.get('/', async function(req, resp){
     resp.render('homepage',{
       layout: 'homepageLayout',
       title: 'Home page'
@@ -56,7 +56,3 @@ server.get('/', function(req, resp){
   });
 
 server.listen(3000, () => console.log('Server running on http://localhost:3000'));
-
-server.get('/', async function(req,resp)){
-
-}
