@@ -58,18 +58,18 @@
                     </div>
                 </div>
                 
-                <strong>{{title}}</strong>
-                <span class="flair">{{tag}}</span> 
+                <strong>{{this.title}}</strong>
+                <span class="flair">{{this.tag}}</span> 
                 <p class="paragraph">
-                    {{content}}
+                    {{this.content}}
                 </p>
                 <hr class="hr-orange-smaller">
                 
                 <div class="posts-stats">
                     <img id="like" src="Header Elements/heart.png" alt="like" onclick="changeImageLike()">
-                    <p>{{upvotes}} Likes</p>
+                    <p>{{this.upvotes}} Likes</p>
                     <img id="dislike" src="Header Elements/broken-heart.png" alt="dislike" onclick="changeImageDislike()">
-                    <p>{{downvotes}} Dislikes</p>
+                    <p>{{this.downvotes}} Dislikes</p>
                     <a href="postpage.html">
                         <img src="Header Elements/comment.png" alt="comment">
                     </a>

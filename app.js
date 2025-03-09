@@ -51,11 +51,12 @@ const Comment = mongoose.model('Comment', commentSchema);
 server.get('/', async function (req, resp) {
   try {
     let postResult = await Post.find({}); 
-    console.log("W", postResult)
+    const plainPosts = postResult.map(post => post.toObject());
+    //console.log("W", postResult)
     resp.render('homepage', { 
       layout: 'homepageLayout',
       title: 'Home page',
-      posts: postResult, 
+      posts: plainPosts, 
     });
   } catch (err) {
     console.error("Database Error:", err);
