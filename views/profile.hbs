@@ -1,0 +1,90 @@
+{{> header}}
+
+<body>
+    <main>
+        <div class="main-content">
+            <div class="column-left">
+                <img src="{{profileImg}}" alt="Profile Picture">
+                <h1 class="nomargin">@{{username}}</h1>
+                <div class="profile-stats">
+                    <p><b>{{followers}}</b> Followers</p>
+                    <p><b>{{following}}</b> Following</p>
+                </div>
+                
+                    <h2 class="profile-edit">
+                        <a href="editprofile.html">Edit Profile</a>
+                    </h2>
+                
+                <hr class="hr-orange-small">
+                <h3>My Bio</h3>
+                <p>{{bio}}</p>
+            </div> 
+
+            <div class="column-center">
+                <div class="post-bar">
+                    <img src="Header Elements/Jerry_lobby_sprite.webp" alt="Profile Button">
+                    <textarea name="Search" id="" placeholder="Create a Post!"></textarea>
+                </div>
+                <br>
+                <div class="scrollable">
+                {{#each posts}}
+                    <div class="posts-section">
+                        <div class="posts-edit">
+                            <div class="posts-icon">
+                            <img src="{{profileImg}}" alt="Profile Button">
+                            <p><b>@{{username}}</b></p> 
+                            </div>
+                            <div class="edit-post">
+                                <a href = "editpost.html">
+                                    <img src="Header Elements/pencil-square-svgrepo-com.png" alt="Pencil">
+                                </a>
+                                <p>Edit Post</p>
+                            </div>
+                        </div>
+
+                        <strong> {{title}} </strong>
+                        <span class="flair">{{tag}}</span>
+                        <p class ="paragraph">
+                            {{content}}
+                        </p>
+                        <hr class="hr-orange-smaller">
+                        <div class="posts-stats">
+                            <img id = "like" src="Header Elements/heart.png" alt="like" onclick = "changeImageLike()">
+                            <p>{{upvotes}} Likes</p>
+                            <img id = "dislike" src="Header Elements/broken-heart.png" alt="dislike" onclick = "changeImageDislike()">
+                            <p>{{downvotes}} Dislike</p>
+                            <a href="postpage.html"> <img src="Header Elements/comment.png" alt="comment"></a>
+                            <p>Comments</p>
+                        </div>
+                    </div>
+                {{/each}}
+                </div> 
+            </div>
+
+            <div class="column-right">
+                <h1 class="orange-text nomargin">Friends</h1>
+                <hr class="hr-orange">
+                <ul class="nopadding">
+                    {{#each friends}}
+                    <li class="friendslist">
+                        <a href="profile.html"><img src="{{profileImg}}" alt="@{{username}}"></a>
+                        <p>@{{username}}</p>
+                        <hr class="hr-orange-small">    
+                    </li>
+                {{/each}}
+                </ul>
+            </div>
+        </div>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-left">
+                    <p>Redesign 2025</p>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <script src="profile.js"></script>
+    
+</body>
