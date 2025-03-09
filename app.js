@@ -56,3 +56,35 @@ server.get('/', async function(req, resp){
   });
 
 server.listen(3000, () => console.log('Server running on http://localhost:3000'));
+
+
+server.get('/add-post-page', async function(req,resp){
+  resp.render('addPost',{
+    layout: 'addPostLayout',
+    title: 'Add Post page'
+  });
+});
+
+server.post('/add-post', async function(req, resp) {
+  try {
+    const newPost = new Post({
+      tag: req.body.tag,
+      title: req.body.title,
+      //accID: req.body.accID,
+      content: req.body.content
+    });
+
+    await newPost.save();
+    console.log('Post created successfully');
+
+    resp.redirect('/');
+    
+  } catch (error) {
+    console.error('Error creating post:', error);
+    resp.status(500).render('addPost', {
+      layout: 'addPostLayout',
+      title: 'Add Post',
+      msg: 'Error creating post. Please try again.'
+    });
+  }
+});
