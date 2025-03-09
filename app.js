@@ -47,7 +47,24 @@ const commentSchema = new mongoose.Schema({
 
 const Comment = mongoose.model('Comment', commentSchema);
 
-server.use('/profile', require('./profile'));
+server.get('/profile/:username', (req, res) => {
+  const username = req.params.username;
+  const dataPath = path.join(__dirname, 'data/profileData.json');
+  
+  fs.readFile(dataPath, 'utf8', (err, data) => {
+      if (err) {
+          return res.status(500).send('Server error');
+      }
+      
+      const profileData = JSON.parse(data);
+      
+      if (profileData.username !== username) {
+          return res.status(404).send('User not found');
+      }
+      
+      res.render('profile', { user: profileData });
+  });
+});
 
 server.get('/', async function (req, resp) {
   try {

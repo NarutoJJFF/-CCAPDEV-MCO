@@ -19,28 +19,3 @@ function changeImageDislike(){
     }
 }
 
-const express = require('express');
-const router = express.Router();
-const fs = require('fs');
-const path = require('path');
-
-router.get('/:username', (req, res) => {
-    const username = req.params.username;
-    const dataPath = path.join(__dirname, 'data/profileData.json');
-    
-    fs.readFile(dataPath, 'utf8', (err, data) => {
-        if (err) {
-            return res.status(500).send('Server error');
-        }
-        
-        const profileData = JSON.parse(data);
-        
-        if (profileData.username !== username) {
-            return res.status(404).send('User not found');
-        }
-        
-        res.render('profile', { user: profileData });
-    });
-});
-
-module.exports = router;
