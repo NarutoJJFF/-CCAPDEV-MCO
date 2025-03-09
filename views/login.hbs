@@ -1,0 +1,29 @@
+{{> header}}
+
+<body>
+    <div class="input-area">
+        <h1>Login Page</h1>
+        <form action="/login" method="post">
+            <label for="username"></label>
+            <input type="text" id="username" name="username" placeholder="Type your Username..."><br>
+            <label for="password"></label>
+            <input type="password" id="password" name="password" placeholder="Type your password..."><br>
+            <input type="checkbox" name="remember" value="remember"/> Remember me <br>
+            <input type="submit" value="Submit"><br>
+            <a href="/register-page">No Account!? Sign Up Here!</a>
+        </form>
+        <form action="/" method="get">
+            or<br>
+            <input type="submit" value="Browse as guest">
+        </form>
+    </div>
+
+    {{#if failed}}
+
+    <script>
+        alert("Login details invalid. Please try again!")
+    </script>
+
+    {{/if}}
+
+</body>

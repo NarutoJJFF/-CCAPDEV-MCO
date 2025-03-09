@@ -1,0 +1,36 @@
+{{> header}}
+
+<body>
+    <div class="input-area">
+        <h1>Registration Page</h1>
+        <form action="/register" method="post">
+            <label for="username"></label>
+            <input type="text" id="username" name="username" placeholder="Type your Username..."><br><br>
+            <label for="password"></label>
+            <input type="password" id="password" name="password" placeholder="Type your password..."><br><br>
+            <label for="conf_password"></label>
+            <input type="password" id="conf_password" name="conf_password" placeholder="Confirm your password..."><br><br>
+            <input type="submit" value="Submit"></form><br>
+        </form>
+    </div>
+
+    {{#if passw_error}}
+
+    <script>
+        alert("Error: Passwords must match!")
+    </script>
+
+    {{else if uname_taken}}
+
+    <script>
+        alert("Error: Username is taken!")
+    </script>
+
+    {{else if db_error}}
+
+    <script>
+        alert("Error creating account. Please try again.")
+    </script>
+
+    {{/if}}
+</body>
