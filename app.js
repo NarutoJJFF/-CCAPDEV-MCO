@@ -48,12 +48,20 @@ const commentSchema = new mongoose.Schema({
 const Comment = mongoose.model('Comment', commentSchema);
 
 
-server.get('/', async function(req, resp){
-    resp.render('homepage',{
+server.get('/', async function (req, resp) {
+  try {
+    let postResult = await Post.find({}); 
+    console.log("W", postResult)
+    resp.render('homepage', { 
       layout: 'homepageLayout',
-      title: 'Home page'
+      title: 'Home page',
+      posts: postResult, 
     });
-  });
+  } catch (err) {
+    console.error("Database Error:", err);
+    resp.status(500).send("Internal Server Error");
+  }
+});
 
 server.listen(3000, () => console.log('Server running on http://localhost:3000'));
 
