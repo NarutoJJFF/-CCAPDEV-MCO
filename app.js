@@ -73,7 +73,7 @@ server.get('/profile/:username', (req, res) => {
       }
       
       res.render('profile', { 
-          layout: 'homepageLayout',
+          layout: 'profileLayout',
           profileImg: profileData.profileImg,
           username: profileData.username,
           bio: profileData.bio,
