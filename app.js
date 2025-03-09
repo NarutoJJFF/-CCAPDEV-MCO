@@ -36,7 +36,7 @@ const User = mongoose.model('User', userSchema);
 const postSchema = new mongoose.Schema({
     tag: { type: String , required: true},
     title: {type: String , required: true},
-    //accID: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},  //Subject to change depends on the user database
+    accID: {type: mongoose.Schema.Types.ObjectId, ref: 'users', required: true},  //Subject to change depends on the user database
     content:{type: String , required: true},
     upvotes: { type: Number, default: 0 }, 
     downvotes: { type: Number, default: 0 }
@@ -47,7 +47,7 @@ const Post = mongoose.model('Post', postSchema);
 
 const commentSchema = new mongoose.Schema({
     postId: { type: mongoose.Schema.Types.ObjectId, ref: 'Post', required: true }, // Links to Post
-    author: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, // Links to User
+    author: { type: mongoose.Schema.Types.ObjectId, ref: 'users', required: true }, // Links to User
     content: { type: String, required: true },
     parentComment: { type: mongoose.Schema.Types.ObjectId, ref: 'Comment', default: null }, // For nested comments
     upvotes: { type: Number, default: 0 }, 
@@ -73,7 +73,7 @@ server.get('/profile/:username', (req, res) => {
       }
       
       res.render('profile', { 
-          layout: 'homepageLayout',
+          layout: 'profileLayout',
           profileImg: profileData.profileImg,
           username: profileData.username,
           bio: profileData.bio,
@@ -85,11 +85,11 @@ server.get('/profile/:username', (req, res) => {
   });
 });
 
-server.get('/', async function (req, resp) {
+server.get('/homepage-page', async function (req, resp) {
   try {
-    let postResult = await Post.find({}); 
+    let postResult = await Post.find({});
     const plainPosts = postResult.map(post => post.toObject());
-    //console.log("W", postResult)
+    console.log("W", postResult);
     resp.render('homepage', { 
       layout: 'homepageLayout',
       title: 'Home page',
@@ -132,7 +132,7 @@ server.post('/add-post', async function(req, resp) {
   }
 });
 
-server.get('/login-page', async function(req,resp){
+server.get('/', async function(req,resp){
   resp.render('login',{
     layout: 'loginRegisterLayout',
     title: 'Login Page',

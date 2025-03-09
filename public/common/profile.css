@@ -1,0 +1,360 @@
+body {
+    margin: 0px;
+    font-family: "Poppins", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+h1 {
+    font-family: "Poppins", serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+nav {
+    background-color: coral;
+    height: 20px; 
+}
+
+/* Main Content Column Setup */
+.main-content {
+    display: flex;
+}
+
+.column-left {
+    flex: 1;
+    padding: 20px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+}
+
+.column-left img {
+    object-fit: cover;
+    object-position: center center;
+    width: 400px;
+    height: 400px;
+    border-radius: 10px;
+    border-width: 5px;
+    border-color: orangered;
+    border-style: solid;
+}
+
+.column-center {
+    flex: 2;
+    padding: 20px;
+}
+
+.column-right {
+    flex: 1; 
+    padding: 20px; 
+}
+
+/* Middle Main Content - POST BAR */
+.post-bar {
+    display: flex;
+    flex-direction: row;
+    line-height: 0rem;
+}
+
+.post-bar img {
+    object-fit: fill;
+    object-position: center center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    border-style: solid;
+    border-color: orangered;
+    border-width: 2px;
+    margin-right: 10px;
+    position: relative;
+    top: 7px;
+}
+
+.post-bar textarea {
+    width: 78%;
+    background-color: orangered;
+    padding: 5px 20px;
+    margin: 8px 0;
+    border-radius: 20px;
+    color: white;
+    font-family: "Poppins", serif;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 20px;
+    resize: none; 
+}
+
+::placeholder {
+    color: rgb(255, 255, 255);
+    opacity: 1;
+    font-family: "Poppins", serif;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 2.5rem;
+}
+
+/* Profile Stats */
+.profile-stats {
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    margin: 10px auto;
+    text-align: center;
+}
+
+.profile-stats p {
+    margin-right: 20px;
+}
+
+/* Edit Profile */
+.profile-edit {
+    background-color: orangered;
+    border-radius: 50px;
+    width: 50%;
+    justify-self: center;
+    margin: 10px auto;
+    text-align: center;
+}
+
+.profile-edit a {
+    color: white;
+    text-decoration: none;
+}
+
+/* POSTS */
+.posts-section {
+    padding: 15px;
+    border-style: solid;
+    border-radius: 10px;
+    border-width: 5px;
+    border-color: orangered;
+}
+
+.posts-icon {
+    display: flex;
+    flex-direction: row;
+    align-items: center;  
+    margin-right: 20px;            
+}
+
+.posts-icon img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    border: 2px solid orangered;
+    margin-bottom: 0;      
+    margin-right: 0;       
+    object-fit: cover;
+    object-position: center;
+}
+
+.posts-icon p {
+    margin: 0;             
+    line-height: normal;
+}
+
+.posts-stats {
+    display: flex;
+    align-items: center;  
+    gap: 10px;
+}
+
+.posts-stats p {
+    margin: 0;            
+    line-height: normal;
+}
+
+.posts-stats img {
+    position: static;     
+    top: 0;               
+    margin: 0;
+    width: 30px;
+    height: 30px;
+}
+
+.posts-edit {
+    display: flex;
+    align-items: center;   
+    justify-content: space-between;
+    line-height: normal;   
+}
+
+.edit-post {
+    display: flex;
+    align-items: center;
+    position: relative;
+    top: 0;                
+    color: orangered;
+    gap: 10px;             
+}
+
+.edit-post img {
+    object-fit: fill;
+    object-position: center center;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    border: none;
+}
+
+/* Utility Classes */
+.orange-text {
+    color: orangered !important;
+}
+
+.nomargin {
+    margin: 0px !important;
+}
+
+.nopadding {
+    padding: 0px !important;
+}
+
+/* Friends List */
+.friendslist {
+    display: flex;
+    flex-direction: row;
+    line-height: 1rem;
+}
+
+.friendslist hr {
+    margin-right: 0px;
+    margin-left: auto;
+}
+
+.friendslist ul {
+    list-style-type: none !important;
+    padding: 0px !important;
+    margin: 0px !important;   
+}
+
+.friendslist img {
+    object-fit: fill;
+    object-position: center center;
+    width: 50px;
+    height: 50px;
+    margin-right: 20px;
+    border-radius: 50px;    
+}
+
+/* Horizontal Rules */
+.hr-orange {
+    border-color: orangered;
+    border-width: 5px;
+}
+
+.hr-orange-small {
+    border-color: orangered;
+    border-width: 2px;
+}
+
+.hr-orange-smaller {
+    border-color: orangered;
+    border-width: 1px;
+}
+
+/* Flair */
+.flair {
+    display: inline-block;
+    padding: 3px 8px;
+    background-color: lightgray;
+    border-radius: 5px;
+    font-size: 12px;
+    line-height: 1;
+    margin-left: 5px;
+    vertical-align: middle;
+}
+
+/* Post Titles */
+.posts-section strong {
+    font-size: 25px;
+}
+
+/* Hover Effects */
+.posts-stats img:hover {
+    cursor: pointer;
+    transform: scale(0.8);
+}
+
+.edit-post img:hover {
+    cursor: pointer;
+    transform: scale(0.8);
+}
+
+.posts-icon img:hover {
+    cursor: pointer;
+    transform: scale(0.8);
+}
+
+/* SCROLL */
+.scrollable {
+    height: 100vh; 
+    overflow-y: auto;
+}
+
+/* Scroll Bar Customization */
+:root {
+    --code-color: darkred;
+    --code-bg-color: rgba(169, 55, 14, 0.482);
+    --code-font-size: 14px;
+    --code-line-height: 1.4;
+    --scroll-bar-color: orangered;
+    --scroll-bar-bg-color: rgba(169, 55, 14, 0.482);
+}
+
+pre {
+    color: var(--code-color);
+    font-size: var(--code-font-size);
+    line-height: var(--code-line-height);
+    background-color: var(--code-bg-color);
+}
+
+.code-block {
+    max-height: 100px;
+    overflow: auto;
+    padding: 8px 7px 5px 15px;
+    margin: 0;
+    border-radius: 50px;
+}
+
+::-webkit-scrollbar-corner {
+    background: rgba(0,0,0,0.5);
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scroll-bar-color) var(--scroll-bar-bg-color);
+}
+
+*::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+*::-webkit-scrollbar-track {
+    background: var(--scroll-bar-bg-color);
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: var(--scroll-bar-color);
+    border-radius: 20px;
+    border: 3px solid var(--scroll-bar-bg-color);
+}
+
+/* FOOTER */
+.footer-content {
+    display: flex;
+    background-color: orangered;
+    color: white;
+    justify-content: center;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    padding-right: 2vh;
+    padding-left: 2vh;
+}
+
+.footer-content p {
+    margin: 5px;
+}
