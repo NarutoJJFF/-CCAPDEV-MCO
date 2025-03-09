@@ -22,7 +22,7 @@
 
             <div class="column-center">
                 <div class="post-bar">
-                    <img src="public/header-elements/Jerry_lobby_sprite.webp" alt="Profile Button">
+                    <img src="/header-elements/Jerry_lobby_sprite.webp" alt="Profile Button">
                     <textarea name="Search" id="" placeholder="Create a Post!"></textarea>
                 </div>
                 <br>
@@ -31,12 +31,12 @@
                     <div class="posts-section">
                         <div class="posts-edit">
                             <div class="posts-icon">
-                            <img src="/{{profileImg}}" alt="Profile Button">
+                            <img src="/{{../profileImg}}" alt="Profile Button">
                             <p><b>@{{../username}}</b></p> 
                             </div>
                             <div class="edit-post">
                                 <a href = "editpost.html">
-                                    <img src="public/header-elements/pencil-square-svgrepo-com.png" alt="Pencil">
+                                    <img src="/header-elements/pencil-square-svgrepo-com.png" alt="Pencil">
                                 </a>
                                 <p>Edit Post</p>
                             </div>
@@ -49,11 +49,11 @@
                         </p>
                         <hr class="hr-orange-smaller">
                         <div class="posts-stats">
-                            <img id = "like" src="public/header-elements/heart.png" alt="like" onclick = "changeImageLike()">
+                            <img id = "like" src="/header-elements/heart.png" alt="like" onclick = "changeImageLike()">
                             <p>{{this.upvotes}} Likes</p>
-                            <img id = "dislike" src="public/header-elements/broken-heart.png" alt="dislike" onclick = "changeImageDislike()">
+                            <img id = "dislike" src="/header-elements/broken-heart.png" alt="dislike" onclick = "changeImageDislike()">
                             <p>{{this.downvotes}} Dislike</p>
-                            <a href="postpage.html"> <img src="public/header-elements/comment.png" alt="comment"></a>
+                            <a href="postpage.html"> <img src="/header-elements/comment.png" alt="comment"></a>
                             <p>{{this.comments}} Comments</p>
                         </div>
                     </div>

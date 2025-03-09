@@ -1,0 +1,36 @@
+{{>header}}
+
+<body>
+    <div class="column-left">
+        <img id="profilePicture" src="{{profileImg}}" alt="Profile Picture">
+        <br>
+        <a href="#" onclick="document.getElementById('fileInput').click(); return false;">Change Profile Picture</a>
+        <input type="file" id="fileInput" style="display: none;" accept="image/*" onchange="previewImage(event)">
+        
+        <hr class="hr-orange-small">
+        <h3>Edit Username</h3>
+        <form action="/action_page.php">
+            <label for="username"></label>
+            <input type="text" id="username" name="username" placeholder="@{{username}}"><br><br>
+            <input type="submit" value="Submit"><br>
+        </form>
+        
+        <hr class="hr-orange-small">
+        <h3>Edit Bio</h3>     
+        <form action="/action_page.php">
+            <label for="bio"></label>
+            <input type="text" id="bio" name="bio" placeholder="{{bio}}"><br><br>
+            <input type="submit" value="Submit"><br>
+        </form>
+    </div> 
+    <script>
+        function previewImage(event) {
+            var reader = new FileReader();
+            reader.onload = function(){
+                var imgElement = document.getElementById('profilePicture');
+                imgElement.src = reader.result;
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+</body>
