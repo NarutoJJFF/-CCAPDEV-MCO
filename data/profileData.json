@@ -1,6 +1,6 @@
 {
   "username": "anonymouse",
-  "profileImg": "Header Elements/Jerry_lobby_sprite.webp",
+  "profileImg": "header-elements/Jerry_lobby_sprite.webp",
   "bio": "Hi! I am anonymouse. You will never know my name but my rival is \"@anonycat\" a.k.a Tom the Cat!",
   "followers": 12,
   "following": 19,
@@ -57,15 +57,15 @@
   "friends": [
     {
       "username": "anonycat",
-      "profileImg": "Header Elements/tom the cat.jpg"
+      "profileImg": "header-elements/tom the cat.jpg"
     },
     {
       "username": "anonydog",
-      "profileImg": "Header Elements/spike.jpg"
+      "profileImg": "header-elements/spike.jpg"
     },
     {
       "username": "anonymuscle",
-      "profileImg": "Header Elements/musclemouse.webp"
+      "profileImg": "header-elements/musclemouse.webp"
     }
   ]
 }

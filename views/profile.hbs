@@ -4,7 +4,7 @@
     <main>
         <div class="main-content">
             <div class="column-left">
-                <img src="{{profileImg}}" alt="Profile Picture">
+                <img src="/{{profileImg}}" alt="Profile Picture">
                 <h1 class="nomargin">@{{username}}</h1>
                 <div class="profile-stats">
                     <p><b>{{followers}}</b> Followers</p>
@@ -22,7 +22,7 @@
 
             <div class="column-center">
                 <div class="post-bar">
-                    <img src="Header Elements/Jerry_lobby_sprite.webp" alt="Profile Button">
+                    <img src="public/header-elements/Jerry_lobby_sprite.webp" alt="Profile Button">
                     <textarea name="Search" id="" placeholder="Create a Post!"></textarea>
                 </div>
                 <br>
@@ -31,12 +31,12 @@
                     <div class="posts-section">
                         <div class="posts-edit">
                             <div class="posts-icon">
-                            <img src="{{../profileImg}}" alt="Profile Button">
+                            <img src="/{{profileImg}}" alt="Profile Button">
                             <p><b>@{{../username}}</b></p> 
                             </div>
                             <div class="edit-post">
                                 <a href = "editpost.html">
-                                    <img src="Header Elements/pencil-square-svgrepo-com.png" alt="Pencil">
+                                    <img src="public/header-elements/pencil-square-svgrepo-com.png" alt="Pencil">
                                 </a>
                                 <p>Edit Post</p>
                             </div>
@@ -49,11 +49,11 @@
                         </p>
                         <hr class="hr-orange-smaller">
                         <div class="posts-stats">
-                            <img id = "like" src="Header Elements/heart.png" alt="like" onclick = "changeImageLike()">
+                            <img id = "like" src="public/header-elements/heart.png" alt="like" onclick = "changeImageLike()">
                             <p>{{this.upvotes}} Likes</p>
-                            <img id = "dislike" src="Header Elements/broken-heart.png" alt="dislike" onclick = "changeImageDislike()">
+                            <img id = "dislike" src="public/header-elements/broken-heart.png" alt="dislike" onclick = "changeImageDislike()">
                             <p>{{this.downvotes}} Dislike</p>
-                            <a href="postpage.html"> <img src="Header Elements/comment.png" alt="comment"></a>
+                            <a href="postpage.html"> <img src="public/header-elements/comment.png" alt="comment"></a>
                             <p>{{this.comments}} Comments</p>
                         </div>
                     </div>
@@ -67,7 +67,7 @@
                 <ul class="nopadding">
                     {{#each friends}}
                     <li class="friendslist">
-                        <a href="profile.html"><img src="{{this.profileImg}}" alt="@{{this.username}}"></a>
+                        <a href="profile.html"><img src="/{{this.profileImg}}" alt="@{{this.username}}"></a>
                         <p>@{{this.username}}</p>
                         <hr class="hr-orange-small">    
                     </li>
