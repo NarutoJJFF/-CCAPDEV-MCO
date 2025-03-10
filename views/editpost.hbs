@@ -3,14 +3,14 @@
 <body>
     <div class="posting-area">
         <h1>Edit Post</h1>
-        <form action="/homepage.html">
+        <form action="/profile/{{username}}/edit/{{post._id}}" method="POST">
             <label for="title">Title</label><br>
-            <textarea type="text" id="title" name="title" placeholder="Title">{{title}}</textarea><br>
+            <textarea type="text" id="title" name="title" placeholder="Title">{{post.title}}</textarea><br>
             <label for="post_area">Post Text</label><br>
-            <textarea rows ="13" cols = "50" id="post_area" name="post_area" placeholder="What would you like to change?">{{content}}</textarea><br>
+            <textarea rows="13" cols="50" id="post_area" name="content" placeholder="What would you like to change?">{{post.content}}</textarea><br>
             <label for="tags">Tags</label><br>
-            <textarea rows ="5" cols = "50" id="tags" name="tags" placeholder="Tags">#{{tag}}</textarea><br>
-            <input type="submit" value="Post"></form><br>
+            <textarea rows="5" cols="50" id="tags" name="tag" placeholder="Tags">{{post.tag}}</textarea><br>
+            <input type="submit" value="Save Changes">
         </form>
     </div>
 </body>

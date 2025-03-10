@@ -112,6 +112,93 @@ server.get('/profile', async function (req, res) {
   }
 });
 
+// Profile Page
+server.get('/profile/:username', async function (req, res) {
+  try {
+    const username = req.params.username;
+    const userDoc = await User.findOne({ username: username });
+    if (!userDoc) {
+      return res.status(404).send('User not found');
+    }
+
+    const followerCount = await Follow.countDocuments({ followed: userDoc._id });
+    const followingCount = await Follow.countDocuments({ follower: userDoc._id });
+
+    const userPosts = await Post.find({ accID: userDoc._id });
+
+    for (let post of userPosts) {
+      const upvoteCount = await Vote.countDocuments({ post: post._id, value: 1 });
+      const downvoteCount = await Vote.countDocuments({ post: post._id, value: -1 });
+      post.upvotes = upvoteCount;
+      post.downvotes = downvoteCount;
+    }
+
+    res.render('profile', {
+      layout: 'profileLayout',
+      profileImg: userDoc.profileImg,
+      username: userDoc.username,
+      bio: userDoc.bio,
+      followers: followerCount,
+      following: followingCount,
+      posts: userPosts.map(post => post.toObject()),
+      // friends: userDoc.friends 
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// Edit a post
+server.get('/profile/:username/edit/:postId', async (req, res) => {
+  try {
+    console.log(`Editing post with ID: ${req.params.postId}`);
+    const post = await Post.findById(req.params.postId);
+    if (!post) return res.status(404).send('Post not found');
+
+    res.render('editPost', {
+      layout: 'editPostLayout',
+      post: post.toObject(),
+      username: req.params.username
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+});
+
+server.post('/profile/:username/edit/:postId', async (req, res) => {
+  try {
+    console.log(`Updating post with ID: ${req.params.postId}`);
+    const post = await Post.findById(req.params.postId);
+    if (!post) return res.status(404).send('Post not found');
+
+    post.title = req.body.title;
+    post.tag = req.body.tag;
+    post.content = req.body.content;
+    await post.save();
+
+    res.redirect(`/profile/${req.params.username}`);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+});
+
+// Delete a post
+server.post('/profile/:username/delete/:postId', async (req, res) => {
+  try {
+    console.log(`Deleting post with ID: ${req.params.postId}`);
+    const post = await Post.findByIdAndDelete(req.params.postId);
+    if (!post) return res.status(404).send('Post not found');
+
+    res.redirect(`/profile/${req.params.username}`);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+});
 
 // Like a post
 server.post('/profile/:username/upvote/:postId', async (req, res) => {
