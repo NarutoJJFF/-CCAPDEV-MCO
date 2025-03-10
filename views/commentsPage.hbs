@@ -41,7 +41,7 @@
     {{#each comments}}
         <div class = comment >
             <div class = comment-heading>
-                <a href = "profile.html"> <img src="Header Elements/spike.jpg" alt="Profile Button"> </a>
+                <a href = "profile.html"> <img src="{{this.author.profileImg}}" alt="Profile Button"> </a>
                 <p><b>@{{this.author.username}}</b></p>
             </div>
     
