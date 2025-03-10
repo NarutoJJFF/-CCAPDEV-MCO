@@ -35,10 +35,14 @@
                             <p><b>@{{../username}}</b></p> 
                             </div>
                             <div class="edit-post">
-                                <a href = "editpost.html">
+                                <a href="/profile/{{../username}}/edit/{{this._id}}">
                                     <img src="/header-elements/pencil-square-svgrepo-com.png" alt="Pencil">
                                 </a>
-                                <p>Edit Post</p>
+                                <form action="/profile/{{../username}}/delete/{{this._id}}" method="POST" style="display:inline;">
+                                    <button type="submit" style="background:none;border:none;">
+                                        <img src="/header-elements/trash-can-svgrepo-com.png" alt="Delete">
+                                    </button>
+                                </form>
                             </div>
                         </div>
 
