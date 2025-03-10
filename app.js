@@ -150,6 +150,27 @@ server.get('/profile/:username', async function (req, res) {
   }
 });
 
+server.get('/editprofile/:username', async (req, resp) => {
+  try {
+    const username = req.params.username;
+    const user= await User.findOne({ username: username });
+
+    if (!user) {
+      return resp.status(404).send("User not found");
+    }
+
+    resp.render('editProfile', {
+      layout: 'profileLayout',
+      username: user.username,
+      profileImg: user.profileImg,
+      bio: user.bio,
+    });
+  } catch (err) {
+    console.error(err);
+    resp.status(500).send("Internal Server Error");
+  }
+});
+
 // Edit a post
 server.get('/profile/:username/edit/:postId', async (req, res) => {
   try {
