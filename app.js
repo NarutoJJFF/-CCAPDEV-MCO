@@ -27,7 +27,7 @@ try{
 const userSchema = new mongoose.Schema({
   username: { type: String , required: true},
   password: { type: String , required: true},
-  profileImg: { type: String , default: null},
+  profileImg: { type: String , default: "https://openclipart.org/image/800px/122107"},
   bio: { type: String, default: ""}
 },{versionKey: false, timestamps: true});
 
@@ -173,7 +173,7 @@ server.get('/search', async (req, resp) => {
 
 server.get('/homepage-page', async function (req, resp) {
   try {
-    let postResult = await Post.find({}).populate("accID", "username"); 
+    let postResult = await Post.find({}).populate("accID", "username profileImg"); 
     const plainPosts = postResult.map(post => post.toObject());
     //console.log("W", postResult);
     resp.render('homepage', { 
