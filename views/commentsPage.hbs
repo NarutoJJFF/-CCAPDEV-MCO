@@ -39,7 +39,24 @@
 
 
     {{#each comments}}
+        <div class = comment >
+            <div class = comment-heading>
+                <a href = "profile.html"> <img src="Header Elements/spike.jpg" alt="Profile Button"> </a>
+                <p><b>@{{this.author.username}}</b></p>
+            </div>
+    
+            <div class = "comment-body">
+                <p>{{this.content}}</p>
+                <hr class="hr-orange-smaller">
 
+            </div>
+    
+            <div class = "comment-reply">
+                <img id = "reply" src="Header Elements/comment.png" alt="comment" onclick = "reply()">
+                <input type="text" id="text-box" placeholder="Reply...">
+                <p>Reply</p>
+            </div>
+        </div>
     {{/each}}
 
    <div class="reply">

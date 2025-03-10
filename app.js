@@ -284,46 +284,31 @@ server.get('/commentsPage/:postID', async function(req,resp) {
 
     let postResult = await Post.findById(postID).populate("accID", "username profileImg");
 
+    console.log("W", postResult);
+
+
     if (!postResult) {
       return resp.status(404).send("Post not found.");
     }
     
     const plainPost = postResult.toObject();
 
-    //console.log("W", postResult);
+    let commentsResult = await Comment.find({ postId: postID }).populate("author", "username profileImg")
+
+    console.log("W", commentsResult);
+
+    const plainComments = commentsResult.map(comment => comment.toObject());
+
     resp.render('commentsPage', {
       layout: 'commentsPageLayout',
       title: 'Comments',
       posts: plainPost, 
+      comments: plainComments
     });
   } catch (err) {
     console.error("Database Error:", err);
     resp.status(500).send("Internal Server Error");
   }
- 
-
-  /*
-  try {
-    const postID = req.params.postID;
-    const post = await Post.findById(postID);
-
-    if (!post) {
-      return resp.status(404).send('Post not found');
-    }
-
-    resp.render('commentsPage', {
-      layout: 'commentsPageLayout',
-      title: 'Comments',
-      post, posts,       // Send the post details
-      comments, comments  // Send the comments data
-    });
-
-
-  } catch (err) {
-    console.error(err);
-    resp.status(500).send('Server Error');
-  }
-  */
 })
 
 
