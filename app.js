@@ -173,7 +173,7 @@ server.get('/search', async (req, resp) => {
 
 server.get('/homepage-page', async function (req, resp) {
   try {
-    let postResult = await Post.find({}).populate("accID", "username"); 
+    let postResult = await Post.find({}).populate("accID", "username profileImg"); 
     const plainPosts = postResult.map(post => post.toObject());
     //console.log("W", postResult);
     resp.render('homepage', { 
