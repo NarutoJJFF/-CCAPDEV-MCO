@@ -50,9 +50,9 @@
     </div>
 
     <form action="/addComment" method="POST" class="reply-form">
-        <input type="hidden" name="postID" value="{{post._id}}"> 
+        <input type="hidden" name="postID" value="{{posts._id}}"> 
 
-        {{!-- <input type="hidden" name="parentComment" value="{{parentComment._id}}">  --}}
+        {{!-- <input type="hidden" name="parentComment" value="{{parentComment._id}}">--}}
         
         <div class="reply-textbox">
             <input type="text" name="content" id="reply-box" placeholder="Reply..." required>
