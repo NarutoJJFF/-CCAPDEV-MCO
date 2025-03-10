@@ -183,7 +183,38 @@ server.get('/homepage-page', async function (req, resp) {
   try {
     let postResult = await Post.find({}).populate("accID", "username profileImg"); 
     const plainPosts = postResult.map(post => post.toObject());
-    //console.log("W", postResult);
+
+    let s_user = await User.findOne({ username: "Anonymouse"});
+    let su_id = s_user._id;
+
+    console.log("SU ID: ", su_id);
+
+    for (let post of plainPosts) {
+      let post_id = post._id;
+      console.log(post_id);
+      let voteDatum = await Vote.findOne({ user: su_id, post: post_id});
+      let post_liked = false;
+      let post_disliked = false;
+
+      console.log("Votes found:");
+      console.log(voteDatum);
+
+      if(voteDatum != undefined && voteDatum._id != null){
+        let vote_val = voteDatum.value;
+        if(vote_val>0){
+          post_liked = true;
+        }else{
+          post_disliked = true;
+        }
+      }
+
+      post['liked'] = post_liked;
+      post['disliked'] = post_disliked;
+
+      console.log(post);
+    }
+
+    console.log("W", plainPosts);
     resp.render('homepage', { 
       layout: 'homepageLayout',
       title: 'Home page',

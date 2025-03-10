@@ -44,7 +44,7 @@
             <div class="posts-section">
                 <div class="posts-edit">
                     <div class="posts-icon">
-                        <a href="/profile/anonymouse">
+                        <a href="/profile/Anonymouse">
                             <img src="{{accID.profileImg}}" alt="Profile Button">
                         </a>
                         <p><b>@{{accID.username}}</b></p>   {{!-- {{Change after login is impelemented}} --}}
@@ -66,9 +66,21 @@
                 <hr class="hr-orange-smaller">
                 
                 <div class="posts-stats">
-                    <img id="like" src="/header-elements/heart.png" alt="like" onclick="changeImageLike()">
+
+                    {{#if this.liked}}
+                    <img id="like/{{this._id}}" src="/header-elements/red-heart.png" alt="like" onclick="clickLike('{{this._id}}')">
+                    {{else}}
+                    <img id="like/{{this._id}}" src="/header-elements/heart.png" alt="like" onclick="clickLike('{{this._id}}')">
+                    {{/if}}
+
                     <p>{{this.upvotes}} Likes</p>
-                    <img id="dislike" src="/header-elements/broken-heart.png" alt="dislike" onclick="changeImageDislike()">
+
+                    {{#if this.disliked}}
+                    <img id="dislike/{{this._id}}" src="/header-elements/red-broken-heart.png" alt="dislike" onclick="clickDislike('{{this._id}}')">
+                    {{else}}
+                    <img id="dislike/{{this._id}}" src="/header-elements/broken-heart.png" alt="dislike" onclick="clickDislike('{{this._id}}')">
+                    {{/if}}
+                    
                     <p>{{this.downvotes}} Dislikes</p>
                     <a href="/commentsPage/{{this._id}}">
                         <img src="/header-elements/comment.png" alt="comment">
