@@ -101,7 +101,32 @@ const Vote = mongoose.model('Vote', voteSchema);
 // });
 
 // PROFILE PAGE
-server.get('/profile/:username', async (req, res) => {
+
+// Default Profile Page
+server.get('/profile', async function (req, res) {
+  try {
+    const userDoc = await User.findOne({ username: 'Anonymouse' });
+    if (!userDoc) {
+      return res.status(404).send('No default user found');
+    }
+
+    const userPosts = await Post.find({ accID: userDoc._id });
+
+    res.render('profile', {
+      layout: 'profileLayout',
+      profileImg: userDoc.profileImg,
+      username: userDoc.username,
+      bio: userDoc.bio,
+      posts: userPosts
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+
+server.get('/profile/:username', async function (req, res) {
   try {
     const username = req.params.username;
 
@@ -112,7 +137,7 @@ server.get('/profile/:username', async (req, res) => {
 
     const followerCount = await Follow.countDocuments({ followed: userDoc._id });
     const followingCount = await Follow.countDocuments({ follower: userDoc._id });
-    
+
     const userPosts = await Post.find({ accID: userDoc._id });
 
     for (let post of userPosts) {
@@ -137,6 +162,39 @@ server.get('/profile/:username', async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
+
+// Like a post
+server.post('/profile/:username/upvote/:postId', async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.postId);
+    if (!post) return res.status(404).send('Post not found');
+
+    post.upvotes += 1;
+    await post.save();
+
+    res.redirect(`/profile/${req.params.username}`);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+});
+
+// Dislike a post
+server.post('/profile/:username/downvote/:postId', async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.postId);
+    if (!post) return res.status(404).send('Post not found');
+
+    post.downvotes += 1;
+    await post.save();
+
+    res.redirect(`/profile/${req.params.username}`);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+});
+
 
 server.get('/search', async (req, resp) => {
   const { search, tag } = req.query;
