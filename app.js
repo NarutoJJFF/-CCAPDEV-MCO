@@ -48,7 +48,7 @@ const Post = mongoose.model('Post', postSchema);
 
 const commentSchema = new mongoose.Schema({
     postId: { type: mongoose.Schema.Types.ObjectId, ref: 'Post', required: true }, // Links to Post
-    author: { type: mongoose.Schema.Types.ObjectId, ref: 'users', required: true }, // Links to User
+    author: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, // Links to User
     content: { type: String, required: true },
     parentComment: { type: mongoose.Schema.Types.ObjectId, ref: 'Comment', default: null }, // For nested comments
     upvotes: { type: Number, default: 0 }, 
@@ -273,7 +273,7 @@ server.get('/commentsPage/:postID', async function(req,resp) {
     
     const plainPost = postResult.toObject();
 
-    let commentsResult = await Comment.find({ postId: postID }).populate("author", "username profileImg")
+    let commentsResult = await Comment.find({ postId: postID }).populate("author","username profileImg")
 
     console.log("W", commentsResult);
 
