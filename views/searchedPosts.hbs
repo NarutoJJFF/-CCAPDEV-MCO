@@ -1,34 +1,15 @@
 {{> header}}
 
 {{#if posts.length}}
-    <aside> 
+     <aside> 
         <p class="sidebar-titles"> POPULAR TAGS </p>
 
         <a href = "populartags.html"><div class = "sidebar-populartags">
-            <p class = "sidebar-tag"><b> AITA </b></p>
-            <p class = "sidebar-smaller"> 1 Post </p>
+            <p class = "sidebar-tag"><b> Additional Feature Only </b></p>
+            <p class = "sidebar-smaller">  Not Ready</p>
         </div></a>
 
-        <a href = "populartags.html"><div class = "sidebar-populartags">
-            <p class = "sidebar-tag"><b> Mouse Problems </b></p>
-            <p class = "sidebar-smaller"> 1 Post </p>
-        </div></a>
-
-        <a href = "populartags.html"><div class = "sidebar-populartags">
-            <p class = "sidebar-tag"><b> Food </b></p>
-            <p class = "sidebar-smaller"> 1 Post </p>
-        </div></a>
-
-        <a href = "populartags.html"><div class = "sidebar-populartags">
-            <p class = "sidebar-tag"><b> Cartoon </b></p>
-            <p class = "sidebar-smaller"> 1 Post </p>
-        </div></a>
-
-        <a href = "populartags.html"><div class = "sidebar-populartags">
-            <p class = "sidebar-tag"><b> Gym Bros </b></p>
-            <p class = "sidebar-smaller"> 1 Post </p>
-        </div></a>
-    </aside>    
+    </aside>
     
    <main> 
 
@@ -42,12 +23,15 @@
                         <p><b>@{{accID.username}}</b></p>   {{!-- {{Change after login is impelemented}} --}}
 
                     </div>
+                    {{!-- 
                     <div class="edit-post">
                         <a href="editpost.html">
                             <img src="/header-elements/pencil-square-svgrepo-com.png" alt="Pencil">
                         </a>
                         <p>Edit Post</p>
                     </div>
+                    --}}
+
                 </div>
                 
                 <strong>{{this.title}}</strong>
@@ -62,7 +46,7 @@
                     <p>{{this.upvotes}} Likes</p>
                     <img id="dislike" src="/header-elements/broken-heart.png" alt="dislike" onclick="changeImageDislike()">
                     <p>{{this.downvotes}} Dislikes</p>
-                    <a href="postpage.html">
+                    <a href="/commentsPage/{{this._id}}">
                         <img src="/header-elements/comment.png" alt="comment">
                     </a>
                     <p>Comments</p>
