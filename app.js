@@ -138,17 +138,44 @@ server.get('/profile/:username', async (req, res) => {
   }
 });
 
+server.get('/search', async (req, resp) => {
+  const { search, tag } = req.query;
 
+  let searchCriteria = {
+    $or: [
+      { title: { $regex: search, $options: 'i' } },
+      { content: { $regex: search, $options: 'i' } },
+    ],
+  };
 
-server.post ('/search', async function (req,resp){
+  if (tag) {
+    searchCriteria = { 
+      $and: [
+        searchCriteria, 
+        { tag: { $regex: tag, $options: 'i' } } 
+      ]
+    };
+  }
+  
+  try {
+    const posts = await Post.find(searchCriteria);
+    const plainPosts = posts.map(post => post.toObject());
 
+    resp.render('searchedPosts', { 
+      layout: 'searchPostLayout',
+      title: 'Searched page',
+      posts: plainPosts, 
+    });
+  } catch (error) {
+    resp.status(500).send("Error fetching results.");
+  }
 });
 
 server.get('/homepage-page', async function (req, resp) {
   try {
     let postResult = await Post.find({}).populate("accID", "username"); 
     const plainPosts = postResult.map(post => post.toObject());
-    console.log("W", postResult);
+    //console.log("W", postResult);
     resp.render('homepage', { 
       layout: 'homepageLayout',
       title: 'Home page',
