@@ -39,16 +39,31 @@ header{
 /* SEARCH BAR */
 
 .header-search{
-    flex-grow: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 20px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas: 
+    "tag body";
 }
 
-.header-search input{
+.tag-search{
+    grid-area: tag;
+    margin-left: 150px;
+}
+
+.tag-search input{
+    width:100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+.body-search{
+    grid-area: body;
+}
+
+.body-search input{
     width: 80%;
-    padding: 10px 20px;
+    padding: 10px;
     box-sizing: border-box;
     border-radius: 10px;
 }
