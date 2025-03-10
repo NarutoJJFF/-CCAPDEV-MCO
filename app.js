@@ -73,67 +73,14 @@ const voteSchema = new mongoose.Schema({
 
 const Vote = mongoose.model('Vote', voteSchema);
 
-// server.get('/profile/:username', (req, res) => {
-//   const username = req.params.username;
-//   const dataPath = path.join(__dirname, 'data/profileData.json');
-  
-//   fs.readFile(dataPath, 'utf8', (err, data) => {
-//       if (err) {
-//           return res.status(500).send('Server error');
-//       }
-      
-//       const profileData = JSON.parse(data);
-      
-//       if (profileData.username !== username) {
-//           return res.status(404).send('User not found');
-//       }
-      
-//       res.render('profile', { 
-//           layout: 'profileLayout',
-//           profileImg: profileData.profileImg,
-//           username: profileData.username,
-//           bio: profileData.bio,
-//           followers: profileData.followers,
-//           following: profileData.following,
-//           posts: profileData.posts,
-//           friends: profileData.friends
-//       });
-//   });
-// });
-
 // PROFILE PAGE
 
 // Default Profile Page
 server.get('/profile', async function (req, res) {
   try {
-    const userDoc = await User.findOne({ username: 'Anonymouse' });
+    const userDoc = await User.findOne({ username: "Anonymouse" });
     if (!userDoc) {
       return res.status(404).send('No default user found');
-    }
-
-    const userPosts = await Post.find({ accID: userDoc._id });
-
-    res.render('profile', {
-      layout: 'profileLayout',
-      profileImg: userDoc.profileImg,
-      username: userDoc.username,
-      bio: userDoc.bio,
-      posts: userPosts
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Internal Server Error");
-  }
-});
-
-
-server.get('/profile/:username', async function (req, res) {
-  try {
-    const username = req.params.username;
-
-    const userDoc = await User.findOne({ username: username });
-    if (!userDoc) {
-      return res.status(404).send('User not found');
     }
 
     const followerCount = await Follow.countDocuments({ followed: userDoc._id });
@@ -155,14 +102,16 @@ server.get('/profile/:username', async function (req, res) {
       bio: userDoc.bio,
       followers: followerCount,
       following: followingCount,
-      posts: userPosts
+      posts: userPosts.map(post => post.toObject())
+      // friends: userDoc.friends
     });
 
   } catch (err) {
     console.error(err);
-    res.status(500).send('Server Error');
+    res.status(500).send("Internal Server Error");
   }
 });
+
 
 // Like a post
 server.post('/profile/:username/upvote/:postId', async (req, res) => {
