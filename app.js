@@ -57,38 +57,92 @@ const commentSchema = new mongoose.Schema({
 
 const Comment = mongoose.model('Comment', commentSchema);
 
-server.get('/profile/:username', (req, res) => {
-  const username = req.params.username;
-  const dataPath = path.join(__dirname, 'data/profileData.json');
+const followSchema = new mongoose.Schema({
+  follower: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  followed: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
+}, { versionKey: false, timestamps: true });
+
+const Follow = mongoose.model('Follow', followSchema);
+
+const voteSchema = new mongoose.Schema({
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  post: { type: mongoose.Schema.Types.ObjectId, ref: 'Post', required: true },
+  value: { type: Number, enum: [1, -1], required: true }
+}, { versionKey: false, timestamps: true });
+
+const Vote = mongoose.model('Vote', voteSchema);
+
+// server.get('/profile/:username', (req, res) => {
+//   const username = req.params.username;
+//   const dataPath = path.join(__dirname, 'data/profileData.json');
   
-  fs.readFile(dataPath, 'utf8', (err, data) => {
-      if (err) {
-          return res.status(500).send('Server error');
-      }
+//   fs.readFile(dataPath, 'utf8', (err, data) => {
+//       if (err) {
+//           return res.status(500).send('Server error');
+//       }
       
-      const profileData = JSON.parse(data);
+//       const profileData = JSON.parse(data);
       
-      if (profileData.username !== username) {
-          return res.status(404).send('User not found');
-      }
+//       if (profileData.username !== username) {
+//           return res.status(404).send('User not found');
+//       }
       
-      res.render('profile', { 
-          layout: 'profileLayout',
-          profileImg: profileData.profileImg,
-          username: profileData.username,
-          bio: profileData.bio,
-          followers: profileData.followers,
-          following: profileData.following,
-          posts: profileData.posts,
-          friends: profileData.friends
-      });
-  });
+//       res.render('profile', { 
+//           layout: 'profileLayout',
+//           profileImg: profileData.profileImg,
+//           username: profileData.username,
+//           bio: profileData.bio,
+//           followers: profileData.followers,
+//           following: profileData.following,
+//           posts: profileData.posts,
+//           friends: profileData.friends
+//       });
+//   });
+// });
+
+// PROFILE PAGE
+server.get('/profile/:username', async (req, res) => {
+  try {
+    const username = req.params.username;
+
+    const userDoc = await User.findOne({ username: username });
+    if (!userDoc) {
+      return res.status(404).send('User not found');
+    }
+
+    const followerCount = await Follow.countDocuments({ followed: userDoc._id });
+    const followingCount = await Follow.countDocuments({ follower: userDoc._id });
+    
+    const userPosts = await Post.find({ accID: userDoc._id });
+
+    for (let post of userPosts) {
+      const upvoteCount = await Vote.countDocuments({ post: post._id, value: 1 });
+      const downvoteCount = await Vote.countDocuments({ post: post._id, value: -1 });
+      post.upvotes = upvoteCount;
+      post.downvotes = downvoteCount;
+    }
+
+    res.render('profile', {
+      layout: 'profileLayout',
+      profileImg: userDoc.profileImg,
+      username: userDoc.username,
+      bio: userDoc.bio,
+      followers: followerCount,
+      following: followingCount,
+      posts: userPosts
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
 });
 
 
-server.post ('/search', async function (req,resp)){
-  
-}
+
+server.post ('/search', async function (req,resp){
+
+});
 
 server.get('/homepage-page', async function (req, resp) {
   try {
