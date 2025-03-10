@@ -276,6 +276,14 @@ server.post('/add-post', async function(req, resp) {
   }
 });
 
+
+server.get('/commentsPage', async function(req,resp){
+  resp.render('commentsPage',{
+    layout: 'commentsPageLayout',
+    title: 'Comments'
+});
+})
+
 // Login page (default)
 server.get('/', async function(req,resp){
   resp.render('login',{
