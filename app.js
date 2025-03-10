@@ -278,11 +278,29 @@ server.post('/add-post', async function(req, resp) {
 });
 
 server.get('/commentsPage/:postID', async function(req,resp) {
+  try {
 
-  resp.render('commentsPage', {
-    layout: 'commentsPageLayout',
-    title: 'Comments',
-  });
+    const postID = req.params.postID;
+
+    let postResult = await Post.findById(postID).populate("accID", "username profileImg");
+
+    if (!postResult) {
+      return resp.status(404).send("Post not found.");
+    }
+    
+    const plainPost = postResult.toObject();
+
+    //console.log("W", postResult);
+    resp.render('commentsPage', {
+      layout: 'commentsPageLayout',
+      title: 'Comments',
+      posts: plainPost, 
+    });
+  } catch (err) {
+    console.error("Database Error:", err);
+    resp.status(500).send("Internal Server Error");
+  }
+ 
 
   /*
   try {
@@ -309,29 +327,31 @@ server.get('/commentsPage/:postID', async function(req,resp) {
 })
 
 
-server.post('/addComment', async function(req, resp){
+server.post('/addComment', async function(req, resp) {
   try {
     const newComment = new Comment({
-      postID: req.body.postID,
-      author: '67cdbb525d28b303b3a17556',
-      parentComment: 'hello',
-      content:req.body.content,          //accID: req.body.accID for now super user first, but if sessions are implemented please adjust
+      postId: req.body.postID,  // Fixed field name to match schema
+      author: '67cdbb525d28b303b3a17556',  // Placeholder user ID (adjust when session is implemented)
+      parentComment: req.body.parentComment || null, // Set null if not a reply
+      content: req.body.content,
     });
-  
+
     await newComment.save();
     console.log('Commented Successfully');
-  
-    resp.redirect('/commentsPage/:postID');
+
+    // Redirect to the correct post's comments page
+    resp.redirect(`/commentsPage/${req.body.postID}`);
     
   } catch (error) {
-    console.error('Error creating post:', error);
+    console.error('Error creating comment:', error);
     resp.status(500).render('commentsPage', {
       layout: 'commentsPageLayout',
       title: 'Comments',
-      msg: 'Error creating post. Please try again.'
+      msg: 'Error creating comment. Please try again.'
     });
   }
-})
+});
+
 
 
 // Login page (default)
