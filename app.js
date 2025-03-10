@@ -277,10 +277,31 @@ server.post('/add-post', async function(req, resp) {
 });
 
 server.get('/commentsPage/:postID', async function(req,resp) {
+
+  try {
+    const postID = req.params.postID;
+    const post = await Post.findById(postID);
+
+    if (!post) {
+      return resp.status(404).send('Post not found');
+    }
+
+    const comments = await Comment.find({ postId: postID })
+      .populate('author', 'username') // Assuming 'users' schema has a 'username' field
+      .populate('parentComment'); // If you need nested comments
+
     resp.render('commentsPage', {
       layout: 'commentsPageLayout',
       title: 'Comments',
+      post, posts,       // Send the post details
+      comments, comments  // Send the comments data
     });
+
+
+  } catch (err) {
+    console.error(err);
+    resp.status(500).send('Server Error');
+  }
 })
 
 // Login page (default)
