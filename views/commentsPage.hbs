@@ -1,0 +1,44 @@
+{{>header}}
+
+<main>
+    <div class="posts-section">
+            <div class="posts-edit">
+                <div class="posts-icon">
+                    <a href="/profile/anonymouse">
+                        <img src="{{accID.profileImg}}" alt="Profile Button">
+                    </a>
+                    <p><b>@{{accID.username}}</b></p>   {{!-- {{Change after login is impelemented}} --}}
+
+                </div>
+                <div class="edit-post">
+                    <a href="editpost.html">
+                        <img src="/header-elements/pencil-square-svgrepo-com.png" alt="Pencil">
+                    </a>
+                    <p>Edit Post</p>
+                </div>
+            </div>
+                
+            <strong>{{this.title}}</strong>
+            <span class="flair">{{this.tag}}</span> 
+            <p class="paragraph">
+                {{this.content}}
+            </p>
+            <hr class="hr-orange-smaller">
+                
+            <div class="posts-stats">
+                <img id="like" src="/header-elements/heart.png" alt="like" onclick="changeImageLike()">
+                <p>{{this.upvotes}} Likes</p>
+                <img id="dislike" src="/header-elements/broken-heart.png" alt="dislike" onclick="changeImageDislike()">
+                <p>{{this.downvotes}} Dislikes</p>
+                <a href="/commentsPage">
+                    <img src="/header-elements/comment.png" alt="comment">
+                </a>
+                <p>Comments</p>
+            </div>
+    </div>
+
+
+    {{#each comments}}
+
+    {{/each}}
+</main>
