@@ -40,7 +40,7 @@ header{
 
 .header-search{
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: 300px 700px;
     grid-template-areas: 
     "tag body";
 }
