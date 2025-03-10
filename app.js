@@ -218,6 +218,7 @@ server.post('/add-post', async function(req, resp) {
   }
 });
 
+// Login page (default)
 server.get('/', async function(req,resp){
   resp.render('login',{
     layout: 'loginRegisterLayout',
@@ -243,6 +244,7 @@ server.post('/login', async function(req, resp) {
   }
 });
 
+// Register page
 server.get('/register-page', async function(req,resp){
   resp.render('register',{
     layout: 'loginRegisterLayout',
@@ -308,25 +310,6 @@ server.post('/register', async function(req, resp) {
 
       }
     }
-  }
-
-  const searchQuery = { username: req.body.username, password: req.body.password };
-  let login = await User.findOne(searchQuery);
-  console.log('Finding user');
-
-  if(login != undefined && login._id != null){
-    let postResult = await Post.find({}); 
-    const plainPosts = postResult.map(post => post.toObject());
-    resp.render('homepage', { 
-      layout: 'homepageLayout',
-      title: 'Home page',
-      posts: plainPosts, 
-    });
-  }else{
-    resp.render('login',{
-      layout: 'loginRegisterLayout',
-      title:  'Login Page',
-      failed: true });
   }
 });
 
