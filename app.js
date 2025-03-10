@@ -279,6 +279,12 @@ server.post('/add-post', async function(req, resp) {
 
 server.get('/commentsPage/:postID', async function(req,resp) {
 
+  resp.render('commentsPage', {
+    layout: 'commentsPageLayout',
+    title: 'Comments',
+  });
+
+  /*
   try {
     const postID = req.params.postID;
     const post = await Post.findById(postID);
@@ -286,10 +292,6 @@ server.get('/commentsPage/:postID', async function(req,resp) {
     if (!post) {
       return resp.status(404).send('Post not found');
     }
-
-    const comments = await Comment.find({ postId: postID })
-      .populate('author', 'username') // Assuming 'users' schema has a 'username' field
-      .populate('parentComment'); // If you need nested comments
 
     resp.render('commentsPage', {
       layout: 'commentsPageLayout',
@@ -303,32 +305,32 @@ server.get('/commentsPage/:postID', async function(req,resp) {
     console.error(err);
     resp.status(500).send('Server Error');
   }
+  */
 })
 
 
 server.post('/addComment', async function(req, resp){
   try {
-    const newPost = new Post({
-      tag: req.body.tag,
-      title: req.body.title,
-      accID: '67cdbb525d28b303b3a17556',          //accID: req.body.accID for now super user first, but if sessions are implemented please adjust
-      content: req.body.content
+    const newComment = new Comment({
+      postID: req.body.postID,
+      author: '67cdbb525d28b303b3a17556',
+      parentComment: 'hello',
+      content:req.body.content,          //accID: req.body.accID for now super user first, but if sessions are implemented please adjust
     });
   
-    await newPost.save();
-    console.log('Post created successfully');
+    await newComment.save();
+    console.log('Commented Successfully');
   
-    resp.redirect('/homepage-page');
+    resp.redirect('/commentsPage/:postID');
     
   } catch (error) {
     console.error('Error creating post:', error);
-    resp.status(500).render('addPost', {
-      layout: 'addPostLayout',
-      title: 'Add Post',
+    resp.status(500).render('commentsPage', {
+      layout: 'commentsPageLayout',
+      title: 'Comments',
       msg: 'Error creating post. Please try again.'
     });
   }
-
 })
 
 
