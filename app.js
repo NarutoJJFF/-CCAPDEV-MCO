@@ -199,14 +199,14 @@ server.post('/add-post', async function(req, resp) {
     const newPost = new Post({
       tag: req.body.tag,
       title: req.body.title,
-      //accID: req.body.accID,
+      accID: '67cdbb525d28b303b3a17556',          //accID: req.body.accID for now super user first, but if sessions are implemented please adjust
       content: req.body.content
     });
 
     await newPost.save();
     console.log('Post created successfully');
 
-    resp.redirect('/');
+    resp.redirect('/homepage-page');
     
   } catch (error) {
     console.error('Error creating post:', error);
