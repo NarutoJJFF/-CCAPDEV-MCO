@@ -166,7 +166,7 @@ server.get('/search', async (req, resp) => {
   }
   
   try {
-    const posts = await Post.find(searchCriteria);
+    const posts = await Post.find(searchCriteria).populate("accID", "username profileImg");
     const plainPosts = posts.map(post => post.toObject());
 
     resp.render('searchedPosts', { 
