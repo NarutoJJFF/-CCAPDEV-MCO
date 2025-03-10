@@ -218,7 +218,6 @@ server.post('/add-post', async function(req, resp) {
   }
 });
 
-
 server.get('/commentsPage', async function(req,resp){
   resp.render('commentsPage',{
     layout: 'commentsPageLayout',
