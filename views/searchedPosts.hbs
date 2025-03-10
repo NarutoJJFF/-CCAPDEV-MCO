@@ -1,7 +1,38 @@
 {{> header}}
 
-<body>
-    {{#each posts}}
+{{#if posts.length}}
+    <aside> 
+        <p class="sidebar-titles"> POPULAR TAGS </p>
+
+        <a href = "populartags.html"><div class = "sidebar-populartags">
+            <p class = "sidebar-tag"><b> AITA </b></p>
+            <p class = "sidebar-smaller"> 1 Post </p>
+        </div></a>
+
+        <a href = "populartags.html"><div class = "sidebar-populartags">
+            <p class = "sidebar-tag"><b> Mouse Problems </b></p>
+            <p class = "sidebar-smaller"> 1 Post </p>
+        </div></a>
+
+        <a href = "populartags.html"><div class = "sidebar-populartags">
+            <p class = "sidebar-tag"><b> Food </b></p>
+            <p class = "sidebar-smaller"> 1 Post </p>
+        </div></a>
+
+        <a href = "populartags.html"><div class = "sidebar-populartags">
+            <p class = "sidebar-tag"><b> Cartoon </b></p>
+            <p class = "sidebar-smaller"> 1 Post </p>
+        </div></a>
+
+        <a href = "populartags.html"><div class = "sidebar-populartags">
+            <p class = "sidebar-tag"><b> Gym Bros </b></p>
+            <p class = "sidebar-smaller"> 1 Post </p>
+        </div></a>
+    </aside>    
+    
+   <main> 
+
+       {{#each posts}}
             <div class="posts-section">
                 <div class="posts-edit">
                     <div class="posts-icon">
@@ -38,4 +69,9 @@
                 </div>
             </div>
         {{/each}}
-</body>
+
+    </main>
+
+{{else}}
+    <p>No posts found.</p>
+{{/if}}

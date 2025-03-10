@@ -39,19 +39,23 @@ header{
 /* SEARCH BAR */
 
 .header-search{
-    display: grid;
-    grid-template-columns: 300px 700px;
-    grid-template-areas: 
-    "tag body";
+    flex-grow: 1;
+    display: flex;
+    margin-left: 250px;
+}
+
+.header-search button{
+    width: 60px;
+    height: 40px;
+    border-radius: 10px;
 }
 
 .tag-search{
     grid-area: tag;
-    margin-left: 150px;
 }
 
 .tag-search input{
-    width:100%;
+    width:150px;
     padding: 10px;
     box-sizing: border-box;
     border-radius: 10px;
@@ -62,7 +66,7 @@ header{
 }
 
 .body-search input{
-    width: 80%;
+    width: 600px;
     padding: 10px;
     box-sizing: border-box;
     border-radius: 10px;

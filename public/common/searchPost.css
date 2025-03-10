@@ -6,9 +6,71 @@ body {
     grid-template-rows: auto 1fr auto;
     grid-template-areas: 
     "header header"
-    "main main"
+    "sidebar main"
     "footer footer";
 }
+
+/* SIDE BAR */
+
+aside{
+    height: calc(100vh - 94.53px);
+    top: 94.53px;
+    position:sticky;
+    align-self: start;
+    grid-area: sidebar;
+    border-right: 1px solid black;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-titles{
+    margin-left:20px;
+    margin-top: 15px;
+    font-size: 20px;
+}
+
+.sidebar-populartags {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    margin-left: 35px; 
+    align-items: center; 
+    padding: 8px 12px;
+    cursor: pointer;
+    width: 200px; 
+}
+
+.sidebar-populartags:hover {
+    background-color: #d6d6d6;
+}
+
+.sidebar-tag {
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.sidebar-smaller {
+    font-size: 14px;
+    color: #555;
+    text-decoration: none;
+
+}
+
+aside a:link{
+    color:black;
+    text-decoration: none;
+
+}
+aside a:visited{
+    color:black;
+    text-decoration: none;
+
+}
+aside a:active {
+    color: black;
+    text-decoration: none;
+}
+
 
 /* MAIN */
 
