@@ -18,12 +18,31 @@ server.use(express.static('public'));
 const mongoose = require('mongoose');
 const { emitWarning } = require('process');
 
+const mongo_uri = 'mongodb+srv://josh:dbjoshpassword@apdevmc.vfohc.mongodb.net/?retryWrites=true&w=majority&appName=APDEVMC';
+
 try{
-    mongoose.connect('mongodb+srv://josh:dbjoshpassword@apdevmc.vfohc.mongodb.net/?retryWrites=true&w=majority&appName=APDEVMC');
-    console.log("MongoDB connected")
+    mongoose.connect(mongo_uri);
+    console.log("MongoDB connected");
 } catch(e){
-    console.log("Error MongoDB not connected")
+    console.log("Error MongoDB not connected");
 }
+
+const session = require('express-session');
+const mongoStore = require('connect-mongodb-session')(session);
+
+let store = new mongoStore({
+  uri: mongo_uri,
+  collection: 'mySession',
+  expires: 21*24*60*60*1000 //3weeks
+});
+
+server.use(session({
+  secret: 'a secret fruit',
+  saveUninitialized: true,
+  resave: false,
+  store: store
+}));
+
 
 const userSchema = new mongoose.Schema({
   username: { type: String , required: true},
@@ -299,13 +318,17 @@ server.get('/homepage-page', async function (req, resp) {
 
     for (let post of plainPosts) {
       let post_id = post._id;
+      /*
       console.log(post_id);
+      */
       let voteDatum = await Vote.findOne({ user: su_id, post: post_id});
       let post_liked = false;
       let post_disliked = false;
-
+      
+      /*
       console.log("Votes found:");
       console.log(voteDatum);
+      */
 
       if(voteDatum != undefined && voteDatum._id != null){
         let vote_val = voteDatum.value;
@@ -319,10 +342,15 @@ server.get('/homepage-page', async function (req, resp) {
       post['liked'] = post_liked;
       post['disliked'] = post_disliked;
 
+      /*
       console.log(post);
+      */
     }
 
+    /*
     console.log("W", plainPosts);
+    */
+
     resp.render('homepage', { 
       layout: 'homepageLayout',
       title: 'Home page',
@@ -425,33 +453,168 @@ server.post('/addComment', async function(req, resp) {
   }
 });
 
-
+// LOGIN PAGE
 
 // Login page (default)
 server.get('/', async function(req,resp){
+  console.log("Login page opened.");
+  //let user_id = "";
+  //let saved = false;
+  //let log_uname = "";
+  //let log_passw = "";
+  
+  /*
+  try{
+    let current_user = await User.findById(req.session.login_user);
+    console.log("Session found!");
+    log_uname = current_user.username;
+    log_passw = current_user.password;
+  }catch(err){
+    console.log("Session not found!");
+  }
+  */
+  
+  // Checking status of session before trying to extract data
+  store.get(req.sessionID, async (err, session) => {
+    if (err) {
+      console.log('Error checking session');
+    }else if (!session) {
+      // Session doesn't exist (expired or never existed)
+      console.log('Session has expired or does not exist');
+    }else if (session.expires && new Date(session.expires) < Date.now()) {
+      // Session is expired based on the store's expiration time
+      console.log('Session has expired');
+    }else{
+      // Session exists and is still valid
+      console.log('Session is still active');
+      /*
+      req.session.destroy(function(err){ // kill session to reset lifespan with following calls
+        //resp.redirect('/');
+      });
+      */
+
+      let log_uname = "";
+      let log_passw = "";
+      let saved = false;
+
+      if(req.session.remember){
+        let current_user = await User.findById(req.session.login_user);
+        
+        log_uname = current_user.username;
+        console.log("1 Saved username: " + log_uname);
+        log_passw = current_user.password;
+        console.log("1 Saved password: " + log_passw);
+        saved = true;
+      }
+
+      console.log("2 Username: "+log_uname);
+      console.log("2 Password: "+log_passw);
+
+      resp.render('login',{
+        layout: 'loginRegisterLayout',
+        title: 'Login Page',
+        failed: false,
+        u_saved: saved,
+        saved_uname: log_uname,
+        saved_passw: log_passw
+      });
+    }
+  });
+
+  /*
+  console.log("2 Username: "+log_uname);
+  console.log("2 Password: "+log_passw);
+
   resp.render('login',{
     layout: 'loginRegisterLayout',
     title: 'Login Page',
-    failed: false
+    failed: false,
+    //u_saved: saved,
+    saved_uname: log_uname,
+    saved_passw: log_passw
   });
+  */
 });
 
+// login function
 server.post('/login', async function(req, resp) {
+  console.log("Login attempted");
   const searchQuery = { username: req.body.username, password: req.body.password };
   let login = await User.findOne(searchQuery);
   console.log('Finding user');
 
-  if(login != undefined && login._id != null){
-    let postResult = await Post.find({}); 
-    const plainPosts = postResult.map(post => post.toObject());
+  if(login != undefined && login._id != null){ // succesful login
+    //let postResult = await Post.find({}); 
+    //const plainPosts = postResult.map(post => post.toObject());
+    
+    console.log("Remember?:");
+    console.log(req.body.remember);
+
+    //let sesh_exp = 0;
+    let sesh_saved = true;
+
+    if(req.body.remember != undefined){
+      //store.expires = 21*24*60*60*1000; //three weeks
+    }else{
+      //store.expires = 1000; //1sec
+      sesh_saved = false;
+    }
+
+    req.session.regenerate(function(err){
+      //resp.redirect('/');
+      if (err) {
+        console.log('Error regenerating session');
+      }
+    });
+
+    /*
+    server.use(session({
+      secret: 'a secret fruit',
+      saveUninitialized: true,
+      resave: false,
+      store: new mongoStore({
+        uri: mongo_uri,
+        collection: 'mySession',
+        expires: sesh_exp
+      })
+    }));
+    */
+    
+    req.session.login_user = login._id;
+    req.session.login_id = req.sessionID;
+    req.session.remember = sesh_saved;
+    req.session.guest = false;
+    /*
+    req.session.expires = sesh_exp;
+    */
+
+    console.log("Current User ID: " + req.session.login_user);
+    console.log("Current Login ID: " + req.session.login_id);
+    console.log("Remember?: " + req.session.remember);
+    /*
+    console.log("Expiry Time: " + store.expires.toString());
+    */
+
     resp.redirect('/homepage-page');
-  }else{
+  }else{ // failed login
     resp.render('login',{
       layout: 'loginRegisterLayout',
       title:  'Login Page',
-      failed: true });
+      failed: true,
+      u_saved: false,
+      saved_uname: "",
+      saved_passw: ""});
   }
 });
+
+// Logout function
+server.get('/logout', async function(req,resp){
+  req.session.destroy(function(err){
+    resp.redirect('/');
+  });
+});
+
+// REGISTER PAGE
 
 // Register page
 server.get('/register-page', async function(req,resp){
@@ -464,6 +627,7 @@ server.get('/register-page', async function(req,resp){
   });
 });
 
+// register function
 server.post('/register', async function(req, resp) {
   if(req.body.password != req.body.conf_password){
 
