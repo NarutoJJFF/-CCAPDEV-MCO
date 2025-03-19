@@ -458,24 +458,13 @@ server.post('/addComment', async function(req, resp) {
 // Login page (default)
 server.get('/', async function(req,resp){
   console.log("Login page opened.");
-  //let user_id = "";
-  //let saved = false;
-  //let log_uname = "";
-  //let log_passw = "";
-  
-  /*
-  try{
-    let current_user = await User.findById(req.session.login_user);
-    console.log("Session found!");
-    log_uname = current_user.username;
-    log_passw = current_user.password;
-  }catch(err){
-    console.log("Session not found!");
-  }
-  */
   
   // Checking status of session before trying to extract data
   store.get(req.sessionID, async (err, session) => {
+    let log_uname = "";
+    let log_passw = "";
+    let saved = false;
+    
     if (err) {
       console.log('Error checking session');
     }else if (!session) {
@@ -487,15 +476,6 @@ server.get('/', async function(req,resp){
     }else{
       // Session exists and is still valid
       console.log('Session is still active');
-      /*
-      req.session.destroy(function(err){ // kill session to reset lifespan with following calls
-        //resp.redirect('/');
-      });
-      */
-
-      let log_uname = "";
-      let log_passw = "";
-      let saved = false;
 
       if(req.session.remember){
         let current_user = await User.findById(req.session.login_user);
@@ -509,31 +489,17 @@ server.get('/', async function(req,resp){
 
       console.log("2 Username: "+log_uname);
       console.log("2 Password: "+log_passw);
-
-      resp.render('login',{
-        layout: 'loginRegisterLayout',
-        title: 'Login Page',
-        failed: false,
-        u_saved: saved,
-        saved_uname: log_uname,
-        saved_passw: log_passw
-      });
     }
-  });
 
-  /*
-  console.log("2 Username: "+log_uname);
-  console.log("2 Password: "+log_passw);
-
-  resp.render('login',{
-    layout: 'loginRegisterLayout',
-    title: 'Login Page',
-    failed: false,
-    //u_saved: saved,
-    saved_uname: log_uname,
-    saved_passw: log_passw
+    resp.render('login',{
+      layout: 'loginRegisterLayout',
+      title: 'Login Page',
+      failed: false,
+      u_saved: saved,
+      saved_uname: log_uname,
+      saved_passw: log_passw
+    });
   });
-  */
 });
 
 // login function
@@ -544,8 +510,6 @@ server.post('/login', async function(req, resp) {
   console.log('Finding user');
 
   if(login != undefined && login._id != null){ // succesful login
-    //let postResult = await Post.find({}); 
-    //const plainPosts = postResult.map(post => post.toObject());
     
     console.log("Remember?:");
     console.log(req.body.remember);
@@ -566,34 +530,15 @@ server.post('/login', async function(req, resp) {
         console.log('Error regenerating session');
       }
     });
-
-    /*
-    server.use(session({
-      secret: 'a secret fruit',
-      saveUninitialized: true,
-      resave: false,
-      store: new mongoStore({
-        uri: mongo_uri,
-        collection: 'mySession',
-        expires: sesh_exp
-      })
-    }));
-    */
     
     req.session.login_user = login._id;
     req.session.login_id = req.sessionID;
     req.session.remember = sesh_saved;
     req.session.guest = false;
-    /*
-    req.session.expires = sesh_exp;
-    */
 
     console.log("Current User ID: " + req.session.login_user);
     console.log("Current Login ID: " + req.session.login_id);
     console.log("Remember?: " + req.session.remember);
-    /*
-    console.log("Expiry Time: " + store.expires.toString());
-    */
 
     resp.redirect('/homepage-page');
   }else{ // failed login
@@ -605,6 +550,11 @@ server.post('/login', async function(req, resp) {
       saved_uname: "",
       saved_passw: ""});
   }
+});
+
+server.get('/guest', async function(req,resp){
+  req.session.guest = true;
+  resp.redirect('/homepage-page');
 });
 
 // Logout function
