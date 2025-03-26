@@ -1,4 +1,4 @@
-const Post = require('../models/post');
+const Post = require('../model/post');
 
 async function homepage (req, resp) {
     try {
@@ -20,3 +20,5 @@ async function homepage (req, resp) {
         resp.status(500).send("Internal Server Error");
     }
 }
+
+module.exports = {homepage};

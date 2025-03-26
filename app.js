@@ -3,7 +3,7 @@ const server = express();
 const fs = require('fs');
 const path = require('path')
 
-const router  = require('./routes.js');
+const routes  = require('./routes.js');
 const bodyParser = require('body-parser');
 server.use(express.json()); 
 server.use(express.urlencoded({ extended: true }));
@@ -45,7 +45,7 @@ server.use(session({
 }));
 
 
-server.use("/", routes)
+server.use("/", routes);
 
 const userSchema = new mongoose.Schema({
   username: { type: String , required: true},
@@ -313,10 +313,11 @@ server.get('/homepage-page', async function (req, resp) {
       /*
       console.log(post_id);
       */
+     /*
       let voteDatum = await Vote.findOne({ user: su_id, post: post_id});
       let post_liked = false;
       let post_disliked = false;
-      
+      */
       /*
       console.log("Votes found:");
       console.log(voteDatum);
