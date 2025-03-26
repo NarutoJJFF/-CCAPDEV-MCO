@@ -3,6 +3,7 @@ const server = express();
 const fs = require('fs');
 const path = require('path')
 
+const router  = require('./routes.js');
 const bodyParser = require('body-parser');
 server.use(express.json()); 
 server.use(express.urlencoded({ extended: true }));
@@ -44,6 +45,8 @@ server.use(session({
 }));
 
 
+server.use("/", routes)
+
 const userSchema = new mongoose.Schema({
   username: { type: String , required: true},
   password: { type: String , required: true},
@@ -52,18 +55,6 @@ const userSchema = new mongoose.Schema({
 },{versionKey: false, timestamps: true});
 
 const User = mongoose.model('User', userSchema);
-
-const postSchema = new mongoose.Schema({
-    tag: { type: String , required: true},
-    title: {type: String , required: true},
-    accID: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},  //Subject to change depends on the user database
-    content:{type: String , required: true},
-    upvotes: { type: Number, default: 0 }, 
-    downvotes: { type: Number, default: 0 }
-
-  },{versionKey: false, timestamps: true});
-
-const Post = mongoose.model('Post', postSchema);
 
 const commentSchema = new mongoose.Schema({
     postId: { type: mongoose.Schema.Types.ObjectId, ref: 'Post', required: true }, // Links to Post
@@ -306,6 +297,7 @@ server.get('/search', async (req, resp) => {
   }
 });
 
+/*
 server.get('/homepage-page', async function (req, resp) {
   try {
     let postResult = await Post.find({}).populate("accID", "username profileImg"); 
@@ -330,6 +322,7 @@ server.get('/homepage-page', async function (req, resp) {
       console.log(voteDatum);
       */
 
+      /*
       if(voteDatum != undefined && voteDatum._id != null){
         let vote_val = voteDatum.value;
         if(vote_val>0){
@@ -345,12 +338,15 @@ server.get('/homepage-page', async function (req, resp) {
       /*
       console.log(post);
       */
-    }
 
+    /*
+    }
+    */
     /*
     console.log("W", plainPosts);
     */
 
+    /*
     resp.render('homepage', { 
       layout: 'homepageLayout',
       title: 'Home page',
@@ -361,6 +357,8 @@ server.get('/homepage-page', async function (req, resp) {
     resp.status(500).send("Internal Server Error");
   }
 });
+*/
+
 
 server.get('/add-post-page', async function(req,resp){
   resp.render('addPost',{
