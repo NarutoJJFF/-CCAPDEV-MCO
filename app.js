@@ -45,7 +45,7 @@ server.use(session({
 }));
 
 
-server.use("/", routes);
+server.use("/", routes);  //routes
 
 const userSchema = new mongoose.Schema({
   username: { type: String , required: true},
@@ -56,6 +56,7 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', userSchema);
 
+/*
 const commentSchema = new mongoose.Schema({
     postId: { type: mongoose.Schema.Types.ObjectId, ref: 'Post', required: true }, // Links to Post
     author: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, // Links to User
@@ -66,7 +67,9 @@ const commentSchema = new mongoose.Schema({
 
 }, {versionKey: false, timestamps: true});
 
+
 const Comment = mongoose.model('Comment', commentSchema);
+*/
 
 const followSchema = new mongoose.Schema({
   follower: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },

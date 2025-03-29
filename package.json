@@ -4,7 +4,6 @@
   "description": "",
   "main": "homepage.js",
   "type": "commonjs",
-  
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -25,8 +24,7 @@
     "express": "^4.21.2",
     "express-handlebars": "^8.0.1",
     "express-session": "^1.18.1",
-    "mongodb": "^6.14.2",
-    "mongoose": "^8.13.0"
-  },
-  "devDependencies": {}
+    "mongodb": "^6.15.0",
+    "mongoose": "^8.13.1"
+  }
 }

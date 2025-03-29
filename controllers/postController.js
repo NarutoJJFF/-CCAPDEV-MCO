@@ -2,12 +2,8 @@ const Post = require('../model/post');
 
 async function homepage (req, resp) {
     try {
-        let postResult = await Post.find({})
-        .populate("accID", "username profileImg")
-        .sort({_id:-1})
-        .limit(20);
         
-        const plainPosts = postResult.map(post => post.toObject());
+        const plainPosts = await findAllPosts();
 
         resp.render('homepage', { 
             layout: 'homepageLayout',
@@ -18,6 +14,25 @@ async function homepage (req, resp) {
     } catch (err) {
         console.error("Database Error:", err);
         resp.status(500).send("Internal Server Error");
+    }
+}
+
+
+//Finds all post (Sorted from latest to oldest)
+async function findAllPosts (){
+    try {
+        let postResult = await Post.find({})
+        .populate("accID", "username profileImg")
+        .sort({_id:-1})
+        .limit(20);
+        
+        const plainPosts = postResult.map(post => post.toObject());
+
+        return plainPosts;
+
+    } catch (err) {
+        console.error("Database Error:", err);
+        return [];
     }
 }
 
