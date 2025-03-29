@@ -36,4 +36,83 @@ async function findAllPosts (){
     }
 }
 
-module.exports = {homepage};
+async function searchPage (req, resp) {
+
+    try {
+        const plainPosts = await search(req);
+
+        resp.render('searchedPosts', { 
+            layout: 'searchPostLayout',
+            title: 'Searched page',
+            posts: plainPosts, 
+        });
+
+    } catch (err) {
+        console.error("Database Error:", err);
+        resp.status(500).send("Internal Server Error");
+    }
+}
+
+//Search based based on req from tags and search
+async function search (req) {
+    const search = req.query.search;    
+    const tag = req.query.tag;
+
+    let searchCriteria = {
+        $or: [
+            { title: { $regex: search, $options: 'i' } },
+            { content: { $regex: search, $options: 'i' } },
+          ],
+    }
+
+    if (tag) {
+        searchCriteria = { 
+        $and: [
+            searchCriteria, 
+            { tag: { $regex: tag, $options: 'i' } } 
+          ]
+        };
+    }
+
+    try {
+        const posts = await Post.find(searchCriteria).populate("accID", "username profileImg");
+        const plainPosts = posts.map(post => post.toObject());
+
+        return plainPosts;
+    
+    } catch (error) {
+        console.error("Database Error:", err);
+        return[];
+    }
+}
+
+async function addPostPage (req, resp){
+    resp.render('addPost',{
+      layout: 'addPostLayout',
+      title: 'Add Post page'
+    });
+};
+
+async function addPost (req, resp) {
+    try {
+      const newPost = new Post({
+        tag: req.body.tag,
+        title: req.body.title,
+        accID: req.session.login_user,          //accID: req.body.accID for now super user first, but if sessions are implemented please adjust
+        content: req.body.content
+      });
+  
+      await newPost.save();
+      console.log('Post created successfully');
+  
+      resp.redirect('/homepage-page');
+      
+    } catch (error) {
+      console.error('Error creating post:', error);
+      resp.status(500).redirect('homepage-page');
+    }
+  };
+  
+
+
+module.exports = {homepage, searchPage, addPostPage, addPost};

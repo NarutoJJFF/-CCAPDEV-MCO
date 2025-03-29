@@ -56,21 +56,6 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', userSchema);
 
-/*
-const commentSchema = new mongoose.Schema({
-    postId: { type: mongoose.Schema.Types.ObjectId, ref: 'Post', required: true }, // Links to Post
-    author: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, // Links to User
-    content: { type: String, required: true },
-    parentComment: { type: mongoose.Schema.Types.ObjectId, ref: 'Comment', default: null }, // For nested comments
-    upvotes: { type: Number, default: 0 }, 
-    downvotes: { type: Number, default: 0 }
-
-}, {versionKey: false, timestamps: true});
-
-
-const Comment = mongoose.model('Comment', commentSchema);
-*/
-
 const followSchema = new mongoose.Schema({
   follower: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   followed: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
