@@ -1,8 +1,6 @@
 const Comment = require('../model/comment');
 const Post = require('../model/post');
 
-
-
 async function commentPage (req, resp) {
     try {
         
