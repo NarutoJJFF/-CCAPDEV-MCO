@@ -47,6 +47,7 @@ server.use(session({
 
 server.use("/", routes);  //routes
 
+/*
 const userSchema = new mongoose.Schema({
   username: { type: String , required: true},
   password: { type: String , required: true},
@@ -55,6 +56,7 @@ const userSchema = new mongoose.Schema({
 },{versionKey: false, timestamps: true});
 
 const User = mongoose.model('User', userSchema);
+*/
 
 const followSchema = new mongoose.Schema({
   follower: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
