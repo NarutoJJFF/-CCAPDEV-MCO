@@ -39,8 +39,8 @@ let store = new mongoStore({
 
 server.use(session({
   secret: 'a secret fruit',
-  saveUninitialized: true,
-  resave: false,
+  saveUninitialized: false,
+  resave: true,
   store: store
 }));
 
@@ -84,38 +84,61 @@ const Vote = require('./model/vote');
 // PROFILE PAGE
 
 // Default Profile Page
+// server.get('/profile', async function (req, res) {
+//   try {
+//     const userDoc = await User.findOne({ username: "Anonymouse" });
+//     if (!userDoc) {
+//       return res.status(404).send('No default user found');
+//     }
+
+//     const followerCount = await Follow.countDocuments({ followed: userDoc._id });
+//     const followingCount = await Follow.countDocuments({ follower: userDoc._id });
+
+//     const userPosts = await Post.find({ accID: userDoc._id });
+
+//     for (let post of userPosts) {
+//       const upvoteCount = await Vote.countDocuments({ post: post._id, value: 1 });
+//       const downvoteCount = await Vote.countDocuments({ post: post._id, value: -1 });
+//       post.upvotes = upvoteCount;
+//       post.downvotes = downvoteCount;
+//     }
+
+//     res.render('profile', {
+//       layout: 'profileLayout',
+//       profileImg: userDoc.profileImg,
+//       username: userDoc.username,
+//       bio: userDoc.bio,
+//       followers: followerCount,
+//       following: followingCount,
+//       posts: userPosts.map(post => post.toObject())
+//       // friends: userDoc.friends
+//     });
+
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send("Internal Server Error");
+//   }
+// });
+
+// Flexible Profile Page
 server.get('/profile', async function (req, res) {
   try {
-    const userDoc = await User.findOne({ username: "Anonymouse" });
+    if (!req.session || !req.session.login_user) {
+      console.log("No user logged in. Redirecting to login page.");
+      return res.redirect('/');
+    }
+
+    // Find the logged-in user
+    const userDoc = await User.findById(req.session.login_user);
     if (!userDoc) {
-      return res.status(404).send('No default user found');
+      console.log("Logged-in user not found in the database.");
+      return res.redirect('/');
     }
 
-    const followerCount = await Follow.countDocuments({ followed: userDoc._id });
-    const followingCount = await Follow.countDocuments({ follower: userDoc._id });
-
-    const userPosts = await Post.find({ accID: userDoc._id });
-
-    for (let post of userPosts) {
-      const upvoteCount = await Vote.countDocuments({ post: post._id, value: 1 });
-      const downvoteCount = await Vote.countDocuments({ post: post._id, value: -1 });
-      post.upvotes = upvoteCount;
-      post.downvotes = downvoteCount;
-    }
-
-    res.render('profile', {
-      layout: 'profileLayout',
-      profileImg: userDoc.profileImg,
-      username: userDoc.username,
-      bio: userDoc.bio,
-      followers: followerCount,
-      following: followingCount,
-      posts: userPosts.map(post => post.toObject())
-      // friends: userDoc.friends
-    });
-
+    // Redirect to the user's profile page
+    res.redirect(`/profile/${userDoc.username}`);
   } catch (err) {
-    console.error(err);
+    console.error("Error in /profile route:", err);
     res.status(500).send("Internal Server Error");
   }
 });
@@ -149,9 +172,7 @@ server.get('/profile/:username', async function (req, res) {
       followers: followerCount,
       following: followingCount,
       posts: userPosts.map(post => post.toObject()),
-      // friends: userDoc.friends 
     });
-
   } catch (err) {
     console.error(err);
     res.status(500).send("Internal Server Error");
