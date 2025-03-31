@@ -58,20 +58,28 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.model('User', userSchema);
 */
 
-const followSchema = new mongoose.Schema({
-  follower: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  followed: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
-}, { versionKey: false, timestamps: true });
+// Acessing model folder
+const User = require('./model/user');
+const Post = require('./model/post');
+const Comment = require('./model/comment');
+const Follow = require('./model/follow');
+const Vote = require('./model/vote');
 
-const Follow = mongoose.model('Follow', followSchema);
 
-const voteSchema = new mongoose.Schema({
-  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  post: { type: mongoose.Schema.Types.ObjectId, ref: 'Post', required: true },
-  value: { type: Number, enum: [1, -1], required: true }
-}, { versionKey: false, timestamps: true });
+// const followSchema = new mongoose.Schema({
+//   follower: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+//   followed: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
+// }, { versionKey: false, timestamps: true });
 
-const Vote = mongoose.model('Vote', voteSchema);
+// const Follow = mongoose.model('Follow', followSchema);
+
+// const voteSchema = new mongoose.Schema({
+//   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+//   post: { type: mongoose.Schema.Types.ObjectId, ref: 'Post', required: true },
+//   value: { type: Number, enum: [1, -1], required: true }
+// }, { versionKey: false, timestamps: true });
+
+// const Vote = mongoose.model('Vote', voteSchema);
 
 // PROFILE PAGE
 
@@ -150,6 +158,8 @@ server.get('/profile/:username', async function (req, res) {
   }
 });
 
+
+// Edit Profile Page
 server.get('/editprofile/:username', async (req, resp) => {
   try {
     const username = req.params.username;
@@ -189,6 +199,7 @@ server.get('/profile/:username/edit/:postId', async (req, res) => {
   }
 });
 
+// Update a post
 server.post('/profile/:username/edit/:postId', async (req, res) => {
   try {
     console.log(`Updating post with ID: ${req.params.postId}`);
@@ -252,6 +263,7 @@ server.post('/profile/:username/downvote/:postId', async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
+
 
 // LOGIN PAGE
 
