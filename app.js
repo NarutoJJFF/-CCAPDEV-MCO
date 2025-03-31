@@ -181,26 +181,12 @@ server.get('/profile/:username', async function (req, res) {
 
 
 // Edit Profile Page
-server.get('/editprofile/:username', async (req, resp) => {
-  try {
-    const username = req.params.username;
-    const user= await User.findOne({ username: username });
+const userController = require('./controllers/userController');
 
-    if (!user) {
-      return resp.status(404).send("User not found");
-    }
-
-    resp.render('editProfile', {
-      layout: 'profileLayout',
-      username: user.username,
-      profileImg: user.profileImg,
-      bio: user.bio,
-    });
-  } catch (err) {
-    console.error(err);
-    resp.status(500).send("Internal Server Error");
-  }
-});
+server.get('/editprofile/:username', userController.getEditProfile);
+server.post('/user/updateProfileImg', userController.updateProfileImg);
+server.post('/user/updateUsername', userController.updateUsername);
+server.post('/user/updateBio', userController.updateBio);
 
 // Edit a post
 server.get('/profile/:username/edit/:postId', async (req, res) => {
