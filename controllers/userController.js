@@ -45,17 +45,20 @@ async function updateProfileImg(req, res) {
 // Update Username
 async function updateUsername(req, res) {
     try {
-        const { oldUsername, newUsername } = req.body;
+        const { username, newUsername } = req.body;  // Corrected typo
 
         const user = await User.findOneAndUpdate(
-            { username: oldUsername },
-            { username: newUsername },
+            { username },  // Find user by the current username
+            { username: newUsername },  // Update to the new username
             { new: true }
         );
 
-        if (!user) return res.status(404).send("User not found");
+        if (!user) {
+            return res.status(404).send("User not found");
+        }
 
-        res.redirect(`/profile/${username}`);
+        // Redirect to the updated username profile
+        res.redirect(`/profile/${newUsername}`);
     } catch (error) {
         console.error("Error updating username:", error);
         res.status(500).send("Internal Server Error");
@@ -71,6 +74,7 @@ async function updateBio(req, res) {
 
         if (!user) return res.status(404).send("User not found");
 
+        // Redirect to the same username's edit profile page
         res.redirect(`/profile/${username}`);
     } catch (error) {
         console.error("Error updating bio:", error);

@@ -5,7 +5,7 @@
         <img id="profilePicture" src="{{profileImg}}" alt="Profile Picture">
         <h3>Change Profile Picture (Insert Image Link)</h3>
         <form action="/user/updateProfileImg" method="POST">
-            <input type="hidden" name="username" value="{{username}}"> <!-- Send the username along with the form -->
+            <input type="hidden" name="username" value="{{username}}">
             <input type="text" id="profileImg" name="profileImg" value="{{profileImg}}" required>
             <br>
             <input type="submit" value="Update Profile Picture">
@@ -15,7 +15,8 @@
         <hr class="hr-orange-small">
         <h3>Edit Username</h3>
         <form action="/user/updateUsername" method="POST">
-            <input type="text" id="username" name="username" value="{{username}}" required>
+            <input type="hidden" name="username" value="{{username}}">
+            <input type="text" id="newUsername" name="newUsername" value="{{username}}" required>
             <br>
             <input type="submit" value="Update Username">
         </form>
@@ -23,6 +24,7 @@
         <hr class="hr-orange-small">
         <h3>Edit Bio</h3>
         <form action="/user/updateBio" method="POST">
+            <input type="hidden" name="username" value="{{username}}">
             <input type="text" id="bio" name="bio" value="{{bio}}" required>
             <br>
             <input type="submit" value="Update Bio">
