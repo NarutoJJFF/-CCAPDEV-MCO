@@ -112,7 +112,24 @@ async function addPost (req, resp) {
       resp.status(500).redirect('homepage-page');
     }
   };
+
+
+async function likeCounter(req){
+
+    try {
+        const postID = req;
+        
+        let postResult = await Post.findById(postID).populate("accID", "username profileImg");
+                
+        const plainPost = postResult.toObject();
+    
+        numLike = plainPost.upvotes.length;
+    
+        return numLike;
+    } catch (error){
+        console.error("Error in likeCounter:", error.message);
+        return null; 
+    }
+}
   
-
-
-module.exports = {homepage, searchPage, addPostPage, addPost};
+module.exports = {homepage, searchPage, addPostPage, addPost, likeCounter};
