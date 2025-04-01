@@ -12,9 +12,8 @@ async function getEditProfile(req, res) {
         return res.status(404).send("User not found");
       }
   
-      // Render the edit profile page, passing user data
         res.render('editProfile', {
-            layout: 'profileLayout', // Layout for the edit profile page
+            layout: 'profileLayout', 
             username: user.username,
             profileImg: user.profileImg,
             bio: user.bio
