@@ -1,4 +1,5 @@
 const Post = require('../model/post');
+const User = require('../model/user');
 
 async function homepage (req, resp) {
     try {
@@ -10,6 +11,10 @@ async function homepage (req, resp) {
         let sessionUserID = req.session.login_user.toString();
         const plainPosts = await findAllPosts();
 
+        // Fetch the logged-in user's profile image
+        const user = await User.findById(sessionUserID);
+        const userProfileImg = user ? user.profileImg : "https://openclipart.org/image/800px/122107"; // Default image
+
         console.log("ID: ", sessionUserID);
 
         resp.render('homepage', { 
@@ -17,6 +22,7 @@ async function homepage (req, resp) {
             title: 'Home page',
             posts: plainPosts, 
             session: sessionUserID,
+            userProfileImg // Pass the logged-in user's profile image
         });
 
     } catch (err) {

@@ -1,84 +1,82 @@
 {{> header}}
 
-    <aside> 
-        <p class="sidebar-titles"> POPULAR TAGS </p>
+<aside> 
+    <p class="sidebar-titles"> POPULAR TAGS </p>
 
-        <a href = "populartags.html"><div class = "sidebar-populartags">
-            <p class = "sidebar-tag"><b> Additional Feature Only </b></p>
-            <p class = "sidebar-smaller">  Not Ready</p>
-        </div></a>
-
-    </aside>
-
-
-    <main> 
-        <div> 
-            <div class = "post-bar">
-                {{#each posts}}
-                <img src="{{accID.profileImg}}" alt="Profile Button">
-                {{/each}}
-                <a href="/add-post-page">
-                    <input type="text" placeholder="Create Post.." readonly>
-                </a>
-            </div>
+    <a href="populartags.html">
+        <div class="sidebar-populartags">
+            <p class="sidebar-tag"><b> Additional Feature Only </b></p>
+            <p class="sidebar-smaller"> Not Ready</p>
         </div>
+    </a>
+</aside>
 
-        {{log "Session ID:" session}}
+<main> 
+    <div> 
+        <div class="post-bar">
+            <!-- Use the logged-in user's profile image -->
+            <img src="{{userProfileImg}}" alt="Profile Button">
+            <a href="/add-post-page">
+                <input type="text" placeholder="Create Post.." readonly>
+            </a>
+        </div>
+    </div>
 
+    {{log "Session ID:" session}}
 
-        {{#each posts}}
-            <div class="posts-section">
-                <div class="posts-edit">
-                    <div class="posts-icon">
-                        {{#if (eq accID._id ../session)}}
-                            <a href="/profile">
-                                <img src="{{accID.profileImg}}" alt="Your Profile Button">
-                            </a>
-                        {{else}}
-                            <a href="/profile/view/{{accID.username}}">
-                                <img src="{{accID.profileImg}}" alt="Other User's Profile Button">
-                            </a>
-                        {{/if}}
-                        <p><b>@{{accID.username}}</b></p>
-                    </div>
-                </div>
-                
-                <strong>{{this.title}}</strong>
-                <span class="flair">{{this.tag}}</span> 
-                <p class="paragraph">
-                    {{this.content}}
-                </p>
-                <hr class="hr-orange-smaller">
-                
-                <div class="posts-stats">
-                    {{log "Session ID:" session}}
-                    {{log "Upvotes object:" this.upvotes}}
-
-                    {{#if (lookup this.upvotes session)}}
-                    <img id="like/{{this._id}}" src="/header-elements/red-heart.png" alt="like" onclick="clickLike('{{this._id}}')">
+    {{#each posts}}
+        <div class="posts-section">
+            <div class="posts-edit">
+                <div class="posts-icon">
+                    {{#if (eq accID._id ../session)}}
+                        <a href="/profile">
+                            <img src="{{accID.profileImg}}" alt="Your Profile Button">
+                        </a>
                     {{else}}
-                    <img id="like/{{this._id}}" src="/header-elements/heart.png" alt="like" onclick="clickLike('{{this._id}}')">
+                        <a href="/profile/view/{{accID.username}}">
+                            <img src="{{accID.profileImg}}" alt="Other User's Profile Button">
+                        </a>
                     {{/if}}
-                    <p>{{this.upvoteCount}} Likes</p>
-
-                    <img id="dislike/{{this._id}}" src="/header-elements/red-broken-heart.png" alt="dislike" onclick="clickDislike('{{this._id}}')">                    
-                    <p>{{this.downvoteCount}} Dislikes</p>
-                    
-                    <a href="/commentsPage/{{this._id}}">
-                        <img src="/header-elements/comment.png" alt="comment">
-                    </a>
-                    <p>Comments</p>
-                    
+                    <p><b>@{{accID.username}}</b></p>
                 </div>
             </div>
-        {{/each}}
+            
+            <strong>{{this.title}}</strong>
+            <span class="flair">{{this.tag}}</span> 
+            <p class="paragraph">
+                {{this.content}}
+            </p>
+            <hr class="hr-orange-smaller">
+            
+            <div class="posts-stats">
+                {{log "Session ID:" session}}
+                {{log "Upvotes object:" this.upvotes}}
 
-    </main>
+                {{#if (lookup this.upvotes session)}}
+                <img id="like/{{this._id}}" src="/header-elements/red-heart.png" alt="like" onclick="clickLike('{{this._id}}')">
+                {{else}}
+                <img id="like/{{this._id}}" src="/header-elements/heart.png" alt="like" onclick="clickLike('{{this._id}}')">
+                {{/if}}
+                <p>{{this.upvoteCount}} Likes</p>
 
-    <footer>
-        <div class="footer-content">
-            <div class="footer-left">
-                <p>Redesign 2025</p>
+                <img id="dislike/{{this._id}}" src="/header-elements/red-broken-heart.png" alt="dislike" onclick="clickDislike('{{this._id}}')">                    
+                <p>{{this.downvoteCount}} Dislikes</p>
+                
+                <a href="/commentsPage/{{this._id}}">
+                    <img src="/header-elements/comment.png" alt="comment">
+                </a>
+                <p>Comments</p>
+                
             </div>
         </div>
-    </footer>
+    {{/each}}
+
+</main>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-left">
+            <p>Redesign 2025</p>
+        </div>
+    </div>
+</footer>
