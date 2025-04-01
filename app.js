@@ -239,6 +239,8 @@ server.post('/profile/:username/delete/:postId', async (req, res) => {
   }
 });
 
+
+/*
 // Like a post
 server.post('/profile/:username/upvote/:postId', async (req, res) => {
   try {
@@ -270,6 +272,7 @@ server.post('/profile/:username/downvote/:postId', async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
+*/
 
 
 // LOGIN PAGE

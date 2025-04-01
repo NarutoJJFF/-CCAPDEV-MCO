@@ -117,30 +117,98 @@ async function upvote(req){
 
     const sessionUserID = req.session.login_user;
     const postID = req.params.postID;
-    const upvoted = 0; 
-    const downvoted = 0;
+    let upvoted = 0; 
+    let downvoted = 0;
+    let arrayValue = null;
+
     try {
         const post = await Post.find(postID).populate("accID", "username profileImg");
         
-        for (let i = 0; i < post.upvotes.length; i++){
-            if (sessionUserID == post.upvote.length[i]){
+        for (let i = 0; i < post.upvotes.length - 1; i++){
+            if (sessionUserID == post.upvote[i]){
                 upvoted = 1;
+                arrayValue = i;
+                break;
             }
         }
 
-        for (let i = 0; i < post.downvotes.length; i++){
-            if (sessionUserID == post.upvote.length[i]){
-                upvoted = 1;
+        for (let i = 0; i < post.downvotes.length - 1; i++){
+            if (sessionUserID == post.downvotes[i]){
+                downvoted = 1;
+                arrayValue = i;
+                break;
             }
         }
 
+        if (downvoted == 1){
+            post.downvotes.splice(arrayValue,1)
+            downvoted = 0;
+        }
+
+        if (upvoted == 1) {
+            post.upvotes.splice(arrayValue, 1);
+            upvoted = 0; 
+        } else {
+            post.upvotes.push(sessionUserID);
+        }
+
+
+        updateReactCount(postID);
+
+        await post.save();
 
     } catch (error) {
-
+        console.error("Error can't upvote", error.message);
     }
-
 }
 
+async function downvote(req){
+
+    const sessionUserID = req.session.login_user;
+    const postID = req.params.postID;
+    let upvoted = 0; 
+    let downvoted = 0;
+    let arrayValue = null;
+
+    try {
+        const post = await Post.find(postID).populate("accID", "username profileImg");
+        
+        for (let i = 0; i < post.upvotes.length - 1; i++){
+            if (sessionUserID == post.upvote[i]){
+                upvoted = 1;
+                arrayValue = i;
+                break;
+            }
+        }
+
+        for (let i = 0; i < post.downvotes.length - 1; i++){
+            if (sessionUserID == post.downvotes[i]){
+                downvoted = 1;
+                arrayValue = i;
+                break;
+            }
+        }
+
+        if (downvoted == 1){
+            post.downvotes.splice(arrayValue,1)
+            downvoted = 0;
+        } else {
+            post.downvotes.push(sessionUserID);
+        }
+
+        if (upvoted == 1) {
+            post.upvotes.splice(arrayValue, 1);
+            upvoted = 0; 
+        } 
+
+        updateReactCount(postID);
+
+        await post.save();
+
+    } catch (error) {
+        console.error("Error can't upvote", error.message);
+    }
+}
 
 async function updateReactCount(req){
     try {
@@ -148,15 +216,18 @@ async function updateReactCount(req){
         
         let post = await Post.findById(postID).populate("accID", "username profileImg");
                     
-        const numUpvote = post.upvotes.length + 1;
-        const numDownvote = post.downvotes.length + 1;
+        const numUpvote = post.upvotes.length;
+        const numDownvote = post.downvotes.length;
         
         post.upvoteCount = numUpvote;
         post.downvoteCount = numDownvote;
+
+        await post.save();
+
     
     } catch (error){
         console.error("Error in likeCounter:", error.message);
     }
 }
   
-module.exports = {homepage, searchPage, addPostPage, addPost, };
+module.exports = {homepage, searchPage, addPostPage, addPost, upvote, downvote};

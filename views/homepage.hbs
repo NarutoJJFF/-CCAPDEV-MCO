@@ -58,7 +58,7 @@
                     <img id="like/{{this._id}}" src="/header-elements/heart.png" alt="like" onclick="clickLike('{{this._id}}')">
                     {{/if}}
 
-                    <p>{{this.upvotes}} Likes</p>
+                    <p>{{this.upvoteCount}} Likes</p>
 
                     {{#if this.disliked}}
                     <img id="dislike/{{this._id}}" src="/header-elements/red-broken-heart.png" alt="dislike" onclick="clickDislike('{{this._id}}')">
@@ -66,7 +66,7 @@
                     <img id="dislike/{{this._id}}" src="/header-elements/broken-heart.png" alt="dislike" onclick="clickDislike('{{this._id}}')">
                     {{/if}}
                     
-                    <p>{{this.downvotes}} Dislikes</p>
+                    <p>{{this.downvoteCount}} Dislikes</p>
 
 
                     <a href="/commentsPage/{{this._id}}">

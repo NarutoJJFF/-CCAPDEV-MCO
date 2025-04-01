@@ -11,7 +11,10 @@ server.get('/search', postController.searchPage);
 
 server.get('/add-post-page', postController.addPostPage);
 server.post('/add-post', postController.addPost);
-server.post('/like-count', postController.likeCounter);
+//server.post('/like-count', postController.likeCounter);
+
+server.post('/like/:postID', postController.upvote);
+server.post('/dislike/:postID', postController.downvote);
 
 server.get('/commentsPage/:postID', commentController.commentPage);
 server.post('/addComment', commentController.addComment);
