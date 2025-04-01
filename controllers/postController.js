@@ -2,7 +2,11 @@ const Post = require('../model/post');
 
 async function homepage (req, resp) {
     try {
-        
+        if (!req.session || !req.session.login_user) {
+            console.log("No user logged in. Redirecting to login page.");
+            return resp.redirect('/');
+        }
+
         let sessionUserID = req.session.login_user.toString();
         const plainPosts = await findAllPosts();
 
@@ -263,6 +267,68 @@ async function dislikeChecker(req){
         console.error("Error in like checker:", error.message);
     }
 }
+
+async function editPostPage(req, res) {
+    try {
+        console.log(`Editing post with ID: ${req.params.postId}`);
+        const post = await Post.findById(req.params.postId);
+        if (!post) return res.status(404).send('Post not found');
+
+        res.render('editPost', {
+            layout: 'editPostLayout',
+            post: post.toObject(),
+            username: req.params.username
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Server Error');
+    }
+}
+
+async function updatePost(req, res) {
+    try {
+        console.log(`Updating post with ID: ${req.params.postId}`);
+        const post = await Post.findById(req.params.postId);
+        if (!post) return res.status(404).send('Post not found');
+
+        post.title = req.body.title;
+        post.tag = req.body.tag;
+        post.content = req.body.content;
+        await post.save();
+
+        res.redirect(`/profile/${req.params.username}`);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Server Error');
+    }
+}
+
+async function deletePost(req, res) {
+    try {
+        console.log(`Deleting post with ID: ${req.params.postId}`);
+        const post = await Post.findByIdAndDelete(req.params.postId);
+        if (!post) return res.status(404).send('Post not found');
+
+        res.redirect(`/profile/${req.params.username}`);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Server Error');
+    }
+}
   
+
+
   
-module.exports = {homepage, searchPage, addPostPage, addPost, upvote, downvote, likeChecker, dislikeChecker};
+module.exports = {homepage,
+                searchPage, 
+                addPostPage, 
+                addPost, 
+                upvote, 
+                downvote, 
+                likeChecker, 
+                dislikeChecker, 
+                editPostPage, 
+                updatePost, 
+                deletePost};
+
+

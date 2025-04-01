@@ -82,9 +82,49 @@ async function updateBio(req, res) {
     }
 }
 
+async function browseAsGuest(req, res) {
+    try {
+        req.session.guest = true;
+
+        const defaultUser = await User.findOne({ username: "DefaultUser" });
+
+        if (!defaultUser) {
+            console.error("Default user not found in the database.");
+            return res.status(404).send("Default user not found.");
+        }
+
+        res.redirect(`/profile/${defaultUser.username}`);
+    } catch (err) {
+        console.error("Error in /guest route:", err);
+        res.status(500).send("Internal Server Error");
+    }
+}
+
+async function seedDefaultUser() {
+    try {
+        const defaultUser = await User.findOne({ username: "DefaultUser" });
+
+        if (!defaultUser) {
+            await User.create({
+                username: "DefaultUser",
+                password: "default", 
+                profileImg: "https://thumbs.dreamstime.com/b/default-profile-picture-avatar-photo-placeholder-vector-illustration-default-profile-picture-avatar-photo-placeholder-vector-189495158.jpg",
+                bio: "This is my Default Bio"
+            });
+            console.log("Default user 'DefaultUser' created.");
+        }
+    } catch (err) {
+        console.error("Error seeding default user:", err);
+    }
+}
+
+
+
 module.exports = {
     getEditProfile,
     updateProfileImg,
     updateUsername,
     updateBio,
+    browseAsGuest,
+    seedDefaultUser
 };
