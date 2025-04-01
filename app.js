@@ -197,7 +197,10 @@ server.post('/user/updateProfileImg', userController.updateProfileImg);
 server.post('/user/updateUsername', userController.updateUsername);
 server.post('/user/updateBio', userController.updateBio);
 server.get('/guest', userController.browseAsGuest);
+server.get('/profile/view/:username', userController.viewUserProfile);
 
+// Follow a user
+server.get('/follow/:username', userController.followUser);
 
 
 /*
