@@ -122,10 +122,10 @@ async function upvote(req){
     let arrayValue = null;
 
     try {
-        const post = await Post.find(postID).populate("accID", "username profileImg");
+        const post = await Post.findById(postID).populate("accID", "username profileImg");
         
         for (let i = 0; i < post.upvotes.length - 1; i++){
-            if (sessionUserID == post.upvote[i]){
+            if (sessionUserID == post.upvotes[i]){
                 upvoted = 1;
                 arrayValue = i;
                 break;
@@ -171,10 +171,10 @@ async function downvote(req){
     let arrayValue = null;
 
     try {
-        const post = await Post.find(postID).populate("accID", "username profileImg");
+        const post = await Post.findbyId(postID).populate("accID", "username profileImg");
         
         for (let i = 0; i < post.upvotes.length - 1; i++){
-            if (sessionUserID == post.upvote[i]){
+            if (sessionUserID == post.upvotes[i]){
                 upvoted = 1;
                 arrayValue = i;
                 break;

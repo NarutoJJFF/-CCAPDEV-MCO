@@ -51,21 +51,10 @@
                 <hr class="hr-orange-smaller">
                 
                 <div class="posts-stats">
-
-                    {{#if this.liked}}
-                    <img id="like/{{this._id}}" src="/header-elements/red-heart.png" alt="like" onclick="clickLike('{{this._id}}')">
-                    {{else}}
-                    <img id="like/{{this._id}}" src="/header-elements/heart.png" alt="like" onclick="clickLike('{{this._id}}')">
-                    {{/if}}
-
+                                        <img id="like/{{this._id}}" src="/header-elements/red-heart.png" alt="like" onclick="clickLike('{{this._id}}')">
                     <p>{{this.upvoteCount}} Likes</p>
 
-                    {{#if this.disliked}}
-                    <img id="dislike/{{this._id}}" src="/header-elements/red-broken-heart.png" alt="dislike" onclick="clickDislike('{{this._id}}')">
-                    {{else}}
-                    <img id="dislike/{{this._id}}" src="/header-elements/broken-heart.png" alt="dislike" onclick="clickDislike('{{this._id}}')">
-                    {{/if}}
-                    
+                    <img id="dislike/{{this._id}}" src="/header-elements/red-broken-heart.png" alt="dislike" onclick="clickDislike('{{this._id}}')">                    
                     <p>{{this.downvoteCount}} Dislikes</p>
 
 
