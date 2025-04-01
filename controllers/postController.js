@@ -113,23 +113,50 @@ async function addPost (req, resp) {
     }
   };
 
+async function upvote(req){
 
-async function likeCounter(req){
+    const sessionUserID = req.session.login_user;
+    const postID = req.params.postID;
+    const upvoted = 0; 
+    const downvoted = 0;
+    try {
+        const post = await Post.find(postID).populate("accID", "username profileImg");
+        
+        for (let i = 0; i < post.upvotes.length; i++){
+            if (sessionUserID == post.upvote.length[i]){
+                upvoted = 1;
+            }
+        }
 
+        for (let i = 0; i < post.downvotes.length; i++){
+            if (sessionUserID == post.upvote.length[i]){
+                upvoted = 1;
+            }
+        }
+
+
+    } catch (error) {
+
+    }
+
+}
+
+
+async function updateReactCount(req){
     try {
         const postID = req;
         
-        let postResult = await Post.findById(postID).populate("accID", "username profileImg");
-                
-        const plainPost = postResult.toObject();
+        let post = await Post.findById(postID).populate("accID", "username profileImg");
+                    
+        const numUpvote = post.upvotes.length + 1;
+        const numDownvote = post.downvotes.length + 1;
+        
+        post.upvoteCount = numUpvote;
+        post.downvoteCount = numDownvote;
     
-        numLike = plainPost.upvotes.length;
-    
-        return numLike;
     } catch (error){
         console.error("Error in likeCounter:", error.message);
-        return null; 
     }
 }
   
-module.exports = {homepage, searchPage, addPostPage, addPost, likeCounter};
+module.exports = {homepage, searchPage, addPostPage, addPost, };
