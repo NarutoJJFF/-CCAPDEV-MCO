@@ -42,21 +42,19 @@ async function editProfile(req, res) {
         const user = await User.findOneAndUpdate(
             { username }, 
             updateFields,
-            { new: true }
+            { new: true } 
         );
 
         if (!user) {
             return res.status(404).send("User not found");
         }
 
-        const redirectUsername = newUsername || username;
-        res.redirect(`/profile/${redirectUsername}`);
+        res.redirect('/profile');
     } catch (error) {
         console.error("Error updating user profile:", error);
         res.status(500).send("Internal Server Error");
     }
 }
-
 
 async function browseAsGuest(req, res) {
     try {
@@ -99,6 +97,9 @@ async function viewUserProfile(req, res) {
         const username = req.params.username;
         const loggedInUserId = req.session.login_user;
 
+        // console.log("Logged-in user ID:", loggedInUserId);
+        // console.log("Requested username:", username);
+
         const user = await User.findOne({ username });
         if (!user) {
             return res.status(404).send("User not found");
@@ -127,10 +128,48 @@ async function viewUserProfile(req, res) {
             following: followingCount,
             posts: userPosts.map(post => post.toObject()),
             followersList,
-            isFollowing: !!isFollowing 
+            isFollowing: !!isFollowing,
+            session: { username: req.session.username }
         });
     } catch (err) {
         console.error("Error in viewUserProfile:", err);
+        res.status(500).send("Internal Server Error");
+    }
+}
+
+async function viewOwnProfile(req, res) {
+    try {
+        const loggedInUserId = req.session.login_user;
+
+        // console.log("Logged-in user ID:", loggedInUserId);
+
+        const user = await User.findById(loggedInUserId);
+        if (!user) {
+            return res.status(404).send("User not found");
+        }
+
+        const followersList = await Follow.find({ followed: user._id })
+            .populate('follower', 'username profileImg')
+            .then(follows => follows.map(f => f.follower.toObject()));
+
+        const userPosts = await Post.find({ accID: user._id }).sort({ _id: -1 });
+
+        // console.log("Followers list:", followersList);
+        // console.log("Session username:", req.session.username);
+
+        res.render('profile', {
+            layout: 'profileLayout',
+            profileImg: user.profileImg,
+            username: user.username,
+            bio: user.bio,
+            followers: followersList.length, 
+            following: await Follow.countDocuments({ follower: user._id }),
+            posts: userPosts.map(post => post.toObject()),
+            followersList,
+            session: { username: req.session.username }
+        });
+    } catch (err) {
+        console.error("Error in viewOwnProfile:", err);
         res.status(500).send("Internal Server Error");
     }
 }
@@ -192,6 +231,7 @@ module.exports = {
     browseAsGuest,
     seedDefaultUser,
     viewUserProfile,
+    viewOwnProfile,
     followUser,
     unfollowUser
 };

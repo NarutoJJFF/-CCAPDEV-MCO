@@ -317,8 +317,6 @@ async function deletePost(req, res) {
 }
   
 
-
-  
 module.exports = {homepage,
                 searchPage, 
                 addPostPage, 

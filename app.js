@@ -12,7 +12,11 @@ const handlebars = require('express-handlebars');
 const hbs = handlebars.create({
     extname: 'hbs',
     helpers: {
-        eq: (a, b) => a.toString() === b.toString()
+        eq: (a, b) => {
+            // console.log("Comparing in eq helper:", a, "and", b);
+            if (a == null || b == null) return false;
+            return a.toString() === b.toString();
+        }
     }
 });
 server.engine('hbs', hbs.engine);
@@ -125,63 +129,63 @@ const Vote = require('./model/vote');
 // });
 
 // Flexible Profile Page
-server.get('/profile', async function (req, res) {
-  try {
-    if (!req.session || !req.session.login_user) {
-      console.log("No user logged in. Redirecting to login page.");
-      return res.redirect('/');
-    }
+// server.get('/profile', async function (req, res) {
+//   try {
+//     if (!req.session || !req.session.login_user) {
+//       console.log("No user logged in. Redirecting to login page.");
+//       return res.redirect('/');
+//     }
 
-    // Find the logged-in user
-    const userDoc = await User.findById(req.session.login_user);
-    if (!userDoc) {
-      console.log("Logged-in user not found in the database.");
-      return res.redirect('/');
-    }
+//     // Find the logged-in user
+//     const userDoc = await User.findById(req.session.login_user);
+//     if (!userDoc) {
+//       console.log("Logged-in user not found in the database.");
+//       return res.redirect('/');
+//     }
 
-    // Redirect to the user's profile page
-    res.redirect(`/profile/${userDoc.username}`);
-  } catch (err) {
-    console.error("Error in /profile route:", err);
-    res.status(500).send("Internal Server Error");
-  }
-});
+//     // Redirect to the user's profile page
+//     res.redirect(`/profile/${userDoc.username}`);
+//   } catch (err) {
+//     console.error("Error in /profile route:", err);
+//     res.status(500).send("Internal Server Error");
+//   }
+// });
 
 // Profile Page
-server.get('/profile/:username', async function (req, res) {
-  try {
-    const username = req.params.username;
-    const userDoc = await User.findOne({ username: username });
-    if (!userDoc) {
-      return res.status(404).send('User not found');
-    }
+// server.get('/profile/:username', async function (req, res) {
+//   try {
+//     const username = req.params.username;
+//     const userDoc = await User.findOne({ username: username });
+//     if (!userDoc) {
+//       return res.status(404).send('User not found');
+//     }
 
-    const followerCount = await Follow.countDocuments({ followed: userDoc._id });
-    const followingCount = await Follow.countDocuments({ follower: userDoc._id });
+//     const followerCount = await Follow.countDocuments({ followed: userDoc._id });
+//     const followingCount = await Follow.countDocuments({ follower: userDoc._id });
 
-    const userPosts = await Post.find({ accID: userDoc._id });
+//     const userPosts = await Post.find({ accID: userDoc._id });
 
-    for (let post of userPosts) {
-      const upvoteCount = await Vote.countDocuments({ post: post._id, value: 1 });
-      const downvoteCount = await Vote.countDocuments({ post: post._id, value: -1 });
-      post.upvotes = upvoteCount;
-      post.downvotes = downvoteCount;
-    }
+//     for (let post of userPosts) {
+//       const upvoteCount = await Vote.countDocuments({ post: post._id, value: 1 });
+//       const downvoteCount = await Vote.countDocuments({ post: post._id, value: -1 });
+//       post.upvotes = upvoteCount;
+//       post.downvotes = downvoteCount;
+//     }
 
-    res.render('profile', {
-      layout: 'profileLayout',
-      profileImg: userDoc.profileImg,
-      username: userDoc.username,
-      bio: userDoc.bio,
-      followers: followerCount,
-      following: followingCount,
-      posts: userPosts.map(post => post.toObject()),
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Internal Server Error");
-  }
-});
+//     res.render('profile', {
+//       layout: 'profileLayout',
+//       profileImg: userDoc.profileImg,
+//       username: userDoc.username,
+//       bio: userDoc.bio,
+//       followers: followerCount,
+//       following: followingCount,
+//       posts: userPosts.map(post => post.toObject()),
+//     });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send("Internal Server Error");
+//   }
+// });
 
 
 
@@ -202,6 +206,7 @@ server.get('/guest', userController.browseAsGuest);
 server.get('/profile/view/:username', userController.viewUserProfile);
 server.get('/follow/:username', userController.followUser);
 server.get('/unfollow/:username', userController.unfollowUser);
+server.get('/profile', userController.viewOwnProfile);
 
 
 /*

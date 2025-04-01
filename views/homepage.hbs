@@ -30,12 +30,10 @@
             <div class="posts-section">
                 <div class="posts-edit">
                     <div class="posts-icon">
-                        {{!-- Check if the post belongs to the logged-in user --}}
                         {{#if (eq accID._id ../session)}}
                             <a href="/profile">
                                 <img src="{{accID.profileImg}}" alt="Your Profile Button">
                             </a>
-                        {{!-- If it's another user's post, redirect to their profile --}}
                         {{else}}
                             <a href="/profile/view/{{accID.username}}">
                                 <img src="{{accID.profileImg}}" alt="Other User's Profile Button">

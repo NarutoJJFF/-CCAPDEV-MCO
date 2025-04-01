@@ -84,7 +84,7 @@ async function login(req, resp) {
   console.log('Finding user');
 
   if(login != undefined && login._id != null){ // succesful login
-    
+
     console.log("Remember?:");
     console.log(req.body.remember);
 
@@ -104,14 +104,16 @@ async function login(req, resp) {
         console.log('Error regenerating session');
       }
     });
-    
+
     req.session.login_user = login._id;
+    req.session.username = login.username; // Store the username in the session
     req.session.login_id = req.sessionID;
     req.session.remember = sesh_saved;
     req.session.guest = false;
     req.session.cookie.maxAge = sesh_exp;
 
     console.log("Current User ID: " + req.session.login_user);
+    console.log("Current Username: " + req.session.username); // Log the username
     console.log("Current Login ID: " + req.session.login_id);
     console.log("Remember?: " + req.session.remember);
 

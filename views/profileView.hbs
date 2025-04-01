@@ -58,11 +58,20 @@
                 <h1 class="orange-text nomargin">Followers</h1>
                 <hr class="hr-orange">
                 <ul class="nopadding">
+                    {{!-- {{log "Session username:" ../session.username}}
+                    {{log "Followers list:" followersList}} --}}
                     {{#each followersList}}
                     <li class="friendslist">
-                        <a href="/profile/view/{{this.username}}">
-                            <img src="{{this.profileImg}}" alt="@{{this.username}}">
-                        </a>
+                        {{!-- {{log "Current follower username:" this.username}} --}}
+                        {{#if (eq this.username ../session.username)}}
+                            <a href="/profile">
+                                <img src="{{this.profileImg}}" alt="@{{this.username}}">
+                            </a>
+                        {{else}}
+                            <a href="/profile/view/{{this.username}}">
+                                <img src="{{this.profileImg}}" alt="@{{this.username}}">
+                            </a>
+                        {{/if}}
                         <p>@{{this.username}}</p>
                         <hr class="hr-orange-small">    
                     </li>

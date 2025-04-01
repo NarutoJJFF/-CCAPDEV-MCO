@@ -22,7 +22,7 @@
 
             <div class="column-center">
                 <div class="post-bar">
-                    <img src="/header-elements/Jerry_lobby_sprite.webp" alt="Profile Button">
+                    <img src="{{profileImg}}" alt="Profile Button">
                     <textarea name="Search" id="" placeholder="Create a Post!"></textarea>
                 </div>
                 <br>
@@ -69,9 +69,11 @@
                 <h1 class="orange-text nomargin">Followers</h1>
                 <hr class="hr-orange">
                 <ul class="nopadding">
-                    {{#each friends}}
+                    {{#each followersList}}
                     <li class="friendslist">
-                        <a href="profile.html"><img src="/{{this.profileImg}}" alt="@{{this.username}}"></a>
+                        <a href="/profile/view/{{this.username}}">
+                            <img src="{{this.profileImg}}" alt="@{{this.username}}">
+                        </a>
                         <p>@{{this.username}}</p>
                         <hr class="hr-orange-small">    
                     </li>
