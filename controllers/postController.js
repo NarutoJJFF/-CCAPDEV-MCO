@@ -3,12 +3,16 @@ const Post = require('../model/post');
 async function homepage (req, resp) {
     try {
         
+        const sessionUserID = req.session.login_user.toString();
         const plainPosts = await findAllPosts();
+
+        console.log("ID: ", sessionUserID);
 
         resp.render('homepage', { 
             layout: 'homepageLayout',
             title: 'Home page',
             posts: plainPosts, 
+            session: sessionUserID
         });
 
     } catch (err) {
@@ -124,7 +128,7 @@ async function upvote(req){
     try {
         const post = await Post.findById(postID).populate("accID", "username profileImg");
         
-        for (let i = 0; i < post.upvotes.length - 1; i++){
+        for (let i = 0; i < post.upvotes.length; i++){
             if (sessionUserID == post.upvotes[i]){
                 upvoted = 1;
                 arrayValue = i;
@@ -132,7 +136,7 @@ async function upvote(req){
             }
         }
 
-        for (let i = 0; i < post.downvotes.length - 1; i++){
+        for (let i = 0; i < post.downvotes.length; i++){
             if (sessionUserID == post.downvotes[i]){
                 downvoted = 1;
                 arrayValue = i;
@@ -171,9 +175,9 @@ async function downvote(req){
     let arrayValue = null;
 
     try {
-        const post = await Post.findbyId(postID).populate("accID", "username profileImg");
+        let post = await Post.findById(postID).populate("accID", "username profileImg");
         
-        for (let i = 0; i < post.upvotes.length - 1; i++){
+        for (let i = 0; i < post.upvotes.length; i++){
             if (sessionUserID == post.upvotes[i]){
                 upvoted = 1;
                 arrayValue = i;
@@ -181,7 +185,7 @@ async function downvote(req){
             }
         }
 
-        for (let i = 0; i < post.downvotes.length - 1; i++){
+        for (let i = 0; i < post.downvotes.length; i++){
             if (sessionUserID == post.downvotes[i]){
                 downvoted = 1;
                 arrayValue = i;
@@ -226,8 +230,39 @@ async function updateReactCount(req){
 
     
     } catch (error){
-        console.error("Error in likeCounter:", error.message);
+        console.error("Error in like counter:", error.message);
+    }
+}
+
+async function likeChecker(req){
+
+    const sessionUserID = req.session.login_user;
+    const postID = req.params.postID;
+
+    try {
+        let post = await Post.findById(postID).populate("accID", "username profileImg");
+
+        return post.upvotes.includes(sessionUserID);
+
+    } catch (error){
+        console.error("Error in like checker:", error.message);
+    }
+}
+
+async function dislikeChecker(req){
+
+    const sessionUserID = req.session.login_user;
+    const postID = req.params.postID;
+
+    try {
+        let post = await Post.findById(postID).populate("accID", "username profileImg");
+
+        return post.downvotes.includes(sessionUserID);
+
+    } catch (error){
+        console.error("Error in like checker:", error.message);
     }
 }
   
-module.exports = {homepage, searchPage, addPostPage, addPost, upvote, downvote};
+  
+module.exports = {homepage, searchPage, addPostPage, addPost, upvote, downvote, likeChecker, dislikeChecker};
