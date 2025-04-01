@@ -193,9 +193,7 @@ server.post('/profile/:username/delete/:postId', postController.deletePost);
 const userController = require('./controllers/userController');
 
 server.get('/editprofile/:username', userController.getEditProfile);
-server.post('/user/updateProfileImg', userController.updateProfileImg);
-server.post('/user/updateUsername', userController.updateUsername);
-server.post('/user/updateBio', userController.updateBio);
+server.post('/user/editProfile', userController.editProfile);
 server.get('/guest', userController.browseAsGuest);
 server.get('/profile/view/:username', userController.viewUserProfile);
 

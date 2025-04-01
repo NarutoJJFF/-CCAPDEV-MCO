@@ -1,4 +1,4 @@
-const User = require('../model/user'); // Ensure correct path
+const User = require('../model/user');
 const Post = require('../model/post');
 const Follow = require('../model/follow');
 
@@ -13,7 +13,7 @@ async function getEditProfile(req, res) {
       }
   
         res.render('editProfile', {
-            layout: 'profileLayout', 
+            layout: 'editPostLayout', 
             username: user.username,
             profileImg: user.profileImg,
             bio: user.bio
@@ -24,33 +24,24 @@ async function getEditProfile(req, res) {
     }
   }
 
-// Update Profile Image (Accepts Image URL instead of File Upload)
-async function updateProfileImg(req, res) {
+async function editProfile(req, res) {
     try {
-        const { username, profileImg } = req.body;
+        const { username, newUsername, profileImg, bio } = req.body;
+        let updateFields = {};
 
-        const user = await User.findOneAndUpdate({ username }, { profileImg });
-
-        if (!user) {
-            return res.status(404).send("User not found");
+        if (newUsername) {
+            updateFields.username = newUsername;
+        }
+        if (profileImg) {
+            updateFields.profileImg = profileImg;
+        }
+        if (bio) {
+            updateFields.bio = bio;
         }
 
-        // Redirect to the profile page after updating the profile image
-        res.redirect(`/profile/${username}`);
-    } catch (error) {
-        console.error("Error updating profile image:", error);
-        res.status(500).send("Internal Server Error");
-    }
-}
-
-// Update Username
-async function updateUsername(req, res) {
-    try {
-        const { username, newUsername } = req.body;  // Corrected typo
-
         const user = await User.findOneAndUpdate(
-            { username },  // Find user by the current username
-            { username: newUsername },  // Update to the new username
+            { username }, 
+            updateFields,
             { new: true }
         );
 
@@ -58,30 +49,14 @@ async function updateUsername(req, res) {
             return res.status(404).send("User not found");
         }
 
-        // Redirect to the updated username profile
-        res.redirect(`/profile/${newUsername}`);
+        const redirectUsername = newUsername || username;
+        res.redirect(`/profile/${redirectUsername}`);
     } catch (error) {
-        console.error("Error updating username:", error);
+        console.error("Error updating user profile:", error);
         res.status(500).send("Internal Server Error");
     }
 }
 
-// Update Bio
-async function updateBio(req, res) {
-    try {
-        const { username, bio } = req.body;
-
-        const user = await User.findOneAndUpdate({ username }, { bio });
-
-        if (!user) return res.status(404).send("User not found");
-
-        // Redirect to the same username's edit profile page
-        res.redirect(`/profile/${username}`);
-    } catch (error) {
-        console.error("Error updating bio:", error);
-        res.status(500).send("Internal Server Error");
-    }
-}
 
 async function browseAsGuest(req, res) {
     try {
@@ -198,9 +173,7 @@ async function followUser(req, res) {
 
 module.exports = {
     getEditProfile,
-    updateProfileImg,
-    updateUsername,
-    updateBio,
+    editProfile,
     browseAsGuest,
     seedDefaultUser,
     viewUserProfile,
