@@ -58,16 +58,8 @@ async function editProfile(req, res) {
 
 async function browseAsGuest(req, res) {
     try {
-        req.session.guest = true;
-
-        const defaultUser = await User.findOne({ username: "DefaultUser" });
-
-        if (!defaultUser) {
-            console.error("Default user not found in the database.");
-            return res.status(404).send("Default user not found.");
-        }
-
-        res.redirect(`/profile/${defaultUser.username}`);
+        req.session.guest = true; 
+        res.redirect('/homepage-page'); 
     } catch (err) {
         console.error("Error in /guest route:", err);
         res.status(500).send("Internal Server Error");

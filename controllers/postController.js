@@ -57,7 +57,10 @@ async function searchPage (req, resp) {
         resp.render('searchedPosts', { 
             layout: 'searchPostLayout',
             title: 'Searched page',
-            posts: plainPosts, 
+            posts: plainPosts,
+            session: {
+                username: req.session.username, 
+            },
         });
 
     } catch (err) {

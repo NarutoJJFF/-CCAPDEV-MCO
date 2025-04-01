@@ -12,26 +12,19 @@
     </aside>
     
    <main> 
-
        {{#each posts}}
             <div class="posts-section">
                 <div class="posts-edit">
                     <div class="posts-icon">
-                        <a href="/profile/anonymouse">
-                            <img src="{{accID.profileImg}}" alt="Profile Button">
-                        </a>
-                        <p><b>@{{accID.username}}</b></p>   {{!-- {{Change after login is impelemented}} --}}
-
+                        {{#if (eq accID.username ../session.username)}}
+                            <a href="/profile">
+                        {{else}}
+                            <a href="/profile/view/{{accID.username}}">
+                        {{/if}}
+                                <img src="{{#if accID.profileImg}}{{accID.profileImg}}{{else}}/header-elements/default.png{{/if}}" alt="Profile Button">
+                            </a>
+                        <p><b>@{{accID.username}}</b></p>
                     </div>
-                    {{!-- 
-                    <div class="edit-post">
-                        <a href="editpost.html">
-                            <img src="/header-elements/pencil-square-svgrepo-com.png" alt="Pencil">
-                        </a>
-                        <p>Edit Post</p>
-                    </div>
-                    --}}
-
                 </div>
                 
                 <strong>{{this.title}}</strong>
