@@ -14,7 +14,7 @@
 <main> 
     <div> 
         <div class="post-bar">
-            <img src="{{userProfileImg}}" alt="Profile Button">
+            <img src="{{#if userProfileImg}}{{userProfileImg}}{{else}}/header-elements/default.png{{/if}}" alt="Profile Button">
             <a href="/add-post-page">
                 <input type="text" placeholder="Create Post.." readonly>
             </a>
@@ -29,11 +29,11 @@
                 <div class="posts-icon">
                     {{#if (eq accID._id ../session)}}
                         <a href="/profile">
-                            <img src="{{accID.profileImg}}" alt="Your Profile Button">
+                            <img src="{{#if accID.profileImg}}{{accID.profileImg}}{{else}}/header-elements/default.png{{/if}}" alt="Your Profile Button">
                         </a>
                     {{else}}
                         <a href="/profile/view/{{accID.username}}">
-                            <img src="{{accID.profileImg}}" alt="Other User's Profile Button">
+                            <img src="{{#if accID.profileImg}}{{accID.profileImg}}{{else}}/header-elements/default.png{{/if}}" alt="Other User's Profile Button">
                         </a>
                     {{/if}}
                     <p><b>@{{accID.username}}</b></p>

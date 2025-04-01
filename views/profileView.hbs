@@ -5,7 +5,7 @@
         <div class="main-content">
             <!-- Left Column -->
             <div class="column-left">
-                <img src="{{profileImg}}" alt="Profile Picture">
+                <img src="{{#if profileImg}}{{profileImg}}{{else}}/header-elements/default.png{{/if}}" alt="Profile Picture">
                 <h1 class="nomargin">@{{username}}</h1>
                 <div class="profile-stats">
                     <p><b>{{followers}}</b> Followers</p>
@@ -31,7 +31,7 @@
                 {{#each posts}}
                     <div class="posts-section">
                         <div class="posts-icon">
-                            <img src="{{../profileImg}}" alt="Profile Button">
+                            <img src="{{#if ../profileImg}}{{../profileImg}}{{else}}default{{/if}}" alt="Profile Button">
                             <p><b>@{{../username}}</b></p> 
                         </div>
                         <strong>{{this.title}}</strong>~
@@ -62,16 +62,11 @@
                     {{log "Followers list:" followersList}} --}}
                     {{#each followersList}}
                     <li class="friendslist">
-                        {{!-- {{log "Current follower username:" this.username}} --}}
-                        {{#if (eq this.username ../session.username)}}
-                            <a href="/profile">
-                                <img src="{{this.profileImg}}" alt="@{{this.username}}">
-                            </a>
-                        {{else}}
-                            <a href="/profile/view/{{this.username}}">
-                                <img src="{{this.profileImg}}" alt="@{{this.username}}">
-                            </a>
-                        {{/if}}
+                        {{!-- {{log "Follower username:" this.username}} --}}
+                        {{!-- {{log "Follower profile image:" this.profileImg}} --}}
+                        <a href="/profile/view/{{this.username}}">
+                            <img src="{{#if this.profileImg}}{{this.profileImg}}{{else}}/header-elements/default.png{{/if}}" alt="@{{this.username}}">
+                        </a>
                         <p>@{{this.username}}</p>
                         <hr class="hr-orange-small">    
                     </li>

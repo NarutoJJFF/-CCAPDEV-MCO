@@ -4,7 +4,7 @@
     <div class="posting-area">
         <h1>Edit Profile</h1>
 
-        <img id="profilePicture" src="{{profileImg}}" alt="Profile Picture" class="profile-img">
+        <img id="profilePicture" src="{{#if profileImg}}{{profileImg}}{{else}}/header-elements/default.png{{/if}}" alt="Profile Picture" class="profile-img">
         
         <form action="/user/editProfile" method="POST">
             <input type="hidden" name="username" value="{{username}}">
