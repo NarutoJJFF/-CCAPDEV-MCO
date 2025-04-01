@@ -1,33 +1,30 @@
 {{> header}}
 
 <body>
-    <div class="column-left">
-        <img id="profilePicture" src="{{profileImg}}" alt="Profile Picture">
-        <h3>Change Profile Picture (Insert Image Link)</h3>
-        <form action="/user/updateProfileImg" method="POST">
-            <input type="hidden" name="username" value="{{username}}">
-            <input type="text" id="profileImg" name="profileImg" value="{{profileImg}}" required>
-            <br>
-            <input type="submit" value="Update Profile Picture">
-        </form>
+    <div class="posting-area">
+        <h1>Edit Profile</h1>
 
-
-        <hr class="hr-orange-small">
-        <h3>Edit Username</h3>
-        <form action="/user/updateUsername" method="POST">
+        <img id="profilePicture" src="{{profileImg}}" alt="Profile Picture" class="profile-img">
+        
+        <form action="/user/editProfile" method="POST">
             <input type="hidden" name="username" value="{{username}}">
-            <input type="text" id="newUsername" name="newUsername" value="{{username}}" required>
-            <br>
-            <input type="submit" value="Update Username">
-        </form>
 
-        <hr class="hr-orange-small">
-        <h3>Edit Bio</h3>
-        <form action="/user/updateBio" method="POST">
-            <input type="hidden" name="username" value="{{username}}">
-            <input type="text" id="bio" name="bio" value="{{bio}}" required>
-            <br>
-            <input type="submit" value="Update Bio">
+            <div class="form-group">
+                <label for="profileImg"><b>Change Profile Picture</b></label><br>
+                <input type="text" id="profileImg" name="profileImg" value="{{profileImg}}" class="input-box">
+            </div>
+
+            <div class="form-group">
+                <label for="newUsername"><b>Edit Username</b></label><br>
+                <input type="text" id="newUsername" name="newUsername" value="{{username}}" required class="input-box">
+            </div>
+
+            <div class="form-group">
+                <label for="bio"><b>Edit Bio</b></label><br>
+                <input type="text" id="bio" name="bio" value="{{bio}}" required class="input-box">
+            </div>
+
+            <input type="submit" value="Save Changes">
         </form>
     </div>
 </body>
