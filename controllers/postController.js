@@ -3,7 +3,7 @@ const Post = require('../model/post');
 async function homepage (req, resp) {
     try {
         
-        const sessionUserID = req.session.login_user.toString();
+        let sessionUserID = req.session.login_user.toString();
         const plainPosts = await findAllPosts();
 
         console.log("ID: ", sessionUserID);
@@ -12,7 +12,7 @@ async function homepage (req, resp) {
             layout: 'homepageLayout',
             title: 'Home page',
             posts: plainPosts, 
-            session: sessionUserID
+            session: sessionUserID,
         });
 
     } catch (err) {
