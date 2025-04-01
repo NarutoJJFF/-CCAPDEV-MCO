@@ -14,7 +14,9 @@
     <main> 
         <div> 
             <div class = "post-bar">
-                <img src="header-elements/Jerry_lobby_sprite.webp" alt="Profile Button">
+                {{#each posts}}
+                <img src="{{accID.profileImg}}" alt="Profile Button">
+                {{/each}}
                 <a href="/add-post-page">
                     <input type="text" placeholder="Create Post.." readonly>
                 </a>

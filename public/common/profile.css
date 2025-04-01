@@ -107,7 +107,7 @@ nav {
     margin-right: 20px;
 }
 
-/* Edit Profile */
+/* Edit Profile, Follow and Unfollow Buttons*/
 .profile-edit {
     background-color: orangered;
     border-radius: 50px;
@@ -122,39 +122,64 @@ nav {
     text-decoration: none;
 }
 
-.edit-profile-btn {
-    background-color: orangered;
+.edit-profile-btn, .unfollow-btn {
+    background-color: orangered; 
     color: white;
     text-decoration: none;
     padding: 10px 20px;
     font-size: 16px;
     font-weight: bold;
-    border-radius: 50px;
+    border-radius: 50px; 
     display: inline-block;
     text-align: center;
-    width: 100%;
-    max-width: 200px;
-    margin-top: 10px;
+    width: 100%; 
+    max-width: 200px; 
+    margin-top: 10px; 
     cursor: pointer;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+}
+.edit-profile-btn:hover, .unfollow-btn:hover {
+    background-color: #e03e00; 
 }
 
-.edit-profile-btn:hover {
-    background-color: #e03e00;
+.unfollow-btn {
+    background-color: gray; 
 }
 
-.followed {
-    background-color: gray;
+.unfollow-btn:hover {
+    background-color: darkgray; 
+}
+
+/* General styling for profile-edit buttons */
+.profile-edit {
+    background-color: orangered; /* Same orange color */
     color: white;
+    text-decoration: none;
     padding: 10px 20px;
     font-size: 16px;
     font-weight: bold;
-    border-radius: 50px;
+    border-radius: 50px; /* Rounded corners */
     display: inline-block;
     text-align: center;
-    width: 100%;
-    max-width: 200px;
-    margin-top: 10px;
-    cursor: default;
+    width: 100%; /* Full width */
+    max-width: 200px; /* Optional: Limit the button width */
+    margin-top: 10px; /* Add spacing */
+    cursor: pointer;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+}
+
+/* Hover effect for profile-edit buttons */
+.profile-edit:hover {
+    background-color: #e03e00; /* Slightly darker orange on hover */
+}
+
+/* Specific styling for the Unfollow button */
+.profile-edit.unfollow {
+    background-color: gray; /* Gray for Unfollow */
+}
+
+.profile-edit.unfollow:hover {
+    background-color: darkgray; /* Slightly darker gray on hover */
 }
 
 /* POSTS */

@@ -99,26 +99,21 @@ async function viewUserProfile(req, res) {
         const username = req.params.username;
         const loggedInUserId = req.session.login_user;
 
-        // Find the user by username
         const user = await User.findOne({ username });
         if (!user) {
             return res.status(404).send("User not found");
         }
 
-        // Check if the logged-in user is already following this user
         const isFollowing = await Follow.findOne({
             follower: loggedInUserId,
             followed: user._id
         });
 
-        // Count followers and following
         const followerCount = await Follow.countDocuments({ followed: user._id });
         const followingCount = await Follow.countDocuments({ follower: user._id });
 
-        // Fetch the user's posts
         const userPosts = await Post.find({ accID: user._id });
 
-// Fetch the followers list
         const followersList = await Follow.find({ followed: user._id })
             .populate('follower', 'username profileImg')
             .then(follows => follows.map(f => f.follower.toObject()));
@@ -131,7 +126,8 @@ async function viewUserProfile(req, res) {
             followers: followerCount,
             following: followingCount,
             posts: userPosts.map(post => post.toObject()),
-            followersList
+            followersList,
+            isFollowing: !!isFollowing 
         });
     } catch (err) {
         console.error("Error in viewUserProfile:", err);
@@ -141,14 +137,13 @@ async function viewUserProfile(req, res) {
 
 async function followUser(req, res) {
     try {
-        const followerId = req.session.login_user; // Logged-in user
+        const followerId = req.session.login_user;
         const followedUser = await User.findOne({ username: req.params.username });
 
         if (!followedUser) {
             return res.status(404).send("User not found");
         }
 
-        // Check if already following
         const alreadyFollowing = await Follow.findOne({
             follower: followerId,
             followed: followedUser._id
@@ -158,7 +153,6 @@ async function followUser(req, res) {
             return res.redirect(`/profile/view/${req.params.username}`);
         }
 
-        // Add follow relationship
         await Follow.create({
             follower: followerId,
             followed: followedUser._id
@@ -171,11 +165,33 @@ async function followUser(req, res) {
     }
 }
 
+async function unfollowUser(req, res) {
+    try {
+        const followerId = req.session.login_user; 
+        const followedUser = await User.findOne({ username: req.params.username });
+
+        if (!followedUser) {
+            return res.status(404).send("User not found");
+        }
+
+        await Follow.findOneAndDelete({
+            follower: followerId,
+            followed: followedUser._id
+        });
+
+        res.redirect(`/profile/view/${req.params.username}`);
+    } catch (err) {
+        console.error("Error in unfollowUser:", err);
+        res.status(500).send("Internal Server Error");
+    }
+}
+
 module.exports = {
     getEditProfile,
     editProfile,
     browseAsGuest,
     seedDefaultUser,
     viewUserProfile,
-    followUser
+    followUser,
+    unfollowUser
 };

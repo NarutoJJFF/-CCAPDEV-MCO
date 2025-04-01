@@ -196,9 +196,8 @@ server.get('/editprofile/:username', userController.getEditProfile);
 server.post('/user/editProfile', userController.editProfile);
 server.get('/guest', userController.browseAsGuest);
 server.get('/profile/view/:username', userController.viewUserProfile);
-
-// Follow a user
 server.get('/follow/:username', userController.followUser);
+server.get('/unfollow/:username', userController.unfollowUser);
 
 
 /*

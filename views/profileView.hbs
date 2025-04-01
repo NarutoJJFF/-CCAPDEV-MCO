@@ -12,8 +12,12 @@
                     <p><b>{{following}}</b> Following</p>
                 </div>
                 
-                <h2 class="profile-edit">
-                    <a href="/follow/{{username}}" class="edit-profile-btn">Follow</a>
+                <h2>
+                    {{#if isFollowing}}
+                        <a href="/unfollow/{{username}}" class="profile-edit unfollow">Unfollow</a>
+                    {{else}}
+                        <a href="/follow/{{username}}" class="profile-edit">Follow</a>
+                    {{/if}}
                 </h2>
                 
                 <hr class="hr-orange-small">
