@@ -34,7 +34,7 @@ const mongoStore = require('connect-mongodb-session')(session);
 let store = new mongoStore({
   uri: mongo_uri,
   collection: 'mySession',
-  expires: 21*24*60*60*1000 //3weeks
+  expires: 60*60*1000 //1hr
 });
 
 server.use(session({
@@ -238,186 +238,227 @@ server.post('/profile/:username/downvote/:postId', async (req, res) => {
 
 // LOGIN PAGE
 
+const loginController = require('./controllers/loginController');
+
+server.get('/', loginController.loginPage);
+server.post('/login', loginController.login);
+server.get('/guest', loginController.guest);
+server.get('/logout', loginController.logout);
+server.get('/register-page', loginController.registerPage);
+server.post('/register', loginController.register);
+
 // Login page (default)
-server.get('/', async function(req,resp){
-  console.log("Login page opened.");
+// server.get('/', async function(req,resp){
+//   console.log("Login page opened.");
+
+//   if(req.session.login_id == null){
+//     console.log("No user session found. Redirecting...");
+
+//     resp.render('login',{
+//       layout: 'loginRegisterLayout',
+//       title: 'Login Page',
+//       failed: false,
+//     });
+
+//   }else{
+//     let current_user = await User.findById(req.session.login_user);
+//     let log_uname = current_user.username;
+//     if(req.session.remember){
+//       console.log("Remembered. Session extended.");
+//       req.session.cookie.maxAge = 21*24*60*60*1000; // 3 week extension from login during remember period
+//     }else{
+//       console.log("Unremembered. Session unextended.");
+//     }
+//     console.log("Hello " + log_uname);
+//     resp.redirect('/homepage-page');
+//   }
   
-  // Checking status of session before trying to extract data
-  store.get(req.sessionID, async (err, session) => {
-    let log_uname = "";
-    let log_passw = "";
-    let saved = false;
+//   // Checking status of session before trying to extract data
+//   /*
+//   store.get(req.sessionID, async (err, session) => {
+//     let log_uname = "";
+//     let log_passw = "";
+//     let saved = false;
     
-    if (err) {
-      console.log('Error checking session');
-    }else if (!session) {
-      // Session doesn't exist (expired or never existed)
-      console.log('Session has expired or does not exist');
-    }else if (session.expires && new Date(session.expires) < Date.now()) {
-      // Session is expired based on the store's expiration time
-      console.log('Session has expired');
-    }else{
-      // Session exists and is still valid
-      console.log('Session is still active');
+//     if (err) {
+//       console.log('Error checking session');
+//     }else if (!session) {
+//       // Session doesn't exist (expired or never existed)
+//       console.log('Session has expired or does not exist');
+//     }else if (session.expires && new Date(session.expires) < Date.now()) {
+//       // Session is expired based on the store's expiration time
+//       console.log('Session has expired');
+//     }else{
+//       // Session exists and is still valid
+//       console.log('Session is still active');
 
-      if(req.session.remember){
-        let current_user = await User.findById(req.session.login_user);
+//       if(req.session.remember){
+//         let current_user = await User.findById(req.session.login_user);
         
-        log_uname = current_user.username;
-        console.log("1 Saved username: " + log_uname);
-        log_passw = current_user.password;
-        console.log("1 Saved password: " + log_passw);
-        saved = true;
-      }
+//         log_uname = current_user.username;
+//         console.log("1 Saved username: " + log_uname);
+//         log_passw = current_user.password;
+//         console.log("1 Saved password: " + log_passw);
+//         saved = true;
+//       }
 
-      console.log("2 Username: "+log_uname);
-      console.log("2 Password: "+log_passw);
-    }
+//       console.log("2 Username: "+log_uname);
+//       console.log("2 Password: "+log_passw);
+//     }
 
-    resp.render('login',{
-      layout: 'loginRegisterLayout',
-      title: 'Login Page',
-      failed: false,
-      u_saved: saved,
-      saved_uname: log_uname,
-      saved_passw: log_passw
-    });
-  });
-});
+//     try{
+//       //check session, redirect
+//     }catch(err){
 
-// login function
-server.post('/login', async function(req, resp) {
-  console.log("Login attempted");
-  const searchQuery = { username: req.body.username, password: req.body.password };
-  let login = await User.findOne(searchQuery);
-  console.log('Finding user');
+//     }
 
-  if(login != undefined && login._id != null){ // succesful login
+//     resp.render('login',{
+//       layout: 'loginRegisterLayout',
+//       title: 'Login Page',
+//       failed: false,
+//       u_saved: saved,
+//       saved_uname: log_uname,
+//       saved_passw: log_passw
+//     });
+//   });
+//   */
+
+// });
+
+// // login function
+// server.post('/login', async function(req, resp) {
+//   console.log("Login attempted");
+//   const searchQuery = { username: req.body.username, password: req.body.password };
+//   let login = await User.findOne(searchQuery);
+//   console.log('Finding user');
+
+//   if(login != undefined && login._id != null){ // succesful login
     
-    console.log("Remember?:");
-    console.log(req.body.remember);
+//     console.log("Remember?:");
+//     console.log(req.body.remember);
 
-    //let sesh_exp = 0;
-    let sesh_saved = true;
+//     let sesh_exp = 0;
+//     let sesh_saved = true;
 
-    if(req.body.remember != undefined){
-      //store.expires = 21*24*60*60*1000; //three weeks
-    }else{
-      //store.expires = 1000; //1sec
-      sesh_saved = false;
-    }
+//     if(req.body.remember != undefined){
+//       sesh_exp = 21*24*60*60*1000; //three weeks
+//     }else{
+//       sesh_exp = 60*60*1000; //1min
+//       sesh_saved = false;
+//     }
 
-    req.session.regenerate(function(err){
-      //resp.redirect('/');
-      if (err) {
-        console.log('Error regenerating session');
-      }
-    });
+//     req.session.regenerate(function(err){
+//       //resp.redirect('/');
+//       if (err) {
+//         console.log('Error regenerating session');
+//       }
+//     });
     
-    req.session.login_user = login._id;
-    req.session.login_id = req.sessionID;
-    req.session.remember = sesh_saved;
-    req.session.guest = false;
+//     req.session.login_user = login._id;
+//     req.session.login_id = req.sessionID;
+//     req.session.remember = sesh_saved;
+//     req.session.guest = false;
+//     req.session.cookie.maxAge = sesh_exp;
 
-    console.log("Current User ID: " + req.session.login_user);
-    console.log("Current Login ID: " + req.session.login_id);
-    console.log("Remember?: " + req.session.remember);
+//     console.log("Current User ID: " + req.session.login_user);
+//     console.log("Current Login ID: " + req.session.login_id);
+//     console.log("Remember?: " + req.session.remember);
 
-    resp.redirect('/homepage-page');
-  }else{ // failed login
-    resp.render('login',{
-      layout: 'loginRegisterLayout',
-      title:  'Login Page',
-      failed: true,
-      u_saved: false,
-      saved_uname: "",
-      saved_passw: ""});
-  }
-});
+//     resp.redirect('/homepage-page');
+//   }else{ // failed login
+//     resp.render('login',{
+//       layout: 'loginRegisterLayout',
+//       title:  'Login Page',
+//       failed: true,
+//       u_saved: false,
+//       saved_uname: "",
+//       saved_passw: ""});
+//   }
+// });
 
-server.get('/guest', async function(req,resp){
-  req.session.guest = true;
-  resp.redirect('/homepage-page');
-});
+// server.get('/guest', async function(req,resp){
+//   req.session.guest = true;
+//   resp.redirect('/homepage-page');
+// });
 
-// Logout function
-server.get('/logout', async function(req,resp){
-  req.session.destroy(function(err){
-    resp.redirect('/');
-  });
-});
+// // Logout function
+// server.get('/logout', async function(req,resp){
+//   req.session.destroy(function(err){
+//     resp.redirect('/');
+//   });
+// });
 
-// REGISTER PAGE
+// // REGISTER PAGE
 
-// Register page
-server.get('/register-page', async function(req,resp){
-  resp.render('register',{
-    layout: 'loginRegisterLayout',
-    title: 'Registration Page',
-    passw_error: false,
-    uname_taken: false,
-    db_error: false
-  });
-});
+// // Register page
+// server.get('/register-page', async function(req,resp){
+//   resp.render('register',{
+//     layout: 'loginRegisterLayout',
+//     title: 'Registration Page',
+//     passw_error: false,
+//     uname_taken: false,
+//     db_error: false
+//   });
+// });
 
-// register function
-server.post('/register', async function(req, resp) {
-  if(req.body.password != req.body.conf_password){
+// // register
+// server.post('/register', async function(req, resp) {
+//   if(req.body.password != req.body.conf_password){
 
-    resp.render('register',{
-      layout: 'loginRegisterLayout',
-      title:  'Registration Page',
-      passw_error: true,
-      uname_taken: false,
-      db_error: false
-    });
+//     resp.render('register',{
+//       layout: 'loginRegisterLayout',
+//       title:  'Registration Page',
+//       passw_error: true,
+//       uname_taken: false,
+//       db_error: false
+//     });
 
-  }else{
+//   }else{
 
-    const searchQuery = { username: req.body.username };
-    let login = await User.findOne(searchQuery);
-    console.log('Finding user/s');
+//     const searchQuery = { username: req.body.username };
+//     let login = await User.findOne(searchQuery);
+//     console.log('Finding user/s');
 
-    if(login != undefined && login._id != null){
-      resp.render('register',{
-        layout: 'loginRegisterLayout',
-        title:  'Registration Page',
-        passw_error: false,
-        uname_taken: true,
-        db_error: false
-      });
+//     if(login != undefined && login._id != null){
+//       resp.render('register',{
+//         layout: 'loginRegisterLayout',
+//         title:  'Registration Page',
+//         passw_error: false,
+//         uname_taken: true,
+//         db_error: false
+//       });
 
-    }else{
+//     }else{
 
-      try {
-        const newUser = new User({
-          username: req.body.username,
-          password: req.body.password,
-          profileImg: null,
-          bio: "New user"
-        });
+//       try {
+//         const newUser = new User({
+//           username: req.body.username,
+//           password: req.body.password,
+//           profileImg: null,
+//           bio: "New user"
+//         });
     
-        await newUser.save();
-        console.log('User created successfully');
+//         await newUser.save();
+//         console.log('User created successfully');
     
-        resp.redirect('/');
+//         resp.redirect('/');
         
-      } catch (error) {
+//       } catch (error) {
 
-        console.error('Error creating post:', error);
+//         console.error('Error creating post:', error);
 
-        resp.status(500).render('register', {
-          layout: 'loginRegisterLayout',
-          title: 'Registration Page',
-          passw_error: false,
-          uname_taken: false,
-          db_error: true
-        });
+//         resp.status(500).render('register', {
+//           layout: 'loginRegisterLayout',
+//           title: 'Registration Page',
+//           passw_error: false,
+//           uname_taken: false,
+//           db_error: true
+//         });
 
-      }
-    }
-  }
-});
+//       }
+//     }
+//   }
+// });
 
 function finalClose(){
   console.log('Close connection at the end!');

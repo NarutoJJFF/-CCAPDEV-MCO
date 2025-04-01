@@ -5,9 +5,9 @@
         <h1>Login Page</h1>
         <form action="/login" method="post">
             <label for="username"></label>
-            <input type="text" id="username" name="username" placeholder="Type your Username..." value="{{saved_uname}}"><br>
+            <input type="text" id="username" name="username" placeholder="Type your Username..."><br>
             <label for="password"></label>
-            <input type="password" id="password" name="password" placeholder="Type your password..." value="{{saved_passw}}"><br>
+            <input type="password" id="password" name="password" placeholder="Type your password..."><br>
             {{#if u_saved}}
             <input type="checkbox" name="remember" value="remember" checked/> Remember me <br>
             {{else}}
