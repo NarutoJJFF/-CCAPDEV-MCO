@@ -1,0 +1,78 @@
+{{> header}}
+
+<body>
+    <main>
+        <div class="main-content">
+            <!-- Left Column -->
+            <div class="column-left">
+                <img src="{{profileImg}}" alt="Profile Picture">
+                <h1 class="nomargin">@{{username}}</h1>
+                <div class="profile-stats">
+                    <p><b>{{followers}}</b> Followers</p>
+                    <p><b>{{following}}</b> Following</p>
+                </div>
+                
+                <h2 class="profile-edit">
+                    <a href="/follow/{{username}}" class="edit-profile-btn">Follow</a>
+                </h2>
+                
+                <hr class="hr-orange-small">
+                <h3>Bio</h3>
+                <p>{{bio}}</p>
+            </div> 
+
+            <!-- Center Column -->
+            <div class="column-center">
+                <div class="scrollable">
+                {{#each posts}}
+                    <div class="posts-section">
+                        <div class="posts-icon">
+                            <img src="{{../profileImg}}" alt="Profile Button">
+                            <p><b>@{{../username}}</b></p> 
+                        </div>
+                        <strong>{{this.title}}</strong>~
+                        <span class="flair">{{this.tag}}</span>
+                        <p class="paragraph">{{this.content}}</p>
+                        <hr class="hr-orange-smaller">
+                        <div class="posts-stats">
+                            <img id="like" src="/header-elements/heart.png" alt="like" onclick="changeImageLike()">
+                            <p>{{this.upvotes}} Likes</p>
+                            <img id="dislike" src="/header-elements/broken-heart.png" alt="dislike" onclick="changeImageDislike()">
+                            <p>{{this.downvotes}} Dislikes</p>
+                            <a href="/commentsPage/{{this._id}}">
+                                <img src="/header-elements/comment.png" alt="comment">
+                            </a>
+                            <p>{{this.comments}} Comments</p>
+                        </div>
+                    </div>
+                {{/each}}
+                </div> 
+            </div>
+
+            <!-- Right Column -->
+            <div class="column-right">
+                <h1 class="orange-text nomargin">Followers</h1>
+                <hr class="hr-orange">
+                <ul class="nopadding">
+                    {{#each followersList}}
+                    <li class="friendslist">
+                        <a href="/profile/view/{{this.username}}">
+                            <img src="{{this.profileImg}}" alt="@{{this.username}}">
+                        </a>
+                        <p>@{{this.username}}</p>
+                        <hr class="hr-orange-small">    
+                    </li>
+                    {{/each}}
+                </ul>
+            </div>
+        </div>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-left">
+                    <p>Redesign 2025</p>
+                </div>
+            </div>
+        </footer>
+    </main>
+</body>

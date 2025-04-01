@@ -180,6 +180,15 @@ server.get('/profile/:username', async function (req, res) {
 });
 
 
+
+// Edit, Update and Delete Post
+const postController = require('./controllers/postController');
+
+server.get('/profile/:username/edit/:postId', postController.editPostPage);
+server.post('/profile/:username/edit/:postId', postController.updatePost);
+server.post('/profile/:username/delete/:postId', postController.deletePost);
+
+
 // Edit Profile Page
 const userController = require('./controllers/userController');
 
@@ -187,57 +196,11 @@ server.get('/editprofile/:username', userController.getEditProfile);
 server.post('/user/updateProfileImg', userController.updateProfileImg);
 server.post('/user/updateUsername', userController.updateUsername);
 server.post('/user/updateBio', userController.updateBio);
+server.get('/guest', userController.browseAsGuest);
+server.get('/profile/view/:username', userController.viewUserProfile);
 
-// Edit a post
-server.get('/profile/:username/edit/:postId', async (req, res) => {
-  try {
-    console.log(`Editing post with ID: ${req.params.postId}`);
-    const post = await Post.findById(req.params.postId);
-    if (!post) return res.status(404).send('Post not found');
-
-    res.render('editPost', {
-      layout: 'editPostLayout',
-      post: post.toObject(),
-      username: req.params.username
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Server Error');
-  }
-});
-
-// Update a post
-server.post('/profile/:username/edit/:postId', async (req, res) => {
-  try {
-    console.log(`Updating post with ID: ${req.params.postId}`);
-    const post = await Post.findById(req.params.postId);
-    if (!post) return res.status(404).send('Post not found');
-
-    post.title = req.body.title;
-    post.tag = req.body.tag;
-    post.content = req.body.content;
-    await post.save();
-
-    res.redirect(`/profile/${req.params.username}`);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Server Error');
-  }
-});
-
-// Delete a post
-server.post('/profile/:username/delete/:postId', async (req, res) => {
-  try {
-    console.log(`Deleting post with ID: ${req.params.postId}`);
-    const post = await Post.findByIdAndDelete(req.params.postId);
-    if (!post) return res.status(404).send('Post not found');
-
-    res.redirect(`/profile/${req.params.username}`);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Server Error');
-  }
-});
+// Follow a user
+server.get('/follow/:username', userController.followUser);
 
 
 /*
