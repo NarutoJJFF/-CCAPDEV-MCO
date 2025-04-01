@@ -11,9 +11,8 @@ async function homepage (req, resp) {
         let sessionUserID = req.session.login_user.toString();
         const plainPosts = await findAllPosts();
 
-        // Fetch the logged-in user's profile image
         const user = await User.findById(sessionUserID);
-        const userProfileImg = user ? user.profileImg : "https://openclipart.org/image/800px/122107"; // Default image
+        const userProfileImg = user ? user.profileImg : "https://openclipart.org/image/800px/122107"; 
 
         console.log("ID: ", sessionUserID);
 
@@ -22,7 +21,7 @@ async function homepage (req, resp) {
             title: 'Home page',
             posts: plainPosts, 
             session: sessionUserID,
-            userProfileImg // Pass the logged-in user's profile image
+            userProfileImg 
         });
 
     } catch (err) {
