@@ -104,6 +104,7 @@ async function search(req) {
     }
 
     try {
+<<<<<<< HEAD
         // Execute the query and populate account info
         const posts = await Post.find(searchCriteria)
             .populate("accID", "username profileImg");
@@ -117,6 +118,12 @@ async function search(req) {
                 return plainPost;
             })
         );
+=======
+        const posts = await Post.find(searchCriteria)
+            .populate("accID", "username profileImg")
+            .sort({_id:-1});
+        const plainPosts = posts.map(post => post.toObject());
+>>>>>>> fa3ea13de643396926e9982a99903320724b5ff2
 
         return plainPosts;
     } catch (error) {
