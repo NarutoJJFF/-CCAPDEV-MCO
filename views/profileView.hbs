@@ -19,7 +19,7 @@
                         <a href="/follow/{{username}}" class="profile-edit">Follow</a>
                     {{/if}}
                 </h2>
-                
+
                 <hr class="hr-orange-small">
                 <h3>Bio</h3>
                 <p>{{bio}}</p>
@@ -34,15 +34,20 @@
                             <img src="{{#if ../profileImg}}{{../profileImg}}{{else}}/header-elements/default.png{{/if}}" alt="Profile Button">
                             <p><b>@{{../username}}</b></p> 
                         </div>
-                        <strong>{{this.title}}</strong>~
+
+                        <strong> {{this.title}} </strong>
                         <span class="flair">{{this.tag}}</span>
-                        <p class="paragraph">{{this.content}}</p>
+                        <p class="paragraph">
+                            {{this.content}}
+                        </p>
                         <hr class="hr-orange-smaller">
                         <div class="posts-stats">
-                            <img id="like" src="/header-elements/heart.png" alt="like" onclick="changeImageLike()">
-                            <p>{{this.upvotes}} Likes</p>
-                            <img id="dislike" src="/header-elements/broken-heart.png" alt="dislike" onclick="changeImageDislike()">
-                            <p>{{this.downvotes}} Dislikes</p>
+                            <img id="like/{{this._id}}" src="/header-elements/heart.png" alt="like" onclick="clickLike('{{this._id}}')">
+                            <p id="like-count-{{this._id}}">{{this.upvoteCount}} Likes</p>
+
+                            <img id="dislike/{{this._id}}" src="/header-elements/broken-heart.png" alt="dislike" onclick="clickDislike('{{this._id}}')">
+                            <p id="dislike-count-{{this._id}}">{{this.downvoteCount}} Dislikes</p>
+
                             <a href="/commentsPage/{{this._id}}">
                                 <img src="/header-elements/comment.png" alt="comment">
                             </a>
@@ -87,4 +92,6 @@
             </div>
         </footer>
     </main>
+
+    <script src="/common/homepage.js" defer></script>
 </body>
