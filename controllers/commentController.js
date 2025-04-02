@@ -202,10 +202,53 @@ async function deleteComment(req, res) {
   }
 }
 
+
+async function upvoteComment(req, resp){
+    if(!req.session || req.session.guest){
+        console.log("Login before viewing profile.");
+        const log_req = "vote";
+        return resp.redirect('/?logReq='+log_req);
+    }
+
+    const sessionUserID = req.session.login_user.toString();
+    const commentID = req.params.commentID;
+    let upvoted = 0;
+    let downvoted = 0;
+
+    try {
+        const comment = await Comment.findById(commentID);
+
+        if (comment.upvotes.includes(sessionUserID)) {
+            comment.upvotes = comment.upvotes.filter(id => id !== sessionUserID);
+            upvoted = -1;
+        } else {
+            comment.upvotes.push(sessionUserID);
+            upvoted = 1;
+
+            if (comment.downvotes.includes(sessionUserID)) {
+                comment.downvotes = comment.downvotes.filter(id => id !== sessionUserID);
+                downvoted = -1;
+            }
+        }
+
+        comment.upvoteCount += upvoted;
+        comment.downvoteCount += downvoted;
+
+        await comment.save();
+
+    
+        resp.json({ upvoteCount: comment.upvoteCount, downvoteCount: comment.downvoteCount });
+    } catch (error) {
+        console.error("Error in upvote:", error);
+        resp.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
 module.exports = { commentPage, 
   addComment, 
   editCommentPage, 
   updateComment, 
   deleteReplies, 
-  deleteComment 
+  deleteComment, 
+  upvoteComment
 };
