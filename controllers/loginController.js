@@ -24,57 +24,6 @@ async function loginPage (req,resp){
     console.log("Hello " + log_uname);
     resp.redirect('/homepage-page');
   }
-  
-  // Checking status of session before trying to extract data
-  /*
-  store.get(req.sessionID, async (err, session) => {
-    let log_uname = "";
-    let log_passw = "";
-    let saved = false;
-    
-    if (err) {
-      console.log('Error checking session');
-    }else if (!session) {
-      // Session doesn't exist (expired or never existed)
-      console.log('Session has expired or does not exist');
-    }else if (session.expires && new Date(session.expires) < Date.now()) {
-      // Session is expired based on the store's expiration time
-      console.log('Session has expired');
-    }else{
-      // Session exists and is still valid
-      console.log('Session is still active');
-
-      if(req.session.remember){
-        let current_user = await User.findById(req.session.login_user);
-        
-        log_uname = current_user.username;
-        console.log("1 Saved username: " + log_uname);
-        log_passw = current_user.password;
-        console.log("1 Saved password: " + log_passw);
-        saved = true;
-      }
-
-      console.log("2 Username: "+log_uname);
-      console.log("2 Password: "+log_passw);
-    }
-
-    try{
-      //check session, redirect
-    }catch(err){
-
-    }
-
-    resp.render('login',{
-      layout: 'loginRegisterLayout',
-      title: 'Login Page',
-      failed: false,
-      u_saved: saved,
-      saved_uname: log_uname,
-      saved_passw: log_passw
-    });
-  });
-  */
-
 }
 
 async function login(req, resp) {
@@ -131,8 +80,13 @@ async function login(req, resp) {
 
 async function guest(req,resp){
   console.log("Guest thru loginController");
-  req.session.guest = true;
-  resp.redirect('/homepage-page');
+  try {
+    req.session.guest = true; 
+    resp.redirect('/homepage-page'); 
+  } catch (err) {
+    console.error("Error in /guest route:", err);
+    resp.status(500).send("Internal Server Error");
+  }
 }
 
 async function logout(req,resp){
@@ -142,13 +96,13 @@ async function logout(req,resp){
 }
 
 async function registerPage(req,resp){
-    resp.render('register',{
-      layout: 'loginRegisterLayout',
-      title: 'Registration Page',
-      passw_error: false,
-      uname_taken: false,
-      db_error: false
-    });
+  resp.render('register',{
+    layout: 'loginRegisterLayout',
+    title: 'Registration Page',
+    passw_error: false,
+    uname_taken: false,
+    db_error: false
+  });
 }
 
 async function register(req, resp) {
@@ -194,7 +148,7 @@ async function register(req, resp) {
         
       } catch (error) {
 
-        console.error('Error creating post:', error);
+        console.error('Error creating account:', error);
 
         resp.status(500).render('register', {
           layout: 'loginRegisterLayout',
