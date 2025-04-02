@@ -98,7 +98,9 @@ async function search (req) {
     }
 
     try {
-        const posts = await Post.find(searchCriteria).populate("accID", "username profileImg");
+        const posts = await Post.find(searchCriteria)
+            .populate("accID", "username profileImg")
+            .sort({_id:-1});
         const plainPosts = posts.map(post => post.toObject());
 
         return plainPosts;
