@@ -17,6 +17,8 @@ async function commentPage (req, resp) {
         let sessionUserID = req.session.login_user.toString();
         console.log("Curr User:  ",  sessionUserID);
 
+        // console.log("Set of comments:");
+        // console.log(plainComments);
 
         resp.render('commentsPage', {
             layout: 'commentsPageLayout',
