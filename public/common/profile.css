@@ -50,14 +50,6 @@ nav {
     padding: 20px; 
 }
 
-/* Middle Main Content - POST BAR */
-/*.post-bar {
-    display: flex;
-    flex-direction: row;
-    line-height: 0rem;
-}
-*/
-
 .post-bar {
     display: flex;
     align-items: center;  /* Aligns elements vertically */
@@ -73,7 +65,7 @@ nav {
 }
 
 .create-post-btn {
-    flex-grow: 1;  /* Makes the button take the remaining width */
+    flex-grow: 1;  
     background-color: orangered;
     padding: 10px 20px;
     border-radius: 50px;
