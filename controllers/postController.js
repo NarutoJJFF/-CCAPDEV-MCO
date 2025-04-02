@@ -182,7 +182,7 @@ async function upvote(req){
         }
 
 
-        updateReactCount(postID);
+        await updateReactCount(postID);
 
         await post.save();
 
@@ -233,7 +233,7 @@ async function downvote(req){
             upvoted = 0; 
         } 
 
-        updateReactCount(postID);
+        await updateReactCount(postID);
 
         await post.save();
 
@@ -255,6 +255,8 @@ async function updateReactCount(req){
         post.downvoteCount = numDownvote;
 
         await post.save();
+
+        console.log("Updating react count");
 
     
     } catch (error){
