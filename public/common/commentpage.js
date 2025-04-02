@@ -54,3 +54,26 @@ async function clickDislike(post_id) {
     document.querySelector(`#like-count-${post_id}`).textContent = `${data.upvoteCount} Likes`;
     document.querySelector(`#dislike-count-${post_id}`).textContent = `${data.downvoteCount} Dislikes`;
 }
+
+async function commentClickLike(comment_id) {
+    let displayImage = document.getElementById('like/' + comment_id);
+    let filename = displayImage.src.split('/').pop();
+
+    if (filename === 'heart.png') {
+        displayImage.src = '/header-elements/red-heart.png';
+
+        let otherImage = document.getElementById('dislike/' + comment_id);
+        let otherFile = otherImage.src.split('/').pop();
+
+        if (otherFile === 'red-broken-heart.png') {
+            otherImage.src = '/header-elements/broken-heart.png';
+        }
+    } else {
+        displayImage.src = '/header-elements/heart.png';
+    }
+    const response = await fetch(`/commentLike/${comment_id}`, { method: 'POST' });
+    const data = await response.json();
+
+    document.querySelector(`#like-count-${comment_id}`).textContent = `${data.upvoteCount} Likes`;
+    document.querySelector(`#dislike-count-${comment_id}`).textContent = `${data.downvoteCount} Dislikes`;
+}
