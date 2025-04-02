@@ -2,8 +2,10 @@ const User = require('../model/user');
 
 async function loginPage (req,resp){
   console.log("Login page opened.");
+  console.log(req.session);
+  console.log(!req.session.guest);
 
-  if(!req.session || req.session.guest){
+  if(!req.session || req.session.guest || !req.session.login_user){
     let log_req="";
     if(req.query.logReq != null){
       log_req = req.query.logReq
@@ -36,6 +38,8 @@ async function loginPage (req,resp){
     });
 
   }else{
+    console.log("Session found.");
+    console.log(req.session.login_user);
     let current_user = await User.findById(req.session.login_user);
     let log_uname = current_user.username;
     if(req.session.remember){
