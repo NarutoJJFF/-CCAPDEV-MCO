@@ -84,7 +84,7 @@ main{
     gap: 20px;
 }
 
-/* POST BAR */
+/* POST BAR
 
 .post-bar {
     display:grid;
@@ -127,7 +127,41 @@ main{
 .post-bar ::placeholder{
     color: black;
 }
+*/
 
+.post-bar {
+    display: flex;
+    align-items: center;  /* Aligns elements vertically */
+    gap: 10px;  /* Adds space between elements */
+}
+
+.post-bar img {
+    object-fit: cover;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid orangered;
+}
+
+.create-post-btn {
+    flex-grow: 1;  
+    background-color: orangered;
+    padding: 10px 20px;
+    border-radius: 50px;
+    color: white;
+    font-family: "Poppins", serif;
+    font-weight: 400;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+}
+
+.create-post-btn:hover {
+    background-color: darkred;
+}
 
 /* POST AREA */
 
