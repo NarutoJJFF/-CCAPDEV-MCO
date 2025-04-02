@@ -47,15 +47,15 @@
             <div class="posts-stats">
 
 
-                {{log ../session}}
-                {{#if (includes this.upvotes ../session)}}
+                {{log ../session.userID}}
+                {{#if (includes this.upvotes ../session.userID)}}
                 <img id="like/{{this._id}}" src="/header-elements/red-heart.png" alt="like" onclick="clickLike('{{this._id}}')">
                 {{else}}
                 <img id="like/{{this._id}}" src="/header-elements/heart.png" alt="like" onclick="clickLike('{{this._id}}')">
                 {{/if}}
                 <p id="like-count-{{this._id}}">{{this.upvoteCount}} Likes</p>
 
-                {{#if (includes this.downvotes ../session)}}
+                {{#if (includes this.downvotes ../session.userID)}}
                 <img id="dislike/{{this._id}}" src="/header-elements/red-broken-heart.png" alt="dislike" onclick="clickDislike('{{this._id}}')">       
                 {{else}}
                 <img id="dislike/{{this._id}}" src="/header-elements/broken-heart.png" alt="dislike" onclick="clickDislike('{{this._id}}')">
