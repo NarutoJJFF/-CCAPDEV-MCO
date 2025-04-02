@@ -1,5 +1,6 @@
 const Post = require('../model/post');
 const User = require('../model/user');
+const Tag = require('../model/tag'); 
 
 async function homepage (req, resp) {
     try {
@@ -21,6 +22,8 @@ async function homepage (req, resp) {
         const userProfileImg = user ? user.profileImg : "https://openclipart.org/image/800px/122107";
         console.log(plainPosts);
 
+        const popularTags = await getPopularTags();
+
         console.log("ID: ", sessionUserID);
 
         resp.render('homepage', { 
@@ -28,7 +31,8 @@ async function homepage (req, resp) {
             title: 'Home page',
             posts: plainPosts, 
             session: sessionUserID,
-            userProfileImg: userProfileImg
+            userProfileImg: userProfileImg,
+            popTags: popularTags
         });
 
     } catch (err) {
@@ -135,6 +139,9 @@ async function addPost (req, resp) {
   
       await newPost.save();
       console.log('Post created successfully');
+
+      await updateTagCount(newPost.tag);
+
   
       resp.redirect('/homepage-page');
       
@@ -324,6 +331,29 @@ async function deletePost(req, res) {
         console.error(err);
         res.status(500).send('Server Error');
     }
+}
+
+async function updateTagCount(req) {  //case sensitive
+    const existingTag = await Tag.findOne({ name: req });
+
+    if (existingTag) {
+        existingTag.count += 1;
+        await existingTag.save();
+    } else {
+        const newTag = new Tag({ name: req, count: 1 });
+        await newTag.save();
+    }
+}
+
+async function getPopularTags() {
+    const popularTags = await Tag.find()
+        .sort({ count: -1 })
+        .limit(5);
+
+
+    const plainTags = popularTags.map(tag => tag.toObject());
+
+    return plainTags;
 }
   
 
