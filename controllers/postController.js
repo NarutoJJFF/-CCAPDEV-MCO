@@ -181,7 +181,7 @@ async function upvote(req, resp){
     }
 }
 
-async function downvote(req){
+async function downvote(req, resp){
     if(!req.session || req.session.guest){
         console.log("Login before viewing profile.");
         const log_req = "vote";
