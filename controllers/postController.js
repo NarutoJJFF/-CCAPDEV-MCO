@@ -356,7 +356,7 @@ async function deletePost(req, res) {
         const post = await Post.findByIdAndDelete(req.params.postId);
         if (!post) return res.status(404).send('Post not found');
 
-        res.redirect(`/profile/${req.params.username}`);
+        res.redirect(`/profile`);
     } catch (err) {
         console.error(err);
         res.status(500).send('Server Error');
