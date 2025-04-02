@@ -27,6 +27,11 @@ async function loginPage (req,resp){
       vote = true;
     }
 
+    let follow = false;
+    if(log_req == "vote"){
+      follow = true;
+    }
+
     console.log("No user session found. Redirecting...");
 
     resp.render('login',{
@@ -35,7 +40,8 @@ async function loginPage (req,resp){
       failed: false,
       ownProfile: ownProfile,
       addPost: addPost,
-      vote: vote
+      vote: vote,
+      follow: follow
     });
 
   }else{
