@@ -69,6 +69,7 @@ async function addComment (req, resp){
             author: req.session.login_user,  
             parentComment: req.body.parentComment || null, // Set null if not a reply
             content: req.body.content,
+            isEdited: false
         });
 
         await newComment.save();
@@ -133,7 +134,10 @@ async function updateComment(req, resp) {
           return resp.status(403).send('You are not authorized to edit this comment');
       }
 
-      await Comment.findByIdAndUpdate(commentId, { content: updatedContent }, { new: true });
+      await Comment.findByIdAndUpdate(commentId, 
+        { content: updatedContent, isEdited: true }, // Mark as edited
+        { new: true }
+      );
 
       console.log('Comment updated successfully');
       resp.redirect(`/commentsPage/${comment.postId}`);

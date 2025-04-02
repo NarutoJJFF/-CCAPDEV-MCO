@@ -126,7 +126,8 @@ async function addPost (req, resp) {
         tag: req.body.tag,
         title: req.body.title,
         accID: req.session.login_user,          //accID: req.body.accID for now super user first, but if sessions are implemented please adjust
-        content: req.body.content
+        content: req.body.content,
+        isEdited: false
       });
   
       await newPost.save();
@@ -136,7 +137,7 @@ async function addPost (req, resp) {
       
     } catch (error) {
       console.error('Error creating post:', error);
-      resp.status(500).redirect('homepage-page');
+      resp.status(500).redirect('/homepage-page');
     }
   };
 
@@ -298,9 +299,10 @@ async function updatePost(req, res) {
         post.title = req.body.title;
         post.tag = req.body.tag;
         post.content = req.body.content;
+        post.isEdited = true;
         await post.save();
 
-        res.redirect(`/profile/${req.params.username}`);
+        res.redirect(`/profile`);
     } catch (err) {
         console.error(err);
         res.status(500).send('Server Error');
