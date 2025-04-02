@@ -2,82 +2,75 @@
 
 <main>
     <div class="posts-section">
-            <div class="posts-edit">
-                <div class="posts-icon">
-                    <a href="/profile/anonymouse">
-                        <img src="{{posts.accID.profileImg}}" alt="Profile Button">
-                    </a>
-                    <p><b>@{{posts.accID.username}}</b></p>   {{!-- {{Change after login is impelemented}} --}}
-
-                </div>
-                <div class="edit-post">
-                    <a href="editpost.html">
-                        <img src="/header-elements/pencil-square-svgrepo-com.png" alt="Pencil">
-                    </a>
-                    <p>Edit Post</p>
-                </div>
-            </div>
-                
-            <strong>{{posts.title}}</strong>
-            <span class="flair">{{posts.tag}}</span> 
-            <p class="paragraph">
-                {{posts.content}}
-            </p>
-            <hr class="hr-orange-smaller">
-                
-            <div class="posts-stats">
-                <img id="like" src="/header-elements/heart.png" alt="like" onclick="changeImageLike()">
-                <p>{{posts.upvotes}} Likes</p>
-                <img id="dislike" src="/header-elements/broken-heart.png" alt="dislike" onclick="changeImageDislike()">
-                <p>{{posts.downvotes}} Dislikes</p>
-                <a href="/commentsPage">
-                    <img src="/header-elements/comment.png" alt="comment">
+        <div class="posts-edit">
+            <div class="posts-icon">
+                <a href="{{#if (eq posts.accID.username ../session.username)}}/profile{{else}}/profile/view/{{posts.accID.username}}{{/if}}">
+                    <img src="{{#if posts.accID.profileImg}}{{posts.accID.profileImg}}{{else}}/header-elements/default.png{{/if}}" alt="Profile Button">
                 </a>
-                <p>Comments</p>
+                <p><b>@{{posts.accID.username}}</b></p>   {{!-- {{Change after login is implemented}} --}}
             </div>
+        </div>
+            
+        <strong>{{posts.title}}</strong>
+        <span class="flair">{{posts.tag}}</span> 
+        <p class="paragraph">
+            {{posts.content}}
+        </p>
+        <hr class="hr-orange-smaller">
+            
+        <div class="posts-stats">
+            <img id="like" src="/header-elements/heart.png" alt="like" onclick="changeImageLike()">
+            <p>{{posts.upvotes}} Likes</p>
+            <img id="dislike" src="/header-elements/broken-heart.png" alt="dislike" onclick="changeImageDislike()">
+            <p>{{posts.downvotes}} Dislikes</p>
+            <a href="/commentsPage/{{posts._id}}">
+                <img src="/header-elements/comment.png" alt="comment">
+            </a>
+            <p>Comments</p>
+        </div>
     </div>
 
-
     {{#each comments}}
-        <div class = comment >
-            <div class = comment-heading>
-                <a href = "profile.html"> <img src="{{this.author.profileImg}}" alt="Profile Button"> </a>
+        <div class="comment">
+            <div class="comment-heading">
+                <a href="{{#if (eq this.author.username ../session.username)}}/profile{{else}}/profile/view/{{this.author.username}}{{/if}}">
+                    <img src="{{#if this.author.profileImg}}{{this.author.profileImg}}{{else}}/header-elements/default.png{{/if}}" alt="Profile Button">
+                </a>
                 <p><b>@{{this.author.username}}</b></p>
             </div>
     
-            <div class = "comment-body">
+            <div class="comment-body">
                 <p>{{this.content}}</p>
                 <hr class="hr-orange-smaller">
-
             </div>
     
-            <div class = "comment-reply">
-                <img id = "reply" src="/header-elements/comment.png" alt="comment" onclick = "reply()">
+            <div class="comment-reply">
+                <img id="reply" src="/header-elements/comment.png" alt="comment" onclick="reply()">
                 <input type="text" id="text-box" placeholder="Reply...">
                 <p>Reply</p>
             </div>
         </div>
     {{/each}}
 
-   <div class="reply">
-    <div class="reply-image">
-        <a href="profile.html">
-            <img src="{{currUser.profileImg}}" alt="Profile Button">    {{!-- {{Change after sessions are made}} --}}
-        </a>
-    </div>
-
-    <form action="/addComment" method="POST" class="reply-form">
-        <input type="hidden" name="postID" value="{{posts._id}}"> 
-
-        {{!-- <input type="hidden" name="parentComment" value="{{parentComment._id}}">--}}
-        
-        <div class="reply-textbox">
-            <input type="text" name="content" id="reply-box" placeholder="Reply..." required>
+    <div class="reply">
+        <div class="reply-image">
+            <a href="/profile">
+                <img src="{{#if currUser.profileImg}}{{currUser.profileImg}}{{else}}/header-elements/default.png{{/if}}" alt="Profile Button">
+            </a>
         </div>
 
-        <button type="submit" class="reply-button">Reply</button>
-    </form>
-</div>
+        <form action="/addComment" method="POST" class="reply-form">
+            <input type="hidden" name="postID" value="{{posts._id}}"> 
 
+            {{!-- <input type="hidden" name="parentComment" value="{{parentComment._id}}">--}}
+            
+            <div class="reply-textbox">
+                <input type="text" name="content" id="reply-box" placeholder="Reply..." required>
+            </div>
 
+            <button type="submit" class="reply-button">Reply</button>
+        </form>
+    </div>
+
+    
 </main>
