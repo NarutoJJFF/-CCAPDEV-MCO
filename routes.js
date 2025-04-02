@@ -14,7 +14,7 @@ server.post('/add-post', postController.addPost);
 //server.post('/like-count', postController.likeCounter);
 
 server.post('/like/:postID', postController.upvote);
-server.post('/dislike/:postID', postController.downvote);
+server.post('/dislike/:postID', postController.downvote); 
 server.post('/likeChecker/:postID', postController.likeChecker);
 server.post('/dislikeChecker/:postID', postController.dislikeChecker);
 

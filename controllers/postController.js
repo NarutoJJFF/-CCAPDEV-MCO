@@ -139,6 +139,9 @@ async function upvote(req){
 
     try {
         const post = await Post.findById(postID).populate("accID", "username profileImg");
+
+        console.log ('upvoted');
+
         
         for (let i = 0; i < post.upvotes.length; i++){
             if (sessionUserID == post.upvotes[i]){
@@ -188,6 +191,9 @@ async function downvote(req){
 
     try {
         let post = await Post.findById(postID).populate("accID", "username profileImg");
+
+        console.log ('downvoted');
+
         
         for (let i = 0; i < post.upvotes.length; i++){
             if (sessionUserID == post.upvotes[i]){
