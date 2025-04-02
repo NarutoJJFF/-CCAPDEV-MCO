@@ -329,13 +329,23 @@ main{
 /* SCROLLABLE REPLIES */
 
 .scrollable {
-    margin-left: 50%;
-    width: 500px;
+    margin-left: 30%;
+    width: 1000px;
     background-color: antiquewhite;
     border: 2px solid black;
     padding-left: 10px;
     box-sizing:border-box;
     display: none;
+}
+
+#reply-box-2{
+    grid-area: replybar;
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 16px;
+    width: 95%;
+    border: 2px solid orangered; 
+    border-radius: 5px; 
 }
 
 /* FOOTER */
