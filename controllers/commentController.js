@@ -100,7 +100,7 @@ async function editCommentPage(req, resp) {
 
         console.log('Authorization successful: Rendering edit comment page');
         resp.render('editComment', {
-            layout: 'commentsPageLayout',
+            layout: 'editPostLayout',
             title: 'Edit Comment',
             comment: comment.toObject(),
         });
@@ -193,4 +193,10 @@ async function deleteComment(req, res) {
   }
 }
 
-module.exports = { commentPage, addComment, editCommentPage, updateComment, deleteReplies, deleteComment };
+module.exports = { commentPage, 
+  addComment, 
+  editCommentPage, 
+  updateComment, 
+  deleteReplies, 
+  deleteComment 
+};
