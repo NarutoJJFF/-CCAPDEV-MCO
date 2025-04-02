@@ -139,7 +139,7 @@ async function addPost (req, resp) {
     }
   };
 
-async function upvote(req){
+async function upvote(req, resp){
 
     const sessionUserID = req.session.login_user.toString();
     const postID = req.params.postID;
@@ -150,6 +150,7 @@ async function upvote(req){
     try {
         const post = await Post.findById(postID).populate("accID", "username profileImg");
 
+        console.log("Am i working now?");
         console.log ('upvoted');
 
         
@@ -182,7 +183,8 @@ async function upvote(req){
         }
 
 
-        await updateReactCount(postID);
+        post.upvoteCount = post.upvotes.length;
+        post.downvoteCount = post.downvotes.length;
 
         await post.save();
 
@@ -233,7 +235,8 @@ async function downvote(req){
             upvoted = 0; 
         } 
 
-        await updateReactCount(postID);
+        post.upvoteCount = post.upvotes.length;
+        post.downvoteCount = post.downvotes.length;
 
         await post.save();
 
@@ -242,27 +245,6 @@ async function downvote(req){
     }
 }
 
-async function updateReactCount(req){
-    try {
-        const postID = req;
-        
-        let post = await Post.findById(postID).populate("accID", "username profileImg");
-                    
-        const numUpvote = post.upvotes.length;
-        const numDownvote = post.downvotes.length;
-        
-        post.upvoteCount = numUpvote;
-        post.downvoteCount = numDownvote;
-
-        await post.save();
-
-        console.log("Updating react count");
-
-    
-    } catch (error){
-        console.error("Error in like counter:", error.message);
-    }
-}
 
 async function likeChecker(req){
 
