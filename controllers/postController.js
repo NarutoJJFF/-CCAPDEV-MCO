@@ -306,7 +306,7 @@ async function editPostPage(req, res) {
         const post = await Post.findById(req.params.postId);
         if (!post) return res.status(404).send('Post not found');
 
-        res.render('editPost', {
+        res.render('editpost', {
             layout: 'editPostLayout',
             post: post.toObject(),
             username: req.params.username
