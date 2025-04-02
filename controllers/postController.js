@@ -1,6 +1,8 @@
 const Post = require('../model/post');
 const User = require('../model/user');
 const Comment = require('../model/comment');
+const Tag = require('../model/tag');
+
 
 async function homepage(req, resp) {
     try {
@@ -18,6 +20,8 @@ async function homepage(req, resp) {
         const userProfileImg = user && user.profileImg ? user.profileImg : "https://openclipart.org/image/800px/122107";
         console.log("Retrieved posts:", plainPosts);
         console.log("Session User ID:", sessionUserID);
+
+        const plainTags = await getPopularTags();
         
         resp.render('homepage', { 
             layout: 'homepageLayout',
@@ -27,7 +31,8 @@ async function homepage(req, resp) {
                 userID: sessionUserID,
                 username: user ? user.username : null
             },
-            userProfileImg: userProfileImg
+            userProfileImg: userProfileImg,
+            popTags: plainTags
         });
     } catch (err) {
         console.error("Database Error:", err);
