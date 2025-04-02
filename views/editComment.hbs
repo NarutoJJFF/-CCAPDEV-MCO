@@ -1,0 +1,12 @@
+{{> editHeader}}
+
+<body>
+    <div class="editing-area">
+        <h1>Edit Comment</h1>
+        <form action="/comments/edit/{{comment._id}}" method="POST">
+            <label for="content">Edit your comment:</label><br>
+            <textarea rows="5" cols="50" id="content" name="content" placeholder="Edit your comment here..." required>{{comment.content}}</textarea><br>
+            <input type="submit" value="Save Changes">
+        </form>
+    </div>
+</body>

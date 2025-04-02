@@ -7,7 +7,7 @@
                 <a href="{{#if (eq posts.accID.username ../session.username)}}/profile{{else}}/profile/view/{{posts.accID.username}}{{/if}}">
                     <img src="{{#if posts.accID.profileImg}}{{posts.accID.profileImg}}{{else}}/header-elements/default.png{{/if}}" alt="Profile Button">
                 </a>
-                <p><b>@{{posts.accID.username}}</b></p>   {{!-- {{Change after login is implemented}} --}}
+                <p><b>@{{posts.accID.username}}</b></p>
             </div>
         </div>
             
@@ -33,10 +33,25 @@
     {{#each comments}}
         <div class="comment">
             <div class="comment-heading">
-                <a href="{{#if (eq this.author.username ../session.username)}}/profile{{else}}/profile/view/{{this.author.username}}{{/if}}">
-                    <img src="{{#if this.author.profileImg}}{{this.author.profileImg}}{{else}}/header-elements/default.png{{/if}}" alt="Profile Button">
-                </a>
-                <p><b>@{{this.author.username}}</b></p>
+                <div class="comment-header-left">
+                    <a href="{{#if (eq this.author.username ../session.username)}}/profile{{else}}/profile/view/{{this.author.username}}{{/if}}">
+                        <img src="{{#if this.author.profileImg}}{{this.author.profileImg}}{{else}}/header-elements/default.png{{/if}}" alt="Profile Button">
+                    </a>
+                    <p><b>@{{this.author.username}}</b></p>
+                </div>
+
+                {{#if (eq this.author.username ../session.username)}}
+                <div class="comment-actions">
+                    <a href="/comments/edit/{{this._id}}">
+                        <img src="/header-elements/pencil-square-svgrepo-com.png" alt="Edit Comment">
+                    </a>
+                    <form action="/comments/delete/{{this._id}}" method="POST" style="display:inline;">
+                        <button type="submit" style="background:none;border:none;padding:0;">
+                            <img src="/header-elements/trash.png" alt="Delete Comment">
+                        </button>
+                    </form>
+                </div>
+                {{/if}}
             </div>
     
             <div class="comment-body">
@@ -61,8 +76,6 @@
 
         <form action="/addComment" method="POST" class="reply-form">
             <input type="hidden" name="postID" value="{{posts._id}}"> 
-
-            {{!-- <input type="hidden" name="parentComment" value="{{parentComment._id}}">--}}
             
             <div class="reply-textbox">
                 <input type="text" name="content" id="reply-box" placeholder="Reply..." required>
@@ -71,6 +84,4 @@
             <button type="submit" class="reply-button">Reply</button>
         </form>
     </div>
-
-    
 </main>

@@ -170,30 +170,50 @@ main{
     border-width: 3px;
     border-color: orangered;
     margin-left: 40px;
-    margin-bottom: 20px; 
-
+    margin-bottom: 20px;
+    position: relative; /* Allows positioning of actions */
 }
 
 .comment-heading {
     display: flex;
-    flex-direction: row;
-    line-height: 1rem;
-    margin-right: 20px;
+    justify-content: space-between; /* Aligns name and actions */
     align-items: center;
-     
 }
 
-.comment-heading img{
-    object-fit:fill;
+.comment-header-left {
+    display: flex;
+    align-items: center;
+}
+
+.comment-header-left img {
+    object-fit: fill;
     object-position: center center;
     width: 40px;
     height: 40px;
     border-radius: 50px;
-    margin-bottom: 8px ;
     margin-right: 10px;
     border-style: solid;
     border-color: orangered;
     border-width: 2px;
+}
+
+.comment-header-left p {
+    margin: 0;
+}
+
+.comment-actions {
+    display: flex;
+    gap: 10px; /* Adds spacing between edit and delete buttons */
+}
+
+.comment-actions img {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}
+
+.comment-actions img:hover {
+    opacity: 0.7; /* Adds a hover effect similar to profile.css */
 }
 
 .comment-body p{
@@ -275,6 +295,24 @@ main{
     margin-left: 30px;
 }
 
+
+.comment-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px; 
+    margin-top: 10px;
+}
+
+.comment-actions img {
+    width: 25px;
+    height: 25px; 
+    cursor: pointer; 
+    transition: transform 0.2s ease; 
+}
+
+.comment-actions img:hover {
+    transform: scale(1.1); 
+}
 
 /* FOOTER */
 

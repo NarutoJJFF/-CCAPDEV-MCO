@@ -20,6 +20,8 @@ server.post('/dislikeChecker/:postID', postController.dislikeChecker);
 
 server.get('/commentsPage/:postID', commentController.commentPage);
 server.post('/addComment', commentController.addComment);
+server.get('/comments/edit/:commentId', commentController.editCommentPage);
+server.post('/comments/edit/:commentId', commentController.updateComment);
 
 // Redirect to homepage if in guest mode
 // server.get('/profile', (req, res) => {

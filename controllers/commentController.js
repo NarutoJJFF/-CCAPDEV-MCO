@@ -20,6 +20,9 @@ async function commentPage (req, resp) {
             posts: plainPost, 
             comments: plainComments,
             currUser: plainProfille,
+            session: {
+              username: req.session.username,
+          },
         });
       
     } catch (err) {
@@ -74,5 +77,54 @@ async function addComment (req, resp){
     }
 }
 
+async function editCommentPage(req, resp) {
+    try {
+        const commentId = req.params.commentId;
+        const comment = await Comment.findById(commentId).populate('author', 'username');
 
-  module.exports = {commentPage, addComment};
+        if (!comment) {
+            return resp.status(404).send('Comment not found');
+        }
+
+        if (req.session.login_user !== comment.author._id.toString()) {
+            return resp.status(403).send('You are not authorized to edit this comment');
+        }
+
+        resp.render('editComment', {
+            layout: 'commentsPageLayout',
+            title: 'Edit Comment',
+            comment: comment.toObject(),
+        });
+    } catch (err) {
+        console.error('Error rendering edit comment page:', err);
+        resp.status(500).send('Internal Server Error');
+    }
+}
+
+async function updateComment(req, resp) {
+    try {
+        const commentId = req.params.commentId;
+        const updatedContent = req.body.content;
+
+        const comment = await Comment.findById(commentId);
+
+        if (!comment) {
+            return resp.status(404).send('Comment not found');
+        }
+
+        if (req.session.login_user !== comment.author.toString()) {
+            return resp.status(403).send('You are not authorized to edit this comment');
+        }
+
+        comment.content = updatedContent;
+        await comment.save();
+
+        console.log('Comment updated successfully');
+        resp.redirect(`/commentsPage/${comment.postId}`);
+    } catch (err) {
+        console.error('Error updating comment:', err);
+        resp.status(500).send('Internal Server Error');
+    }
+}
+
+module.exports = { commentPage, addComment, editCommentPage, updateComment };
