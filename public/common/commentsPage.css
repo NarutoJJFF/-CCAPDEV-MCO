@@ -326,6 +326,13 @@ main{
     transform: scale(1.1); 
 }
 
+/* SCROLLABLE REPLIES */
+.scrollable {
+    border: 2px black;
+    padding-left: 10px;
+    box-sizing:border-box;
+}
+
 /* FOOTER */
 
 .footer-content {
