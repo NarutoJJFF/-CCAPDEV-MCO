@@ -1,6 +1,7 @@
 const User = require('../model/user');
 const Post = require('../model/post');
 const Follow = require('../model/follow');
+const Comment = require('../model/comment');
 
 // Function to render the edit profile page
 async function getEditProfile(req, res) {
@@ -90,9 +91,7 @@ async function viewUserProfile(req, res) {
         const username = req.params.username;
         const loggedInUserId = req.session.login_user;
 
-        // console.log("Logged-in user ID:", loggedInUserId);
-        // console.log("Requested username:", username);
-
+        // Find the user by username
         const user = await User.findOne({ username });
         if (!user) {
             return res.status(404).send("User not found");
@@ -106,7 +105,17 @@ async function viewUserProfile(req, res) {
         const followerCount = await Follow.countDocuments({ followed: user._id });
         const followingCount = await Follow.countDocuments({ follower: user._id });
 
-        const userPosts = await Post.find({ accID: user._id });
+        // Get the user's posts
+        const userPosts = await Post.find({ accID: user._id }).sort({ _id: -1 });
+
+        // For each post, count the number of comments
+        const postsWithComments = await Promise.all(
+            userPosts.map(async (post) => {
+                const plainPost = post.toObject();
+                const commentCount = await Comment.countDocuments({ postId: post._id });
+                return { ...plainPost, commentCount };
+            })
+        );
 
         const followersList = await Follow.find({ followed: user._id })
             .populate('follower', 'username profileImg')
@@ -119,7 +128,7 @@ async function viewUserProfile(req, res) {
             bio: user.bio,
             followers: followerCount,
             following: followingCount,
-            posts: userPosts.map(post => post.toObject()),
+            posts: postsWithComments, // Posts now include commentCount
             followersList,
             isFollowing: !!isFollowing,
             session: { username: req.session.username }
@@ -132,14 +141,12 @@ async function viewUserProfile(req, res) {
 
 async function viewOwnProfile(req, res) {
     try {
-        if(!req.session || req.session.guest  || !req.session.login_user){
+        if (!req.session || req.session.guest || !req.session.login_user) {
             console.log("Login before viewing profile.");
             const log_req = "ownProfile";
-            return res.redirect('/?logReq='+log_req);
+            return res.redirect('/?logReq=' + log_req);
         }
         const loggedInUserId = req.session.login_user;
-
-        // console.log("Logged-in user ID:", loggedInUserId);
 
         const user = await User.findById(loggedInUserId);
         if (!user) {
@@ -152,8 +159,14 @@ async function viewOwnProfile(req, res) {
 
         const userPosts = await Post.find({ accID: user._id }).sort({ _id: -1 });
 
-        // console.log("Followers list:", followersList);
-        // console.log("Session username:", req.session.username);
+        // Add comment count to each post
+        const postsWithComments = await Promise.all(
+            userPosts.map(async (post) => {
+                const plainPost = post.toObject();
+                const commentCount = await Comment.countDocuments({ postId: post._id });
+                return { ...plainPost, commentCount };
+            })
+        );
 
         res.render('profile', {
             layout: 'profileLayout',
@@ -162,7 +175,7 @@ async function viewOwnProfile(req, res) {
             bio: user.bio,
             followers: followersList.length, 
             following: await Follow.countDocuments({ follower: user._id }),
-            posts: userPosts.map(post => post.toObject()),
+            posts: postsWithComments, // Posts now include commentCount
             followersList,
             session: { username: req.session.username }
         });
