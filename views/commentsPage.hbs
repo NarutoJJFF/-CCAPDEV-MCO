@@ -92,7 +92,7 @@
                 {{else}}
                 <img id="dislike/{{this._id}}" src="/header-elements/broken-heart.png" alt="dislike" onclick="commentClickDislike('{{this._id}}')">
                 {{/if}}
-                <p "comment-dislike-count-{{this._id}}">{{this.downvoteCount}} Dislikes</p>
+                <p id="comment-dislike-count-{{this._id}}">{{this.downvoteCount}} Dislikes</p>
 
                 <img id="reply" src="/header-elements/comment.png" alt="comment" onclick="reply()">
                 <input type="text" id="text-box" placeholder="Reply...">
