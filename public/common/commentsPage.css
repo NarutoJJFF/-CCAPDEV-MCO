@@ -326,6 +326,18 @@ main{
     transform: scale(1.1); 
 }
 
+/* SCROLLABLE REPLIES */
+
+.scrollable {
+    margin-left: 50%;
+    width: 500px;
+    background-color: antiquewhite;
+    border: 2px solid black;
+    padding-left: 10px;
+    box-sizing:border-box;
+    display: none;
+}
+
 /* FOOTER */
 
 .footer-content {

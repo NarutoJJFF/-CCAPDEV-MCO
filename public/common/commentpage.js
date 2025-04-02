@@ -98,7 +98,7 @@ async function commentClickDislike(comment_id) {
         displayImage.src = '/header-elements/broken-heart.png';
     }
 
-    const response = await fetch(`/commentDisike/${comment_id}`, { method: 'POST' });
+    const response = await fetch(`/commentDislike/${comment_id}`, { method: 'POST' });
     const data = await response.json(); 
 
     document.querySelector(`#comment-like-count-${comment_id}`).textContent = `${data.upvoteCount} Likes`;
@@ -106,11 +106,11 @@ async function commentClickDislike(comment_id) {
 }
 
 
-function reply() {
-    var x = document.getElementById("myDIV");
+function reply(comment_id) {
+    var x = document.getElementById(`scrollable-box-${comment_id}`); 
     if (x.style.display === "none") {
-      x.style.display = "block";
+        x.style.display = "block";
     } else {
-      x.style.display = "none";
+        x.style.display = "none";
     }
-  }
+}

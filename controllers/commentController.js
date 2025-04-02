@@ -286,6 +286,27 @@ async function downvoteComment(req, resp){
         resp.status(500).json({ error: "Internal Server Error" });
     }
 }
+
+async function addReply (req, resp){
+    try {
+        const newComment = new Comment({
+            postId: req.body.postID,  
+            author: req.session.login_user,  
+            parentComment: req.body.parentComment,
+            content: req.body.content,
+            isEdited: false
+        });
+
+        await newComment.save();
+        console.log('Replied Successfully');
+
+        resp.redirect(`/commentsPage/${req.body.postID}`);
+
+    } catch (error) {
+        console.error('Error creating comment:', error);
+        resp.status(500).redirect('homepage-page');
+    }
+}
 module.exports = { commentPage, 
   addComment, 
   editCommentPage, 
@@ -293,5 +314,6 @@ module.exports = { commentPage,
   deleteReplies, 
   deleteComment, 
   upvoteComment,
-  downvoteComment
+  downvoteComment,
+  addReply
 };
