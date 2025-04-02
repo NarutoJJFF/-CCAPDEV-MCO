@@ -3,15 +3,21 @@ const User = require('../model/user');
 
 async function homepage (req, resp) {
     try {
-        if (!req.session || !req.session.login_user) {
-            console.log("No user logged in. Redirecting to login page.");
-            return resp.redirect('/');
+        let sessionUserID = "";
+        let user;
+        //let is_guest = false;
+        if (!req.session || req.session.guest) {
+            //console.log("No user logged in. Redirecting to login page.");
+            //return resp.redirect('/');
+            //is_guest = true;
+        }else{
+            console.log("Attempting homepage for user: ");
+            console.log(req.session.login_user);
+            sessionUserID = req.session.login_user.toString();
+            user = await User.findById(sessionUserID);
         }
 
-        let sessionUserID = req.session.login_user.toString();
         const plainPosts = await findAllPosts();
-
-        const user = await User.findById(sessionUserID);
         const userProfileImg = user ? user.profileImg : "https://openclipart.org/image/800px/122107"; 
 
         console.log("ID: ", sessionUserID);
@@ -21,7 +27,7 @@ async function homepage (req, resp) {
             title: 'Home page',
             posts: plainPosts, 
             session: sessionUserID,
-            userProfileImg 
+            userProfileImg: userProfileImg
         });
 
     } catch (err) {
@@ -103,6 +109,10 @@ async function search (req) {
 }
 
 async function addPostPage (req, resp){
+    if(!req.session || req.session.guest){
+        console.log("Login before creating post/s.");
+        return resp.redirect('/');
+    }
     resp.render('addPost',{
       layout: 'addPostLayout',
       title: 'Add Post page'

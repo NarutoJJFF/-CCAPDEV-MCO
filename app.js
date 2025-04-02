@@ -202,7 +202,7 @@ const userController = require('./controllers/userController');
 
 server.get('/editprofile/:username', userController.getEditProfile);
 server.post('/user/editProfile', userController.editProfile);
-server.get('/guest', userController.browseAsGuest);
+//server.get('/guest', userController.browseAsGuest);
 server.get('/profile/view/:username', userController.viewUserProfile);
 server.get('/follow/:username', userController.followUser);
 server.get('/unfollow/:username', userController.unfollowUser);
@@ -246,14 +246,14 @@ server.post('/profile/:username/downvote/:postId', async (req, res) => {
 
 // LOGIN PAGE
 
-const loginController = require('./controllers/loginController');
+// const loginController = require('./controllers/loginController');
 
-server.get('/', loginController.loginPage);
-server.post('/login', loginController.login);
-server.get('/guest', loginController.guest);
-server.get('/logout', loginController.logout);
-server.get('/register-page', loginController.registerPage);
-server.post('/register', loginController.register);
+// server.get('/', loginController.loginPage);
+// server.post('/login', loginController.login);
+// server.get('/guest', loginController.guest);
+// server.get('/logout', loginController.logout);
+// server.get('/register-page', loginController.registerPage);
+// server.post('/register', loginController.register);
 
 // Login page (default)
 // server.get('/', async function(req,resp){

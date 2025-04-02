@@ -132,6 +132,10 @@ async function viewUserProfile(req, res) {
 
 async function viewOwnProfile(req, res) {
     try {
+        if(!req.session || req.session.guest){
+            console.log("Login before viewing profile.");
+            return res.redirect('/');
+        }
         const loggedInUserId = req.session.login_user;
 
         // console.log("Logged-in user ID:", loggedInUserId);
