@@ -268,17 +268,19 @@ main{
 }
 
 .flair {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center; /* Vertically centers the text */
     padding: 3px 8px;
     background-color: lightgray;
     border-radius: 5px;
     font-size: 12px;
-    line-height: 1;
     margin-left: 5px;
 }
 
+/* Post Titles */
 .posts-section strong {
     font-size: 25px;
+    vertical-align: middle;
 }
 
 .paragraph {

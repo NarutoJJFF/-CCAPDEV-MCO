@@ -1,64 +1,70 @@
 const Post = require('../model/post');
 const User = require('../model/user');
+const Comment = require('../model/comment');
 
-async function homepage (req, resp) {
+async function homepage(req, resp) {
     try {
         let sessionUserID = "";
-        let user;
-        //let is_guest = false;
-        if (!req.session || req.session.guest || !req.session.login_user) {
-            //console.log("No user logged in. Redirecting to login page.");
-            //return resp.redirect('/');
-            //is_guest = true;
-        }else{
-            console.log("Attempting homepage for user: ");
-            console.log(req.session.login_user);
+        let user = null;
+        
+        if (req.session && !req.session.guest && req.session.login_user) {
+            console.log("Attempting homepage for user:", req.session.login_user);
             sessionUserID = req.session.login_user.toString();
-            user = await User.findById(sessionUserID);
+            user = await User.findById(sessionUserID).lean();
         }
-
+        
         const plainPosts = await findAllPosts();
-        const userProfileImg = user ? user.profileImg : "https://openclipart.org/image/800px/122107";
-        console.log(plainPosts);
 
-        console.log("ID: ", sessionUserID);
-
+        const userProfileImg = user && user.profileImg ? user.profileImg : "https://openclipart.org/image/800px/122107";
+        console.log("Retrieved posts:", plainPosts);
+        console.log("Session User ID:", sessionUserID);
+        
         resp.render('homepage', { 
             layout: 'homepageLayout',
             title: 'Home page',
             posts: plainPosts, 
-            session: sessionUserID,
+            session: {
+                userID: sessionUserID,
+                username: user ? user.username : null
+            },
             userProfileImg: userProfileImg
         });
-
     } catch (err) {
         console.error("Database Error:", err);
         resp.status(500).send("Internal Server Error");
     }
 }
 
-
-//Finds all post (Sorted from latest to oldest)
-async function findAllPosts (){
+async function findAllPosts() {
     try {
-        let postResult = await Post.find({})
-        .populate("accID", "username profileImg")
-        .sort({_id:-1})
-        .limit(20);
-        
-        const plainPosts = postResult.map(post => post.toObject());
+        const postResult = await Post.find({})
+            .populate("accID", "username profileImg")
+            .sort({ _id: -1 })
+            .limit(20)
+            .lean();
 
-        return plainPosts;
+        const plainPostsWithComments = await Promise.all(
+            postResult.map(async (post) => {
+                const commentCount = await Comment.countDocuments({ postId: post._id });
+                return { ...post, commentCount };
+            })
+        );
 
+        return plainPostsWithComments;
     } catch (err) {
         console.error("Database Error:", err);
         return [];
     }
 }
 
-async function searchPage (req, resp) {
 
+async function searchPage(req, resp) {
     try {
+        let sessionUserID = "";
+        if (req.session && !req.session.guest && req.session.login_user) {
+            sessionUserID = req.session.login_user.toString();
+        }
+        
         const plainPosts = await search(req);
 
         resp.render('searchedPosts', { 
@@ -66,50 +72,59 @@ async function searchPage (req, resp) {
             title: 'Searched page',
             posts: plainPosts,
             session: {
-                username: req.session.username, 
-            },
+                userID: sessionUserID,
+                username: req.session.username
+            }
         });
-
     } catch (err) {
         console.error("Database Error:", err);
         resp.status(500).send("Internal Server Error");
     }
 }
 
-//Search based based on req from tags and search
-async function search (req) {
-    const search = req.query.search;    
+async function search(req) {
+    const searchTerm = req.query.search;
     const tag = req.query.tag;
 
+    // Build the search criteria
     let searchCriteria = {
         $or: [
-            { title: { $regex: search, $options: 'i' } },
-            { content: { $regex: search, $options: 'i' } },
-          ],
-    }
+            { title: { $regex: searchTerm, $options: 'i' } },
+            { content: { $regex: searchTerm, $options: 'i' } }
+        ]
+    };
 
     if (tag) {
         searchCriteria = { 
-        $and: [
-            searchCriteria, 
-            { tag: { $regex: tag, $options: 'i' } } 
-          ]
+            $and: [
+                searchCriteria, 
+                { tag: { $regex: tag, $options: 'i' } }
+            ]
         };
     }
 
     try {
+        // Execute the query and populate account info
         const posts = await Post.find(searchCriteria)
-            .populate("accID", "username profileImg")
-            .sort({_id:-1});
-        const plainPosts = posts.map(post => post.toObject());
+            .populate("accID", "username profileImg");
+
+        // For each post, count the related comments and attach commentCount
+        const plainPosts = await Promise.all(
+            posts.map(async (post) => {
+                const plainPost = post.toObject();
+                const commentCount = await Comment.countDocuments({ postId: post._id });
+                plainPost.commentCount = commentCount;
+                return plainPost;
+            })
+        );
 
         return plainPosts;
-    
     } catch (error) {
-        console.error("Database Error:", err);
-        return[];
+        console.error("Database Error:", error);
+        return [];
     }
 }
+
 
 async function addPostPage (req, resp){
     if(!req.session || req.session.guest  || !req.session.login_user){
