@@ -14,12 +14,17 @@ async function commentPage (req, resp) {
         let profile = await User.findById(req.session.login_user);
         const plainProfille = profile.toObject();
 
+        let sessionUserID = req.session.login_user.toString();
+        console.log("Curr User:  ",  sessionUserID);
+
+
         resp.render('commentsPage', {
             layout: 'commentsPageLayout',
             title: 'Comments',
             posts: plainPost, 
             comments: plainComments,
             currUser: plainProfille,
+            session2: sessionUserID,
             session: {
               username: req.session.username,
           },

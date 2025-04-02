@@ -11,7 +11,7 @@
             </div>
         </div>
             
-        <strong>{{posts.title}}</strong>
+        <strong>{{posts.title}} </strong>
         <span class="flair">{{posts.tag}}</span> 
         <p class="paragraph">
             {{posts.content}}
@@ -19,14 +19,18 @@
         <hr class="hr-orange-smaller">
             
         <div class="posts-stats">
-                {{#if (eq ../session this.upvotes)}}
+
+            {{log "hello world" session2}}
+            {{log posts.upvotes}}
+
+                {{#if (eq session2 posts.upvotes)}}
                 <img id="like/{{posts._id}}" src="/header-elements/red-heart.png" alt="like" onclick="clickLike('{{posts._id}}')">
                 {{else}}
                 <img id="like/{{posts._id}}" src="/header-elements/heart.png" alt="like" onclick="clickLike('{{posts._id}}')">
                 {{/if}}
                 <p>{{posts.upvoteCount}} Likes</p>
 
-                {{#if (eq ../session this.downvotes)}}
+                {{#if (eq session2 posts.downvotes)}}
                 <img id="dislike/{{posts._id}}" src="/header-elements/red-broken-heart.png" alt="dislike" onclick="clickDislike('{{posts._id}}')">       
                 {{else}}
                 <img id="dislike/{{posts._id}}" src="/header-elements/broken-heart.png" alt="dislike" onclick="clickDislike('{{posts._id}}')">
