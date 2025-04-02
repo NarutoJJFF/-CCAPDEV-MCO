@@ -1,4 +1,5 @@
 const User = require('../model/user');
+const argon2 = require('argon2');
 
 async function loginPage (req,resp){
   console.log("Login page opened.");
@@ -56,10 +57,31 @@ async function loginPage (req,resp){
 async function login(req, resp) {
   console.log("Login attempted");
   const searchQuery = { username: req.body.username, password: req.body.password };
-  let login = await User.findOne(searchQuery);
+  const login = await User.findOne(searchQuery);
+
+  const searchQueryH = { username: req.body.username};
+  const loginH = await User.findOne(searchQueryH);
+  const hash_pass = loginH.password;
+  let match = false;
+  try{
+    match = await argon2.verify(hash_pass, req.body.password);
+  }catch(err){
+    console.error(err);
+  }
+  console.log(hash_pass);
   console.log('Finding user');
 
-  if(login != undefined && login._id != null){ // succesful login
+  if((login != undefined && login._id != null) || match){ // succesful login
+    let uid = "";
+    let uname = "";
+    if(loginH._id != null){
+      uid = loginH._id;
+      uname = loginH.username;
+    }else{
+      uid = login._id;
+      uname = login.username;
+      //temporary account converter code
+    }
 
     console.log("Remember?:");
     console.log(req.body.remember);
@@ -70,7 +92,7 @@ async function login(req, resp) {
     if(req.body.remember != undefined){
       sesh_exp = 21*24*60*60*1000; //three weeks
     }else{
-      sesh_exp = 60*60*1000; //1min
+      sesh_exp = 60*60*1000; //1hr
       sesh_saved = false;
     }
 
@@ -81,8 +103,8 @@ async function login(req, resp) {
       }
     });
 
-    req.session.login_user = login._id.toString(); // Convert ObjectId to string
-    req.session.username = login.username; // Store the username in the session
+    req.session.login_user = uid.toString(); // Convert ObjectId to string
+    req.session.username = uname; // Store the username in the session
     req.session.login_id = req.sessionID;
     req.session.remember = sesh_saved;
     req.session.guest = false;
@@ -161,15 +183,18 @@ async function register(req, resp) {
     }else{
 
       try {
+        const hash_pass = await argon2.hash(req.body.password);
         const newUser = new User({
           username: req.body.username,
-          password: req.body.password,
+          password: hash_pass,
           profileImg: null,
           bio: "New user"
         });
     
         await newUser.save();
         console.log('User created successfully');
+        console.log('Unhashed pass: '+ req.body.password);
+        console.log('Hashed pass: '+ hash_pass);
     
         resp.redirect('/');
         
