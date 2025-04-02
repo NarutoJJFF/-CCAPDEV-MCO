@@ -85,14 +85,14 @@
                 {{else}}
                 <img id="like/{{this._id}}" src="/header-elements/heart.png" alt="like" onclick="commentClickLike('{{this._id}}')">
                 {{/if}}
-                <p>{{this.upvoteCount}} Likes</p>
+                <p id="comment-like-count-{{this._id}}">{{this.upvoteCount}} Likes</p>
 
                 {{#if (eq ../session2 this.downvotes)}}
-                <img id="dislike/{{this._id}}" src="/header-elements/red-broken-heart.png" alt="dislike" onclick="clickDislike('{{this._id}}')">       
+                <img id="dislike/{{this._id}}" src="/header-elements/red-broken-heart.png" alt="dislike" onclick="commentClickDislike('{{this._id}}')">       
                 {{else}}
-                <img id="dislike/{{this._id}}" src="/header-elements/broken-heart.png" alt="dislike" onclick="clickDislike('{{this._id}}')">
+                <img id="dislike/{{this._id}}" src="/header-elements/broken-heart.png" alt="dislike" onclick="commentClickDislike('{{this._id}}')">
                 {{/if}}
-                <p>{{this.downvoteCount}} Dislikes</p>
+                <p "comment-dislike-count-{{this._id}}">{{this.downvoteCount}} Dislikes</p>
 
                 <img id="reply" src="/header-elements/comment.png" alt="comment" onclick="reply()">
                 <input type="text" id="text-box" placeholder="Reply...">
