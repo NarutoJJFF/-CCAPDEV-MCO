@@ -12,6 +12,9 @@ server.get('/search', postController.searchPage);
 
 server.get('/add-post-page', postController.addPostPage);
 server.post('/add-post', postController.addPost);
+server.get('/profile/:username/edit/:postId', postController.editPostPage);
+server.post('/profile/:username/edit/:postId', postController.updatePost);
+server.post('/profile/:username/delete/:postId', postController.deletePost);
 //server.post('/like-count', postController.likeCounter);
 
 server.post('/like/:postID', postController.upvote);
@@ -24,6 +27,18 @@ server.post('/addComment', commentController.addComment);
 server.get('/comments/edit/:commentId', commentController.editCommentPage);
 server.post('/comments/edit/:commentId', commentController.updateComment);
 server.post('/comments/delete/:commentId', commentController.deleteComment);
+server.post('/commentLike/:commentID', commentController.upvoteComment);
+server.post('/commentDisike/:commentID', commentController.downvoteComment);
+
+
+
+server.get('/editprofile/:username', userController.getEditProfile);
+server.post('/user/editProfile', userController.editProfile);
+//server.get('/guest', userController.browseAsGuest);
+server.get('/profile/view/:username', userController.viewUserProfile);
+server.get('/follow/:username', userController.followUser);
+server.get('/unfollow/:username', userController.unfollowUser);
+server.get('/profile', userController.viewOwnProfile);
 
 server.get('/', loginController.loginPage);
 server.post('/login', loginController.login);

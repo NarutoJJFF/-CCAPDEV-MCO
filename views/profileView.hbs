@@ -33,6 +33,7 @@
                         <div class="posts-icon">
                             <img src="{{#if ../profileImg}}{{../profileImg}}{{else}}/header-elements/default.png{{/if}}" alt="Profile Button">
                             <p><b>@{{../username}}</b></p> 
+                            <span class="edited">{{#if this.isEdited}}Edited{{/if}}</span>
                         </div>
 
                         <strong> {{this.title}} </strong>

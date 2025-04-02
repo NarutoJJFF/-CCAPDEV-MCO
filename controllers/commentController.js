@@ -51,7 +51,9 @@ async function findAllCommentsUnderPost (req) {
     
         //console.log("W", commentsResult);
     
-        const plainComments = commentsResult.map(comment => comment.toObject());
+        const plainComments = commentsResult.map(comment => ({...comment.toObject(),
+        isEdited: comment.isEdited
+        }));
     
         return [plainComments, plainPost];
 
@@ -69,6 +71,7 @@ async function addComment (req, resp){
             author: req.session.login_user,  
             parentComment: req.body.parentComment || null, // Set null if not a reply
             content: req.body.content,
+            isEdited: false
         });
 
         await newComment.save();
@@ -133,7 +136,10 @@ async function updateComment(req, resp) {
           return resp.status(403).send('You are not authorized to edit this comment');
       }
 
-      await Comment.findByIdAndUpdate(commentId, { content: updatedContent }, { new: true });
+      await Comment.findByIdAndUpdate(commentId, 
+        { content: updatedContent, isEdited: true },
+        { new: true }
+      );
 
       console.log('Comment updated successfully');
       resp.redirect(`/commentsPage/${comment.postId}`);
@@ -198,10 +204,94 @@ async function deleteComment(req, res) {
   }
 }
 
+
+async function upvoteComment(req, resp){
+    if(!req.session || req.session.guest){
+        console.log("Login before viewing profile.");
+        const log_req = "vote";
+        return resp.redirect('/?logReq='+log_req);
+    }
+
+    const sessionUserID = req.session.login_user.toString();
+    const commentID = req.params.commentID;
+    let upvoted = 0;
+    let downvoted = 0;
+
+    try {
+        const comment = await Comment.findById(commentID);
+
+        if (comment.upvotes.includes(sessionUserID)) {
+            comment.upvotes = comment.upvotes.filter(id => id !== sessionUserID);
+            upvoted = -1;
+        } else {
+            comment.upvotes.push(sessionUserID);
+            upvoted = 1;
+
+            if (comment.downvotes.includes(sessionUserID)) {
+                comment.downvotes = comment.downvotes.filter(id => id !== sessionUserID);
+                downvoted = -1;
+            }
+        }
+
+        comment.upvoteCount += upvoted;
+        comment.downvoteCount += downvoted;
+
+        await comment.save();
+
+    
+        resp.json({ upvoteCount: comment.upvoteCount, downvoteCount: comment.downvoteCount });
+    } catch (error) {
+        console.error("Error in upvote:", error);
+        resp.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
+async function downvoteComment(req, resp){
+    if(!req.session || req.session.guest){
+        console.log("Login before viewing profile.");
+        const log_req = "vote";
+        return resp.redirect('/?logReq='+log_req);
+    }
+
+    const sessionUserID = req.session.login_user.toString();
+    const commentID = req.params.commentID;
+    let upvoted = 0;
+    let downvoted = 0;
+
+    try {
+        const comment = await Comment.findById(commentID);
+
+        if (comment.downvotes.includes(sessionUserID)) {
+            comment.downvotes = comment.downvotes.filter(id => id !== sessionUserID);
+            downvoted = -1;
+        } else {
+            comment.downvotes.push(sessionUserID);
+            downvoted = 1;
+
+            if (comment.upvotes.includes(sessionUserID)) {
+                comment.upvotes = comment.upvotes.filter(id => id !== sessionUserID);
+                upvoted = -1;
+            }
+        }
+
+        comment.upvoteCount += upvoted;
+        comment.downvoteCount += downvoted;
+
+        await comment.save();
+
+        // Return updated counts as JSON
+        resp.json({ upvoteCount: comment.upvoteCount, downvoteCount: comment.downvoteCount });
+    } catch (error) {
+        console.error("Error in downvote:", error);
+        resp.status(500).json({ error: "Internal Server Error" });
+    }
+}
 module.exports = { commentPage, 
   addComment, 
   editCommentPage, 
   updateComment, 
   deleteReplies, 
-  deleteComment 
+  deleteComment, 
+  upvoteComment,
+  downvoteComment
 };

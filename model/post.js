@@ -9,7 +9,8 @@ const postSchema = new mongoose.Schema({
     downvoteCount: {type: Number, default: 0},
     upvotes: [{type: mongoose.Schema.Types.String, ref: 'User'}],    //i'll just use .length to find the amount
     downvotes: [{type: mongoose.Schema.Types.String, ref: 'User'}],
-    comments : [{type: mongoose.Schema.Types.ObjectId, ref: 'Comment'}]
+    comments : [{type: mongoose.Schema.Types.ObjectId, ref: 'Comment'}],
+    isEdited: {type: Boolean, default:false}
 
   },{versionKey: false, timestamps: true});
 
