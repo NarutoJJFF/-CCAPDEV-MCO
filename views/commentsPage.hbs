@@ -28,14 +28,15 @@
                 {{else}}
                 <img id="like/{{posts._id}}" src="/header-elements/heart.png" alt="like" onclick="clickLike('{{posts._id}}')">
                 {{/if}}
-                <p>{{posts.upvoteCount}} Likes</p>
+                <p id="like-count-{{posts._id}}">{{posts.upvoteCount}} Likes</p>
 
                 {{#if (eq session2 posts.downvotes)}}
                 <img id="dislike/{{posts._id}}" src="/header-elements/red-broken-heart.png" alt="dislike" onclick="clickDislike('{{posts._id}}')">       
                 {{else}}
                 <img id="dislike/{{posts._id}}" src="/header-elements/broken-heart.png" alt="dislike" onclick="clickDislike('{{posts._id}}')">
                 {{/if}}
-                <p>{{posts.downvoteCount}} Dislikes</p>
+                <p id="dislike-count-{{posts._id}}">{{posts.downvoteCount}} Dislikes</p>
+
             <a href="/commentsPage/{{posts._id}}">
                 <img src="/header-elements/comment.png" alt="comment">
             </a>
