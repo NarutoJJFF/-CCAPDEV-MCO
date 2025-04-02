@@ -84,6 +84,7 @@ nav {
     background-color: darkred;
 }
 
+/*
 ::placeholder {
     color: rgb(255, 255, 255);
     opacity: 1;
@@ -92,6 +93,7 @@ nav {
     font-style: normal;
     line-height: 2.5rem;
 }
+*/
 
 /* Profile Stats */
 .profile-stats {
