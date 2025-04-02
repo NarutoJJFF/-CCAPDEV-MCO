@@ -121,6 +121,10 @@ async function viewUserProfile(req, res) {
             .populate('follower', 'username profileImg')
             .then(follows => follows.map(f => f.follower.toObject()));
 
+        // console.log("Posts by this user:");
+        // console.log(userPosts);
+        // console.log(loggedInUserId);
+
         res.render('profileView', {
             layout: 'profileLayout',
             profileImg: user.profileImg,
@@ -131,7 +135,8 @@ async function viewUserProfile(req, res) {
             posts: postsWithComments, // Posts now include commentCount
             followersList,
             isFollowing: !!isFollowing,
-            session: { username: req.session.username }
+            session: { username: req.session.username },
+            sesh_user: loggedInUserId
         });
     } catch (err) {
         console.error("Error in viewUserProfile:", err);
@@ -177,7 +182,8 @@ async function viewOwnProfile(req, res) {
             following: await Follow.countDocuments({ follower: user._id }),
             posts: postsWithComments, // Posts now include commentCount
             followersList,
-            session: { username: req.session.username }
+            session: { username: req.session.username },
+            sesh_user: loggedInUserId
         });
     } catch (err) {
         console.error("Error in viewOwnProfile:", err);
@@ -186,6 +192,11 @@ async function viewOwnProfile(req, res) {
 }
 
 async function followUser(req, res) {
+    if(!req.session || req.session.guest  || !req.session.login_user){
+        console.log("Login before creating post/s.");
+        const log_req = "follow";
+        return res.redirect('/?logReq='+log_req);
+    }
     try {
         const followerId = req.session.login_user;
         const followedUser = await User.findOne({ username: req.params.username });
