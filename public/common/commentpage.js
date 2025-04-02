@@ -102,3 +102,13 @@ async function commentClickDislike(comment_id) {
     document.querySelector(`#comment-like-count-${comment_id}`).textContent = `${data.upvoteCount} Likes`;
     document.querySelector(`#comment-dislike-count-${comment_id}`).textContent = `${data.downvoteCount} Dislikes`;
 }
+
+
+function reply() {
+    var x = document.getElementById("myDIV");
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
+  }
