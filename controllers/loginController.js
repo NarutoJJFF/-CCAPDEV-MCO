@@ -105,7 +105,7 @@ async function login(req, resp) {
       }
     });
 
-    req.session.login_user = login._id;
+    req.session.login_user = login._id.toString(); // Convert ObjectId to string
     req.session.username = login.username; // Store the username in the session
     req.session.login_id = req.sessionID;
     req.session.remember = sesh_saved;

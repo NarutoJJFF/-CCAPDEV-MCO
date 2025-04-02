@@ -68,7 +68,7 @@ input[type=submit]:hover {
     border-width: 5px;
     border-color: orangered;
 }
-
+    
 a {
     display: block;
     text-align: center;

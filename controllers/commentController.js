@@ -80,16 +80,25 @@ async function addComment (req, resp){
 async function editCommentPage(req, resp) {
     try {
         const commentId = req.params.commentId;
+
         const comment = await Comment.findById(commentId).populate('author', 'username');
 
+        console.log('Retrieved comment:', comment);
+
         if (!comment) {
+            console.log('Comment not found');
             return resp.status(404).send('Comment not found');
         }
 
+        console.log('Logged-in user ID:', req.session.login_user);
+        console.log('Comment author ID:', comment.author._id.toString());
+
         if (req.session.login_user !== comment.author._id.toString()) {
+            console.log('Authorization failed: Logged-in user is not the author');
             return resp.status(403).send('You are not authorized to edit this comment');
         }
 
+        console.log('Authorization successful: Rendering edit comment page');
         resp.render('editComment', {
             layout: 'commentsPageLayout',
             title: 'Edit Comment',
@@ -131,14 +140,12 @@ async function updateComment(req, resp) {
 
 async function deleteReplies(commentId) {
   try {
-      // Find all replies associated with the commentId
       const replies = await Comment.find({ parentComment: commentId });
 
       if (replies.length === 0) return;
 
-      // Recursively delete replies before deleting the main comment
       await Promise.all(replies.map(async (reply) => {
-          await deleteReplies(reply._id); // Recursively delete nested replies
+          await deleteReplies(reply._id);
           await Comment.findByIdAndDelete(reply._id);
       }));
 
