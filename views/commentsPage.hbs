@@ -80,29 +80,89 @@
 
                 {{log ../session2}}
 
-                 {{#if (eq ../session2 this.upvotes)}}
+                 {{#if (includes ../session2 this.upvotes)}}
                 <img id="like/{{this._id}}" src="/header-elements/red-heart.png" alt="like" onclick="commentClickLike('{{this._id}}')">
                 {{else}}
                 <img id="like/{{this._id}}" src="/header-elements/heart.png" alt="like" onclick="commentClickLike('{{this._id}}')">
                 {{/if}}
                 <p id="comment-like-count-{{this._id}}">{{this.upvoteCount}} Likes</p>
 
-                {{#if (eq ../session2 this.downvotes)}}
+                {{#if (includes ../session2 this.downvotes)}}
                 <img id="dislike/{{this._id}}" src="/header-elements/red-broken-heart.png" alt="dislike" onclick="commentClickDislike('{{this._id}}')">       
                 {{else}}
                 <img id="dislike/{{this._id}}" src="/header-elements/broken-heart.png" alt="dislike" onclick="commentClickDislike('{{this._id}}')">
                 {{/if}}
                 <p id="comment-dislike-count-{{this._id}}">{{this.downvoteCount}} Dislikes</p>
 
-                <img id="reply" src="/header-elements/comment.png" alt="comment" onclick="reply()">
+                <img id="reply" src="/header-elements/comment.png" alt="comment"  onclick=reply('{{this._id}}')>
                 <input type="text" id="text-box" placeholder="Reply...">
                 <p>Reply</p>
             </div>
         </div>
 
-         <div id="myDIV">
-                    This is my DIV element.
-            </div>
+         <div class ="scrollable" id="scrollable-box-{{this._id}}">
+            <p> Hello test {{this._id}}</p>
+                {{#each this.replies}}
+                <div class="comment">
+                    <div class="comment-heading">
+                        <div class="comment-header-left">
+                            <a href="{{#if (eq this.author.username ../session.username)}}/profile{{else}}/profile/view/{{this.author.username}}{{/if}}">
+                                <img src="{{#if this.author.profileImg}}{{this.author.profileImg}}{{else}}/header-elements/default.png{{/if}}" alt="Profile Button">
+                            </a>
+                            <p><b>@{{this.author.username}}</b></p>
+                            {{#if isEdited}}<span class="edited">Edited</span>{{/if}}
+                        </div>
+
+                        {{#if (eq this.author.username ../session.username)}}
+                        <div class="comment-actions">
+                            <a href="/comments/edit/{{this._id}}">
+                                <img src="/header-elements/pencil-square-svgrepo-com.png" alt="Edit Comment">
+                            </a>
+                            <form action="/comments/delete/{{this._id}}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this comment?');">
+                                <button type="submit" style="background:none;border:none;padding:0;">
+                                    <img src="/header-elements/trash.png" alt="Delete Comment">
+                                </button>
+                            </form>
+
+                        </div>
+                        {{/if}}
+                    </div>
+            
+                    <div class="comment-body">
+                        <p>{{this.content}}</p>
+                        <hr class="hr-orange-smaller">
+                    </div>
+            
+                    <div class="comment-reply">
+
+                        {{log ../session2}}
+
+                        {{#if (includes ../session2 this.upvotes)}}
+                        <img id="like/{{this._id}}" src="/header-elements/red-heart.png" alt="like" onclick="commentClickLike('{{this._id}}')">
+                        {{else}}
+                        <img id="like/{{this._id}}" src="/header-elements/heart.png" alt="like" onclick="commentClickLike('{{this._id}}')">
+                        {{/if}}
+                        <p id="comment-like-count-{{this._id}}">{{this.upvoteCount}} Likes</p>
+
+                        {{#if (includes ../session2 this.downvotes)}}
+                        <img id="dislike/{{this._id}}" src="/header-elements/red-broken-heart.png" alt="dislike" onclick="commentClickDislike('{{this._id}}')">       
+                        {{else}}
+                        <img id="dislike/{{this._id}}" src="/header-elements/broken-heart.png" alt="dislike" onclick="commentClickDislike('{{this._id}}')">
+                        {{/if}}
+                        <p id="comment-dislike-count-{{this._id}}">{{this.downvoteCount}} Dislikes</p>
+
+                        <img id="reply" src="/header-elements/comment.png" alt="comment"  onclick=reply('{{this._id}}')>
+                        <input type="text" id="text-box" placeholder="Reply...">
+                        <p>Reply</p>
+                    </div>
+                </div>
+
+                <div class ="scrollable" id="scrollable-box-{{this._id}}">
+                    <p> Hello test {{this._id}}</p>
+                        
+                </div>
+            {{/each}}
+        </div>
     {{/each}}
 
     <div class="reply">

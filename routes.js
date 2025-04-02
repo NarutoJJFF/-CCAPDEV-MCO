@@ -28,7 +28,7 @@ server.get('/comments/edit/:commentId', commentController.editCommentPage);
 server.post('/comments/edit/:commentId', commentController.updateComment);
 server.post('/comments/delete/:commentId', commentController.deleteComment);
 server.post('/commentLike/:commentID', commentController.upvoteComment);
-server.post('/commentDisike/:commentID', commentController.downvoteComment);
+server.post('/commentDislike/:commentID', commentController.downvoteComment);
 
 
 
