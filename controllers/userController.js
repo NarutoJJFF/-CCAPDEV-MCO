@@ -57,6 +57,7 @@ async function editProfile(req, res) {
 }
 
 async function browseAsGuest(req, res) {
+    console.log("Guest thru userController");
     try {
         req.session.guest = true; 
         res.redirect('/homepage-page'); 

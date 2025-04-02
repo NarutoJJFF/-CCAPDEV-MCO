@@ -130,6 +130,7 @@ async function login(req, resp) {
 }
 
 async function guest(req,resp){
+  console.log("Guest thru loginController");
   req.session.guest = true;
   resp.redirect('/homepage-page');
 }
