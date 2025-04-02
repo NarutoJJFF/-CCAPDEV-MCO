@@ -6,7 +6,7 @@ async function homepage (req, resp) {
         let sessionUserID = "";
         let user;
         //let is_guest = false;
-        if (!req.session || req.session.guest) {
+        if (!req.session || req.session.guest || !req.session.login_user) {
             //console.log("No user logged in. Redirecting to login page.");
             //return resp.redirect('/');
             //is_guest = true;
@@ -18,7 +18,8 @@ async function homepage (req, resp) {
         }
 
         const plainPosts = await findAllPosts();
-        const userProfileImg = user ? user.profileImg : "https://openclipart.org/image/800px/122107"; 
+        const userProfileImg = user ? user.profileImg : "https://openclipart.org/image/800px/122107";
+        console.log(plainPosts);
 
         console.log("ID: ", sessionUserID);
 
@@ -109,7 +110,7 @@ async function search (req) {
 }
 
 async function addPostPage (req, resp){
-    if(!req.session || req.session.guest){
+    if(!req.session || req.session.guest  || !req.session.login_user){
         console.log("Login before creating post/s.");
         const log_req = "addPost";
         return resp.redirect('/?logReq='+log_req);
@@ -141,7 +142,8 @@ async function addPost (req, resp) {
   };
 
 async function upvote(req, resp){
-    if(!req.session || req.session.guest){
+    console.log("Tried to like post");
+    if(!req.session || req.session.guest  || !req.session.login_user){
         console.log("Login before viewing profile.");
         const log_req = "vote";
         return resp.redirect('/?logReq='+log_req);
@@ -182,7 +184,7 @@ async function upvote(req, resp){
 }
 
 async function downvote(req, resp){
-    if(!req.session || req.session.guest){
+    if(!req.session || req.session.guest  || !req.session.login_user){
         console.log("Login before viewing profile.");
         const log_req = "vote";
         return resp.redirect('/?logReq='+log_req);

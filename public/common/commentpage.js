@@ -9,6 +9,7 @@ $(document).ready(function(){
 });
 
 async function clickLike(post_id) {
+    console.log("clicked like commentPage");
     let displayImage = document.getElementById('like/' + post_id);
     let filename = displayImage.src.split('/').pop();
 
@@ -32,6 +33,7 @@ async function clickLike(post_id) {
 }
 
 async function clickDislike(post_id) {
+    console.log("clicked dislike commentPage");
     let displayImage = document.getElementById('dislike/' + post_id);
     let filename = displayImage.src.split('/').pop();
 

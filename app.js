@@ -16,7 +16,14 @@ const hbs = handlebars.create({
             // console.log("Comparing in eq helper:", a, "and", b);
             if (a == null || b == null) return false;
             return a.toString() === b.toString();
-        }
+        },
+        includes: (array, value) => {
+          if (Array.isArray(array) && array.includes(value)) {
+              return true;
+          } else {
+              return false;
+          }
+      }
     }
 });
 server.engine('hbs', hbs.engine);

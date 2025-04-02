@@ -9,6 +9,7 @@ $(document).ready(function(){
 });
 
 async function clickLike(post_id) {
+    console.log("clickLike Triggered!");
     let displayImage = document.getElementById('like/' + post_id);
     let filename = displayImage.src.split('/').pop();
 
