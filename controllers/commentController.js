@@ -102,29 +102,88 @@ async function editCommentPage(req, resp) {
 }
 
 async function updateComment(req, resp) {
-    try {
-        const commentId = req.params.commentId;
-        const updatedContent = req.body.content;
+  try {
+      const commentId = req.params.commentId;
+      const updatedContent = req.body.content;
 
-        const comment = await Comment.findById(commentId);
+      if (!updatedContent || !updatedContent.trim()) {
+          return resp.status(400).send('Comment content cannot be empty');
+      }
 
-        if (!comment) {
-            return resp.status(404).send('Comment not found');
-        }
+      const comment = await Comment.findById(commentId);
+      if (!comment) {
+          return resp.status(404).send('Comment not found');
+      }
 
-        if (req.session.login_user !== comment.author.toString()) {
-            return resp.status(403).send('You are not authorized to edit this comment');
-        }
+      if (!comment.author.equals(req.session.login_user)) {
+          return resp.status(403).send('You are not authorized to edit this comment');
+      }
 
-        comment.content = updatedContent;
-        await comment.save();
+      await Comment.findByIdAndUpdate(commentId, { content: updatedContent }, { new: true });
 
-        console.log('Comment updated successfully');
-        resp.redirect(`/commentsPage/${comment.postId}`);
-    } catch (err) {
-        console.error('Error updating comment:', err);
-        resp.status(500).send('Internal Server Error');
-    }
+      console.log('Comment updated successfully');
+      resp.redirect(`/commentsPage/${comment.postId}`);
+  } catch (err) {
+      console.error('Error updating comment:', err);
+      resp.status(500).send('Internal Server Error');
+  }
 }
 
-module.exports = { commentPage, addComment, editCommentPage, updateComment };
+async function deleteReplies(commentId) {
+  try {
+      // Find all replies associated with the commentId
+      const replies = await Comment.find({ parentComment: commentId });
+
+      if (replies.length === 0) return;
+
+      // Recursively delete replies before deleting the main comment
+      await Promise.all(replies.map(async (reply) => {
+          await deleteReplies(reply._id); // Recursively delete nested replies
+          await Comment.findByIdAndDelete(reply._id);
+      }));
+
+      console.log(`Deleted ${replies.length} replies`);
+
+  } catch (err) {
+      console.error('Error deleting replies:', err);
+      throw new Error('Error deleting replies');
+  }
+}
+
+
+async function deleteComment(req, res) {
+  try {
+      console.log(`Deleting comment with ID: ${req.params.commentId}`);
+
+      const comment = await Comment.findById(req.params.commentId);
+      if (!comment) return res.status(404).json({ error: 'Comment not found' });
+
+      if (!comment.author.equals(req.session.login_user)) {
+          return res.status(403).json({ error: 'You are not authorized to delete this comment' });
+      }
+
+      await deleteReplies(comment._id);
+
+      if (comment.parentComment) {
+          await Comment.findByIdAndUpdate(comment.parentComment, {
+              $pull: { replies: comment._id }
+          });
+      }
+
+      await Comment.findByIdAndDelete(comment._id);
+
+      console.log('Comment deleted successfully');
+
+      if (comment.postId) {
+          res.redirect(`/commentsPage/${comment.postId}`);
+      } else {
+          res.status(200).json({ message: 'Comment deleted successfully' });
+      }
+
+  } catch (err) {
+      console.error('Error deleting comment:', err);
+      res.status(500).json({ error: 'Server Error' });
+  }
+}
+
+module.exports = { commentPage, addComment, editCommentPage, updateComment, deleteReplies, deleteComment };

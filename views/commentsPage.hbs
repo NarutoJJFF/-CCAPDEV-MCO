@@ -45,11 +45,13 @@
                     <a href="/comments/edit/{{this._id}}">
                         <img src="/header-elements/pencil-square-svgrepo-com.png" alt="Edit Comment">
                     </a>
-                    <form action="/comments/delete/{{this._id}}" method="POST" style="display:inline;">
+                    <form action="/comments/delete/{{this._id}}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this comment?');">
                         <button type="submit" style="background:none;border:none;padding:0;">
                             <img src="/header-elements/trash.png" alt="Delete Comment">
                         </button>
                     </form>
+
+
                 </div>
                 {{/if}}
             </div>

@@ -22,6 +22,7 @@ server.get('/commentsPage/:postID', commentController.commentPage);
 server.post('/addComment', commentController.addComment);
 server.get('/comments/edit/:commentId', commentController.editCommentPage);
 server.post('/comments/edit/:commentId', commentController.updateComment);
+server.post('/comments/delete/:commentId', commentController.deleteComment);
 
 // Redirect to homepage if in guest mode
 // server.get('/profile', (req, res) => {
