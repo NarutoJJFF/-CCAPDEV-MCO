@@ -101,7 +101,30 @@
         </div>
 
          <div class ="scrollable" id="scrollable-box-{{this._id}}">
+            
             <p> Hello test {{this._id}}</p>
+
+            {{log "This Replies:" this.replies}}
+
+
+            {{#each this.replies}}
+
+                {{log "Reply Content" this.content}}  <!-- Logs each reply's content -->
+
+            {{/each}}
+            
+
+            <form action="/reply" method="POST" class="reply-form">
+                <input type="hidden" name="postID" value="{{../posts._id}}"> 
+                <input type="hidden" name="parentComment" value="{{this._id}}"> 
+
+                <div class="reply-textbox">
+                    <input type="text" name="content" id="reply-box-2" placeholder="Reply..." required>
+                </div>
+
+                <button type="submit" class="reply-button">Reply</button>
+            </form>
+
         </div>
     {{/each}}
 
