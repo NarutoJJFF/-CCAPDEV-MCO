@@ -50,14 +50,6 @@ nav {
     padding: 20px; 
 }
 
-/* Middle Main Content - POST BAR */
-/*.post-bar {
-    display: flex;
-    flex-direction: row;
-    line-height: 0rem;
-}
-*/
-
 .post-bar {
     display: flex;
     align-items: center;  /* Aligns elements vertically */
@@ -73,7 +65,7 @@ nav {
 }
 
 .create-post-btn {
-    flex-grow: 1;  /* Makes the button take the remaining width */
+    flex-grow: 1;  
     background-color: orangered;
     padding: 10px 20px;
     border-radius: 50px;
@@ -92,6 +84,7 @@ nav {
     background-color: darkred;
 }
 
+/*
 ::placeholder {
     color: rgb(255, 255, 255);
     opacity: 1;
@@ -100,6 +93,7 @@ nav {
     font-style: normal;
     line-height: 2.5rem;
 }
+*/
 
 /* Profile Stats */
 .profile-stats {
@@ -279,24 +273,32 @@ nav {
 /* Friends List */
 .friendslist {
     display: flex;
-    align-items: center; 
-    gap: 10px; 
+    align-items: center;
+    gap: 15px; 
     line-height: 1rem;
+    padding: 10px 0;
+    border-bottom: 2px solid #e03e00; 
 }
 
 .friendslist img {
-    object-fit: fill;
+    object-fit: cover; 
     object-position: center center;
-    width: 50px;
-    height: 50px;
+    width: 60px; 
+    height: 60px;
     margin-right: 10px;
-    border-radius: 50px;
+    border-radius: 50%;
+    border: 2px solid orangered; 
 }
 
 .friendslist p {
-    margin: 0; 
-    line-height: normal; 
+    margin: 0;
+    line-height: normal;
+    font-family: "Poppins", serif;
+    font-weight: 400;
+    font-size: 14px; 
+    color: black; 
 }
+
 
 /* Horizontal Rules */
 .hr-orange {

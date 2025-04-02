@@ -21,6 +21,9 @@ server.post('/dislikeChecker/:postID', postController.dislikeChecker);
 
 server.get('/commentsPage/:postID', commentController.commentPage);
 server.post('/addComment', commentController.addComment);
+server.get('/comments/edit/:commentId', commentController.editCommentPage);
+server.post('/comments/edit/:commentId', commentController.updateComment);
+server.post('/comments/delete/:commentId', commentController.deleteComment);
 
 server.get('/', loginController.loginPage);
 server.post('/login', loginController.login);

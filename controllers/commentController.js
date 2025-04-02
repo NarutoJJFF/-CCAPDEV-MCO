@@ -20,6 +20,9 @@ async function commentPage (req, resp) {
             posts: plainPost, 
             comments: plainComments,
             currUser: plainProfille,
+            session: {
+              username: req.session.username,
+          },
         });
       
     } catch (err) {
@@ -74,5 +77,120 @@ async function addComment (req, resp){
     }
 }
 
+async function editCommentPage(req, resp) {
+    try {
+        const commentId = req.params.commentId;
 
-  module.exports = {commentPage, addComment};
+        const comment = await Comment.findById(commentId).populate('author', 'username');
+
+        console.log('Retrieved comment:', comment);
+
+        if (!comment) {
+            console.log('Comment not found');
+            return resp.status(404).send('Comment not found');
+        }
+
+        console.log('Logged-in user ID:', req.session.login_user);
+        console.log('Comment author ID:', comment.author._id.toString());
+
+        if (req.session.login_user !== comment.author._id.toString()) {
+            console.log('Authorization failed: Logged-in user is not the author');
+            return resp.status(403).send('You are not authorized to edit this comment');
+        }
+
+        console.log('Authorization successful: Rendering edit comment page');
+        resp.render('editComment', {
+            layout: 'commentsPageLayout',
+            title: 'Edit Comment',
+            comment: comment.toObject(),
+        });
+    } catch (err) {
+        console.error('Error rendering edit comment page:', err);
+        resp.status(500).send('Internal Server Error');
+    }
+}
+
+async function updateComment(req, resp) {
+  try {
+      const commentId = req.params.commentId;
+      const updatedContent = req.body.content;
+
+      if (!updatedContent || !updatedContent.trim()) {
+          return resp.status(400).send('Comment content cannot be empty');
+      }
+
+      const comment = await Comment.findById(commentId);
+      if (!comment) {
+          return resp.status(404).send('Comment not found');
+      }
+
+      if (!comment.author.equals(req.session.login_user)) {
+          return resp.status(403).send('You are not authorized to edit this comment');
+      }
+
+      await Comment.findByIdAndUpdate(commentId, { content: updatedContent }, { new: true });
+
+      console.log('Comment updated successfully');
+      resp.redirect(`/commentsPage/${comment.postId}`);
+  } catch (err) {
+      console.error('Error updating comment:', err);
+      resp.status(500).send('Internal Server Error');
+  }
+}
+
+async function deleteReplies(commentId) {
+  try {
+      const replies = await Comment.find({ parentComment: commentId });
+
+      if (replies.length === 0) return;
+
+      await Promise.all(replies.map(async (reply) => {
+          await deleteReplies(reply._id);
+          await Comment.findByIdAndDelete(reply._id);
+      }));
+
+      console.log(`Deleted ${replies.length} replies`);
+
+  } catch (err) {
+      console.error('Error deleting replies:', err);
+      throw new Error('Error deleting replies');
+  }
+}
+
+
+async function deleteComment(req, res) {
+  try {
+      console.log(`Deleting comment with ID: ${req.params.commentId}`);
+
+      const comment = await Comment.findById(req.params.commentId);
+      if (!comment) return res.status(404).json({ error: 'Comment not found' });
+
+      if (!comment.author.equals(req.session.login_user)) {
+          return res.status(403).json({ error: 'You are not authorized to delete this comment' });
+      }
+
+      await deleteReplies(comment._id);
+
+      if (comment.parentComment) {
+          await Comment.findByIdAndUpdate(comment.parentComment, {
+              $pull: { replies: comment._id }
+          });
+      }
+
+      await Comment.findByIdAndDelete(comment._id);
+
+      console.log('Comment deleted successfully');
+
+      if (comment.postId) {
+          res.redirect(`/commentsPage/${comment.postId}`);
+      } else {
+          res.status(200).json({ message: 'Comment deleted successfully' });
+      }
+
+  } catch (err) {
+      console.error('Error deleting comment:', err);
+      res.status(500).json({ error: 'Server Error' });
+  }
+}
+
+module.exports = { commentPage, addComment, editCommentPage, updateComment, deleteReplies, deleteComment };
