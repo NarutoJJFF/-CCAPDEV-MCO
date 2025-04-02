@@ -149,53 +149,35 @@ async function upvote(req, resp){
 
     const sessionUserID = req.session.login_user.toString();
     const postID = req.params.postID;
-    let upvoted = 0; 
+    let upvoted = 0;
     let downvoted = 0;
-    let arrayValue = null;
 
     try {
-        const post = await Post.findById(postID).populate("accID", "username profileImg");
+        const post = await Post.findById(postID);
 
-        console.log("Am i working now?");
-        console.log ('upvoted');
-
-        
-        for (let i = 0; i < post.upvotes.length; i++){
-            if (sessionUserID == post.upvotes[i]){
-                upvoted = 1;
-                arrayValue = i;
-                break;
-            }
-        }
-
-        for (let i = 0; i < post.downvotes.length; i++){
-            if (sessionUserID == post.downvotes[i]){
-                downvoted = 1;
-                arrayValue = i;
-                break;
-            }
-        }
-
-        if (downvoted == 1){
-            post.downvotes.splice(arrayValue,1)
-            downvoted = 0;
-        }
-
-        if (upvoted == 1) {
-            post.upvotes.splice(arrayValue, 1);
-            upvoted = 0; 
+        if (post.upvotes.includes(sessionUserID)) {
+            post.upvotes = post.upvotes.filter(id => id !== sessionUserID);
+            upvoted = -1;
         } else {
             post.upvotes.push(sessionUserID);
+            upvoted = 1;
+
+            if (post.downvotes.includes(sessionUserID)) {
+                post.downvotes = post.downvotes.filter(id => id !== sessionUserID);
+                downvoted = -1;
+            }
         }
 
-
-        post.upvoteCount = post.upvotes.length;
-        post.downvoteCount = post.downvotes.length;
+        post.upvoteCount += upvoted;
+        post.downvoteCount += downvoted;
 
         await post.save();
 
+    
+        resp.json({ upvoteCount: post.upvoteCount, downvoteCount: post.downvoteCount });
     } catch (error) {
-        console.error("Error can't upvote", error.message);
+        console.error("Error in upvote:", error);
+        resp.status(500).json({ error: "Internal Server Error" });
     }
 }
 
@@ -208,54 +190,57 @@ async function downvote(req){
 
     const sessionUserID = req.session.login_user.toString();
     const postID = req.params.postID;
-    let upvoted = 0; 
+    let upvoted = 0;
     let downvoted = 0;
-    let arrayValue = null;
 
     try {
-        let post = await Post.findById(postID).populate("accID", "username profileImg");
+        const post = await Post.findById(postID);
 
-        console.log ('downvoted');
-
-        
-        for (let i = 0; i < post.upvotes.length; i++){
-            if (sessionUserID == post.upvotes[i]){
-                upvoted = 1;
-                arrayValue = i;
-                break;
-            }
-        }
-
-        for (let i = 0; i < post.downvotes.length; i++){
-            if (sessionUserID == post.downvotes[i]){
-                downvoted = 1;
-                arrayValue = i;
-                break;
-            }
-        }
-
-        if (downvoted == 1){
-            post.downvotes.splice(arrayValue,1)
-            downvoted = 0;
+        if (post.downvotes.includes(sessionUserID)) {
+            post.downvotes = post.downvotes.filter(id => id !== sessionUserID);
+            downvoted = -1;
         } else {
             post.downvotes.push(sessionUserID);
+            downvoted = 1;
+
+            if (post.upvotes.includes(sessionUserID)) {
+                post.upvotes = post.upvotes.filter(id => id !== sessionUserID);
+                upvoted = -1;
+            }
         }
 
-        if (upvoted == 1) {
-            post.upvotes.splice(arrayValue, 1);
-            upvoted = 0; 
-        } 
-
-        post.upvoteCount = post.upvotes.length;
-        post.downvoteCount = post.downvotes.length;
+        post.upvoteCount += upvoted;
+        post.downvoteCount += downvoted;
 
         await post.save();
 
+        // Return updated counts as JSON
+        resp.json({ upvoteCount: post.upvoteCount, downvoteCount: post.downvoteCount });
     } catch (error) {
-        console.error("Error can't upvote", error.message);
+        console.error("Error in downvote:", error);
+        resp.status(500).json({ error: "Internal Server Error" });
     }
 }
 
+async function updateReactCount(req){
+    try {
+        const postID = req;
+        
+        let post = await Post.findById(postID).populate("accID", "username profileImg");
+                    
+        const numUpvote = post.upvotes.length;
+        const numDownvote = post.downvotes.length;
+        
+        post.upvoteCount = numUpvote;
+        post.downvoteCount = numDownvote;
+
+        await post.save();
+
+    
+    } catch (error){
+        console.error("Error in like counter:", error.message);
+    }
+}
 
 async function likeChecker(req){
 

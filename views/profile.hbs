@@ -48,16 +48,20 @@
 
                         <strong> {{this.title}} </strong>
                         <span class="flair">{{this.tag}}</span>
-                        <p class ="paragraph">
+                        <p class="paragraph">
                             {{this.content}}
                         </p>
                         <hr class="hr-orange-smaller">
                         <div class="posts-stats">
-                            <img id="like" src="/header-elements/heart.png" alt="like" onclick="changeImageLike()">
-                            <p>{{this.upvotes}} Likes</p>
-                            <img id="dislike" src="/header-elements/broken-heart.png" alt="dislike" onclick="changeImageDislike()">
-                            <p>{{this.downvotes}} Dislike</p>
-                            <a href="postpage.html"> <img src="/header-elements/comment.png" alt="comment"></a>
+                            <img id="like/{{this._id}}" src="/header-elements/heart.png" alt="like" onclick="clickLike('{{this._id}}')">
+                            <p id="like-count-{{this._id}}">{{this.upvoteCount}} Likes</p>
+
+                            <img id="dislike/{{this._id}}" src="/header-elements/broken-heart.png" alt="dislike" onclick="clickDislike('{{this._id}}')">
+                            <p id="dislike-count-{{this._id}}">{{this.downvoteCount}} Dislikes</p>
+
+                            <a href="/commentsPage/{{this._id}}">
+                                <img src="/header-elements/comment.png" alt="comment">
+                            </a>
                             <p>{{this.comments}} Comments</p>
                         </div>
                     </div>
@@ -91,5 +95,5 @@
         </footer>
     </main>
 
-    <script src="profile.js"></script>
+    <script src="/common/homepage.js" defer></script>
 </body>
