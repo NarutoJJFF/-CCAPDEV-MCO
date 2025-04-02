@@ -3,12 +3,12 @@
 <aside> 
     <p class="sidebar-titles"> POPULAR TAGS </p>
 
-    <a href="populartags.html">
+    {{#each popTags}}
         <div class="sidebar-populartags">
-            <p class="sidebar-tag"><b> Additional Feature Only </b></p>
-            <p class="sidebar-smaller"> Not Ready</p>
+            <p class="sidebar-tag"><b> {{this.name}} </b></p>
+            <p class="sidebar-smaller"> {{this.count}}</p>
         </div>
-    </a>
+    {{/each}}
 </aside>
 
 <main> 

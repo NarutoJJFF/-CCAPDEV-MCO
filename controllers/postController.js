@@ -1,6 +1,10 @@
 const Post = require('../model/post');
 const User = require('../model/user');
+<<<<<<< HEAD
+const Tag = require('../model/tag'); 
+=======
 const Comment = require('../model/comment');
+>>>>>>> 6aef82bd4eb23b11f482076757e678bd9bde0fb3
 
 async function homepage(req, resp) {
     try {
@@ -14,6 +18,15 @@ async function homepage(req, resp) {
         }
         
         const plainPosts = await findAllPosts();
+<<<<<<< HEAD
+        const userProfileImg = user ? user.profileImg : "https://openclipart.org/image/800px/122107";
+        console.log(plainPosts);
+
+        const popularTags = await getPopularTags();
+
+        console.log("ID: ", sessionUserID);
+=======
+>>>>>>> 6aef82bd4eb23b11f482076757e678bd9bde0fb3
 
         const userProfileImg = user && user.profileImg ? user.profileImg : "https://openclipart.org/image/800px/122107";
         console.log("Retrieved posts:", plainPosts);
@@ -23,11 +36,17 @@ async function homepage(req, resp) {
             layout: 'homepageLayout',
             title: 'Home page',
             posts: plainPosts, 
+<<<<<<< HEAD
+            session: sessionUserID,
+            userProfileImg: userProfileImg,
+            popTags: popularTags
+=======
             session: {
                 userID: sessionUserID,
                 username: user ? user.username : null
             },
             userProfileImg: userProfileImg
+>>>>>>> 6aef82bd4eb23b11f482076757e678bd9bde0fb3
         });
     } catch (err) {
         console.error("Database Error:", err);
@@ -150,6 +169,9 @@ async function addPost (req, resp) {
   
       await newPost.save();
       console.log('Post created successfully');
+
+      await updateTagCount(newPost.tag);
+
   
       resp.redirect('/homepage-page');
       
@@ -334,11 +356,34 @@ async function deletePost(req, res) {
         const post = await Post.findByIdAndDelete(req.params.postId);
         if (!post) return res.status(404).send('Post not found');
 
-        res.redirect(`/profile/${req.params.username}`);
+        res.redirect(`/profile`);
     } catch (err) {
         console.error(err);
         res.status(500).send('Server Error');
     }
+}
+
+async function updateTagCount(req) {  //case sensitive
+    const existingTag = await Tag.findOne({ name: req });
+
+    if (existingTag) {
+        existingTag.count += 1;
+        await existingTag.save();
+    } else {
+        const newTag = new Tag({ name: req, count: 1 });
+        await newTag.save();
+    }
+}
+
+async function getPopularTags() {
+    const popularTags = await Tag.find()
+        .sort({ count: -1 })
+        .limit(5);
+
+
+    const plainTags = popularTags.map(tag => tag.toObject());
+
+    return plainTags;
 }
   
 
