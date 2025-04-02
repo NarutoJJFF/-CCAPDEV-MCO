@@ -29,5 +29,24 @@
     </script>
 
     {{/if}}
+    {{#if ownProfile}}
+
+    <script>
+        alert("Please log in before viewing your profile.")
+    </script>
+
+    {{else if addPost}}
+
+    <script>
+        alert("Please log in before creating a post.")
+    </script>
+
+    {{else if vote}}
+
+    <script>
+        alert("Please log in before reacting to a post/comment.")
+    </script>
+
+    {{/if}}
 
 </body>

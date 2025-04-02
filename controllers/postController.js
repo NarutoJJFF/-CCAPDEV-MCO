@@ -111,7 +111,8 @@ async function search (req) {
 async function addPostPage (req, resp){
     if(!req.session || req.session.guest){
         console.log("Login before creating post/s.");
-        return resp.redirect('/');
+        const log_req = "addPost";
+        return resp.redirect('/?logReq='+log_req);
     }
     resp.render('addPost',{
       layout: 'addPostLayout',
@@ -140,6 +141,11 @@ async function addPost (req, resp) {
   };
 
 async function upvote(req, resp){
+    if(!req.session || req.session.guest){
+        console.log("Login before viewing profile.");
+        const log_req = "vote";
+        return resp.redirect('/?logReq='+log_req);
+    }
 
     const sessionUserID = req.session.login_user.toString();
     const postID = req.params.postID;
@@ -194,6 +200,11 @@ async function upvote(req, resp){
 }
 
 async function downvote(req){
+    if(!req.session || req.session.guest){
+        console.log("Login before viewing profile.");
+        const log_req = "vote";
+        return resp.redirect('/?logReq='+log_req);
+    }
 
     const sessionUserID = req.session.login_user.toString();
     const postID = req.params.postID;

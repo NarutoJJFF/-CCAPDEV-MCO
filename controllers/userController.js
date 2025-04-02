@@ -134,7 +134,8 @@ async function viewOwnProfile(req, res) {
     try {
         if(!req.session || req.session.guest){
             console.log("Login before viewing profile.");
-            return res.redirect('/');
+            const log_req = "ownProfile";
+            return res.redirect('/?logReq='+log_req);
         }
         const loggedInUserId = req.session.login_user;
 

@@ -3,13 +3,36 @@ const User = require('../model/user');
 async function loginPage (req,resp){
   console.log("Login page opened.");
 
-  if(req.session.login_id == null){
+  if(!req.session || req.session.guest){
+    let log_req="";
+    if(req.query.logReq != null){
+      log_req = req.query.logReq
+    }
+
+    let ownProfile = false;
+    if(log_req == "ownProfile"){
+      ownProfile = true;
+    }
+
+    let addPost = false;
+    if(log_req == "addPost"){
+      addPost = true;
+    }
+
+    let vote = false;
+    if(log_req == "vote"){
+      vote = true;
+    }
+
     console.log("No user session found. Redirecting...");
 
     resp.render('login',{
       layout: 'loginRegisterLayout',
       title: 'Login Page',
       failed: false,
+      ownProfile: ownProfile,
+      addPost: addPost,
+      vote: vote
     });
 
   }else{
