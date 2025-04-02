@@ -26,6 +26,11 @@ function clickLike(post_id){
     } else {
         displayImage.src = 'header-elements/heart.png';
     }
+
+    fetch(`/like/${post_id}`, { method: 'POST' })
+
+
+   
 }
 
 function clickDislike(post_id){

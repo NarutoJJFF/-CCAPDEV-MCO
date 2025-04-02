@@ -131,7 +131,7 @@ async function addPost (req, resp) {
 
 async function upvote(req){
 
-    const sessionUserID = req.session.login_user;
+    const sessionUserID = req.session.login_user.toString();
     const postID = req.params.postID;
     let upvoted = 0; 
     let downvoted = 0;
@@ -180,7 +180,7 @@ async function upvote(req){
 
 async function downvote(req){
 
-    const sessionUserID = req.session.login_user;
+    const sessionUserID = req.session.login_user.toString();
     const postID = req.params.postID;
     let upvoted = 0; 
     let downvoted = 0;
