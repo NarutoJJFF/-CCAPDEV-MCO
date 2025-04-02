@@ -13,7 +13,7 @@ async function getEditProfile(req, res) {
         return res.status(404).send("User not found");
       }
   
-        res.render('editProfile', {
+        res.render('editprofile', {
             layout: 'editPostLayout', 
             username: user.username,
             profileImg: user.profileImg,
