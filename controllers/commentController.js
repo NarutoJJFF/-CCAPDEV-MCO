@@ -51,7 +51,9 @@ async function findAllCommentsUnderPost (req) {
     
         //console.log("W", commentsResult);
     
-        const plainComments = commentsResult.map(comment => comment.toObject());
+        const plainComments = commentsResult.map(comment => ({...comment.toObject(),
+        isEdited: comment.isEdited
+        }));
     
         return [plainComments, plainPost];
 
@@ -135,7 +137,7 @@ async function updateComment(req, resp) {
       }
 
       await Comment.findByIdAndUpdate(commentId, 
-        { content: updatedContent, isEdited: true }, // Mark as edited
+        { content: updatedContent, isEdited: true },
         { new: true }
       );
 

@@ -8,6 +8,7 @@
                     <img src="{{#if posts.accID.profileImg}}{{posts.accID.profileImg}}{{else}}/header-elements/default.png{{/if}}" alt="Profile Button">
                 </a>
                 <p><b>@{{posts.accID.username}}</b></p>
+                {{#if posts.isEdited}}<span class="edited">Edited</span>{{/if}}
             </div>
         </div>
             
@@ -52,7 +53,7 @@
                         <img src="{{#if this.author.profileImg}}{{this.author.profileImg}}{{else}}/header-elements/default.png{{/if}}" alt="Profile Button">
                     </a>
                     <p><b>@{{this.author.username}}</b></p>
-                    {{#if isEdited}}<span class="flair">Edited</span>{{/if}}
+                    {{#if isEdited}}<span class="edited">Edited</span>{{/if}}
                 </div>
 
                 {{#if (eq this.author.username ../session.username)}}
